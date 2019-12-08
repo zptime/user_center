@@ -1,0 +1,43 @@
+
+#样式具体见华校app圈子发布动态，实现录音，图片选择，文件选择，视频选择的功能，以及其展示
+
+#属性
+
+1._subComponents 选用的组件，可选值为['m-audio','m-img','choose-file','m-video'],是个数组
+
+2._mAudio 设置m-audio的参数，设置额值有changeMode,url,origin,popupBtn,removeIcon
+
+3._mImg 设置m-img的参数，设置的值有cols,gutter,maxCount,origin,murl,url,popupBtn,removeIcon
+
+4._cFile 设置choose-file的参数 ，设置的参数有popupBtn，maxCount，fileType，showDelete
+
+5._mVideo 设置m-video的参数，设置的参数有popupBtn。
+
+
+#事件
+1.on-cFileChange 文件选择后的回调，参数为当前选择上传成功后的所有文件
+
+2.on-mAudioChange 音频录制后的回调，参数为当前选择上传成功后的所有的音频（默认一个）
+
+3.on-mImgChange  图片选择后的回调，参数为当前选择上传成功后的所有图片对象
+
+4.on-mVideoChange 视频选择或者录制之后的回调 ，参数为上传成功的视频对象（默认一个）
+
+
+#例子
+
+调用m-choose处的配置
+ <m-choose   class="chooseView"
+                    :_subComponents="m_choose._subComponents"
+                    :_mAudio="m_choose._mAudio"
+                    :_mImg="m_choose._mImg"
+                    :_cFile="m_choose._cFile"
+                    :_mVideo="m_choose._mVideo"
+                    @on-mAudioChange="audioChanged"
+                    @on-mImgChange="imgChanged"
+                    @on-cFileChange="fileProgressed"
+                    @on-mVideoChange="videoChanged">
+
+ </m-choose>
+
+ //具体参考repair系统，publish界面

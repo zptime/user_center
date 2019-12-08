@@ -1,0 +1,76 @@
+
+body{background-color: #f5f5f5;}
+.person-firstcoke-box{width: 100%;height: 200px; position:relative;text-align: center;background:url("../../images/icon/person/firstcoke.png") no-repeat center}
+.person-firstcoke-box .person-box{position: relative;top:40px;}
+.person-firstcoke-box .person-box .person-photo-box{position: relative;width: 60px;margin: 0 auto;border-top-left-radius: 30px;border-bottom-left-radius: 30px;border-bottom-right-radius: 30px;}
+.person-firstcoke-box .person-box .person-photo{width: 60px;height: 60px;border-radius: 30px;cursor: default;}
+.person-firstcoke-box .person-box .up-person-photo-box{display:none;position: absolute;transform: translate(10px,0px);top:0;left: 50%;}
+.person-firstcoke-box .person-box .up-person-photo-box >img{width: 22px;height: 22px;}
+.person-firstcoke-box .person-box .up-person-photo-box .img-dis{display: none;}
+.person-firstcoke-box .person-box .up-person-photo-box .img-active{display: inline;}
+.person-firstcoke-box .person-box .up-person-photo-box:hover>.img-dis{display: inline;}
+.person-firstcoke-box .person-box .up-person-photo-box:hover>.img-active{display: none;}
+.person-firstcoke-box .person-box .person-name{color:#fff0f0;font-size: 16px;font-weight: bold;font-family: monospace;line-height: 22px;}
+.person-firstcoke-box .person-box .person-school{color:#fff0f0;line-height: 30px;}
+
+/**一级导航**/
+.main-frame .main-nav{margin:auto;width:75pc;height:60px;border-bottom:0px solid #e5e5e5;text-align:center;background-color: #fff;}
+.main-frame .main-nav .navblock{display:inline-block;width:150px;height:55px;line-height:70px;vertical-align:bottom;text-align:center;color:#585858;font-size:20px}
+.main-frame .main-nav .active{color:#308ce3;}
+.main-frame .main-nav .navblock:hover{color:#308ce3;}
+.main-frame .main-nav a{text-decoration:none}
+.main-frame .main-nav hr{width:66px;height:5px;background:#308ce3;border:none}
+.main-content{width: 900px;min-height:1000px;margin:0 auto;padding: 30px 0 10px 0;}
+
+.main-content .info-mod{background-color:#fff; margin:0 0 20px 0;border-radius: 4px;}
+.main-content .info-mod .mod-title{height: 50px;line-height: 50px;padding: 0 20px;border-bottom:1px solid #f5f5f5;font-size: 16px;}
+.main-content .info-mod .mod-title .mod-title-oper{font-size: 12px;cursor: pointer;}
+.main-content .info-mod .mod-title .mod-title-oper:hover{color: #308ce3;}
+.main-content .info-mod .mod-title .mod-title-oper:hover >img.img-dis{display: none;}
+.main-content .info-mod .mod-title .mod-title-oper:hover >img.img-active{display: inline;}
+.main-content .info-mod .mod-title .mod-title-oper >img{width: 26px;height: 26px;display: inline;vertical-align: middle;margin-right: 2px;}
+.main-content .info-mod .mod-title .mod-title-oper >img.img-active{display: none;}
+
+.main-content .info-mod .mod-content{padding: 0 20px;}
+
+
+/**个人信息**/
+.table-form{width: 100%;margin: 20px auto;}
+.table-form td{height: 50px;}
+.table-form input{width:182px;}
+.table-form select{width:200px;}
+.-msg .-content{color:#fff!important}
+.table-form label:before{content: '';display: inline-block;width:10px;margin:auto;vertical-align:middle;}
+.table-form label.required:before{content: '*';color: #f74747;}
+
+/**安全设置**/
+.security{/*background-color: white;*/padding:20px;/*text-align: center;*/margin: 0 auto;}
+.security .card-box{width: 400px;height:300px;margin: 0 auto;padding:40px 0;text-align: center;background-color: #fff;
+    border-radius: 4px;position: relative;box-shadow: 0 0 5px #ddd;}
+.security .card-box img{}
+.security .card-box .c-msg{padding: 20px 0;line-height: 26px;}
+.security .card-box .tips{margin-top: 10px;font-size: 12px;}
+.security .card-box .c-btn{position: absolute;bottom: 20px;margin-left: -60px;left: 50%;}
+
+/**家庭管理**/
+.family{width:700px;padding:0 10px;margin: 0 auto;}
+.family .btn-add-parent{margin: 0 0 20px 20px;}
+.family .card-box{width: 308px;height:260px;margin: 20px;padding:20px 0;text-align: center;background-color: #fff;
+    border-radius: 4px;position: relative;box-shadow: 0 0 5px #ddd;}
+.family .card-box img{width: 100px;height: 100px;border-radius: 50px;}
+.family .card-box .c-msg{padding: 20px 0;line-height: 26px;height: 90px;}
+.family .card-box .c-msg .name{font-size: 16px;font-weight: bold;font-family: monospace;height: 26px;}
+.family .card-box .tips{margin-top: 10px;font-size: 12px;}
+.family .card-box .btn-box .e-btn{color: #308ce3;font-size: 16px;margin: 0 10px;}
+.family .card-box .btn-box .e-btn:hover{color: rgba(70,133,255,.9)}
+.family .card-box .c-btn{position: absolute;bottom: 20px;margin-left: -60px;}
+#modal-edit-relation{text-align: center;}
+#modal-edit-relation .relation-name{width: 200px;margin: 80px auto;}
+
+
+/**加入班级**/
+.myclass-box{text-align: center;margin: 0 auto;padding:100px; }
+.myclass-box .btn-box{margin-top: 50px;}
+#modal-join .local-input{width:300px;border: none;border-radius:0px;border-bottom: 1px solid #ccc;text-align: center;}
+
+

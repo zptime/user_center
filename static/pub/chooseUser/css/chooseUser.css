@@ -1,0 +1,12 @@
+/**school - manage - duty **/
+    #modal-chooseUser  .head-left-box{float:left;width: 550px;overflow: hidden;white-space: nowrap; text-overflow: ellipsis;margin: 0 10px;}
+    #modal-chooseUser  .head-left-box .choosed-lab{margin-left: 10px;}
+    #modal-chooseUser .choosed-user-box{margin: 0 10px;}
+    #modal-chooseUser .choosed-user-box .remove-btn{margin: 0 0 0 5px;cursor: pointer;color: #aaa;}
+    #modal-chooseUser .choosed-user-box .remove-btn:hover{color: #f74747;}
+
+    #modal-chooseUser .userDiv{float:left;margin:20px;text-align:center;line-height:80px;width:160px;height:90px;border-radius: 4px;background-color: #EEEEEE;cursor:pointer}
+    #modal-chooseUser .userDiv:hover{background-color: rgba(131,189,245,0.8);color: #fff;}
+    #modal-chooseUser .blue{background-color: #83BDF5 !important;color: #fff;}
+    #modal-chooseUser .userDiv .photo{width:45px;height:45px;border-radius:23px;float:left;margin:10px 0 0 60px}
+    #modal-chooseUser .userDiv .name{  float:left; margin:-25px 0 0 0; display:block; width:140px;text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;padding: 0 10px;}

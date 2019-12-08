@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<!--STATUS OK-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>绑定手机号</title>
+    <link href="/static/resources/css/login/getpassport/base.css" type="text/css" rel="stylesheet" />
+    <link href="/static/resources/css/login/getpassport/forgot.css" type="text/css" rel="stylesheet"/>
+    <script>
+        document.write('<link rel="stylesheet" href="/static/pub/btImport/css/btImport.css?version=' +  Math.random() + '" /> ');
+    </script>
+    <style>
+        body{width: 840px;height: 430px;overflow: hidden;}
+        .btn-box{text-align: center;position: absolute;top:350px;width: 100%;}
+        button.btn-bind{width: 120px;border-radius: 4px; background-color: #308ce3;height: 30px; color: #fff; border: 0px;margin: 0 10px;}
+        button:hover{background-color: rgba(70,133,255,.9)}
+        #content .mod-forgot {  min-height: 350px; position: relative;}
+        .mod-forgot {  height: 350px;  margin-left: 20px;  width: 840px; }
+        .mod-step-detail{text-align: center;}
+        .parent-photo{float: left;width: 35%;text-align: center;padding-top: 50px;}
+        .parent-photo >img{width: 150px;height: 150px;border-radius: 75px; }
+        .parent-info{float: left;width: 60%;text-align: left;padding-top: 60px;}
+        .parent-info .line40{height: 40px;line-height: 40px;}
+    </style>
+</head>
+
+<body>
+<div id="wrapper" class="">
+	<div id="content">
+		<div class="mod-forgot">
+			<ul class="mod-sub-nav">
+				<li class="mod-sub-list1">填写家长信息</li>
+				<li class="mod-sub-list2 list2-active">验证家长</li>
+				<li class="mod-sub-list3">完成邀请</li>
+			</ul>
+            <div class="mod-step-detail">
+                <div>
+                    <div class="parent-photo">
+                        <img class="cell-photo" id="image_photo" src="">
+                    </div>
+                    <div class="parent-info">
+                        <span hidden="hidden" id="account_id"></span>
+                        <p class="line40">
+                            姓名： <span id="full_name"></span>
+                        </p>
+                        <p class="line40">
+                            帐号： <span id="username"></span>
+                        </p>
+                        <p class="line40">
+                            手机： <span id="mobile"></span>
+                        </p>
+                    </div>
+                    <span class="pass-input-msg" id="err-msg-tip"></span>
+                </div>
+                <div class="btn-box">
+                    <button type="button" class="btn-bind" onclick="submit_application()">发出邀请</button>
+                    <button type="button" class="btn-bind" onclick="cancel()">取消</button>
+                </div>
+            </div>
+		</div>
+	</div>
+
+</div>
+<script src="/static/pub/contrib/js/jquery.min.js"></script>
+<script src="/static/resources/js/person/family/step2_2.js"></script></body>
+</html>

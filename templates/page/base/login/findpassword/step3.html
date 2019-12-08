@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<!--STATUS OK-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>找回密码-确认帐号</title>
+{#<script>#}
+{#    /*PV量统计*/#}
+{#    var _hmt = _hmt || [];#}
+{#    (function() {#}
+{#      var hm = document.createElement("script");#}
+{#      hm.src = "https://hm.baidu.com/hm.js?335181d6e2081bdb34e8bfd2a2ee236b";#}
+{#      var s = document.getElementsByTagName("script")[0];#}
+{#      s.parentNode.insertBefore(hm, s);#}
+{#    })();#}
+{#</script>#}
+<link href="/static/resources/css/login/getpassport/base.css" type="text/css" rel="stylesheet" />
+<link href="/static/resources/css/login/getpassport/forgot.css" type="text/css" rel="stylesheet"/>
+</head>
+
+<body>
+<div id="wrapper" class="">
+    <div class="L_header">
+        <div class="L_wrap">
+            <div class="logo">
+                <img src="/static/resources/images/login/findpassword/H_password.png" alt="华校Logo" width="363px" height="45px">
+            </div>
+        </div>
+    </div>
+	<div id="nav">
+		<div class="nav-2">
+			<div class="mod-nav clearfix">
+				<h1 class="page-type-notab">找回密码</h1>
+			</div>
+		</div>
+	</div>
+	<div id="content">
+        <input hidden="hidden" id="mobile" value="{{ mobile }}">
+		<div class="mod-forgot">
+			<ul class="mod-sub-nav">
+				<li class="mod-sub-list1">确认帐号</li>
+				<li class="mod-sub-list2">安全验证</li>
+				<li class="mod-sub-list3 list3-active">重置密码</li>
+			</ul>
+            <div class="mod-step-detail">
+                <p class="step-form-tip m_l80">
+                    您正在找回的帐号是：{{ mobile }}
+                </p>
+                <form action="" method="post" id="form-resetpwd">
+                    <div class="pass-input-container clearfix">
+                        <label class="pass-input-title l-h40" for="password">新密码</label>
+                        <input type="password" class="pass-input pass-input-forgot left" name="newpassword" id="newpassword" value="" autocomplete="off">
+                        <span class="pass-input-msg l-h40" id="pass_input_msg_Pwd"></span>
+                    </div>
+                    <div class="pass-input-container clearfix">
+                        <label class="pass-input-title l-h40" for="repassword">确认新密码</label>
+                        <input type="password" class="pass-input pass-input-forgot left" name="verifypwd" id="verifypwd" value="" autocomplete="off">
+                        <span class="pass-input-msg l-h40"></span>
+                    </div>
+                    <div class="clearfix">
+                        <label class="pass-input-title" style="line-height: 20px;">&nbsp;</label>
+                        <span class="pass-input-msg" style="line-height: 0px;" id="error-tip"></span>
+                    </div>
+                    <div class="m_l80">
+                        <input class="pass-button-submit" type="button" name="" value="确定" id="submit">
+                        <input type="hidden" value="false" id="pwd_flag">
+                    </div>
+                </form>
+            </div>
+		</div>
+	</div>
+
+	<div id="foot">
+		<div class="mod-footer">
+			<div class="copy-box">
+                Copyright © 2015-2020 湖北省武汉市 All Rights Reserved.
+			</div>
+		</div>
+	</div>
+</div>
+<script src="/static/pub/contrib/js/jquery.min.js"></script>
+<script src="/static/resources/js/base/login/findpassword/step3.js"></script>
+</body>
+</html>

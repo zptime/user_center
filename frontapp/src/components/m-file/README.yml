@@ -1,0 +1,51 @@
+
+#文件选择以及显示，使用chooseFile.vue
+
+#属性
+
+1.showDelete  是否显示删除按钮，文件右侧黑色X
+
+2.fileType  文件选择限制类型 ，如pdf，ppt，doc等
+
+3. fileData 组件用作显示的时候，外界赋值入口，赋值对象结构
+      {
+       "file_name": "2289398a40de411a93ac506.png",
+        "file_url": "http://test-interact.hbeducloud.com:8088/media/public/fhxx/file/2289398-a40de411a93ac506_18041610004624609529.png?fname=2289398-a40de411a93ac506",
+        "file_id": "96",
+        "file_size": "196600",
+        "downloadState": 0
+      }
+
+4. maxCount  文件选择最大个数
+
+5. popupBtn 是否显示选择文件额按钮
+
+6. btnSecStyle 外界调整选择文件按钮的样式
+
+7. contentSecStyle 外界调整文件显示部分视图的样式
+
+
+#方法
+
+1.选择文件的时候，接受原生的返回值。调用界面，绑定on-changed事件。
+e.g  html部分
+     <choosefile @on-changed="fileChanged"
+                        :btnSecStyle="cFile.btnSecStyle"
+                        :contentSecStyle="cFile.contentSecStyle"
+                        :popupBtn="_cFile.popupBtn"
+                        :maxCount="_cFile.maxCount"
+                        :fileType="_cFile.fileType"
+                        :showDelete="_cFile.showDelete">
+
+      </choosefile>
+
+    methods部分
+     //allFileData所有选择文件的数据
+     fileChanged(allFileData) {
+
+      },
+
+    注意：allFileData 是当前选择的所有文件的数组，里面元素对象的格式如上
+
+
+2.文件预览，下载都在chooseFile中自动实现了，不必特别调用方法

@@ -1,0 +1,203 @@
+{% extends 'page/school/manage/share/route.html' %}
+
+{% block mylink %}
+    <script>
+        document.write('<link rel="stylesheet" href="/static/pub/btImport/css/btImport.css?version=' +  hxuc.version + '" /> ');
+    </script>
+{% endblock %}
+{% block mycontent %}
+    <div id="content" v-cloak>
+
+        <div class="right-content-core">
+            <div class="toolblock-box"><!--工具栏-->
+                <div class="toolblock">
+                    <span class="hx-float-l">
+                        <span v-show="graduate_flag" class="hx-margin20-r">
+                            <span class="breadcrumbs-box">
+                                <a @click="switch_graduate_flag(false)">学生管理</a>
+                                <span class="split">></span>
+                                <a>毕业的学生</a>
+                            </span>
+                        </span>
+                        <span>
+                            <input type="checkbox" id="grid_multipleBtn"><label>全选</label></input>
+                        </span>
+                        {% ifnotequal role_mask 8 %} <!--班主任不能创建删除学生-->
+                        <span v-show="multiple" onclick="update_class()" class="tool-cell hx-margin20-l">
+                            学生调班
+                        </span>
+                        <span v-show="multiple&&!nograde" onclick="clean_class()" class="tool-cell hx-margin20-l">
+                            取消学生班级
+                        </span>
+                        {% endifnotequal %}
+                        <span v-show="!graduate_flag&&multiple" onclick="restpwd()" class="tool-cell hx-margin20-l">
+                            重置密码
+                        </span>
+                        {% ifnotequal role_mask 8 %} <!--班主任不能创建删除学生-->
+                        <span v-show="multiple" onclick="del()" class="tool-cell hx-margin20-l">
+                            删除
+                        </span>
+                        {% endifnotequal %}
+                    </span>
+                    <span class="hx-float-r">
+                        {% ifnotequal role_mask 8 %} <!--班主任不能创建删除学生-->
+                        <span v-show="!graduate_flag" class="tool-cell middle" @click="switch_graduate_flag(true)">
+                            <span>毕业的学生</span>
+                        </span>
+                        {% else %}
+                        <span class="tool-cell middle" @click="class_application_page()">
+                            <span>申请加入班级的学生</span>
+                        </span>
+                        {% endifnotequal %}
+                    </span>
+                </div>
+                <div class="toolblock">
+                    <span class="hx-float-l">
+                        <select v-if="!graduate_flag" id="grade_num" v-model="grade_num" @change="grade_id_chged" placeholder="--请选择--">
+                            <option value="" grade-name="">全部年级</option>
+                            <option v-for="grade in grade_list" value="{$grade.grade_num$}" grade-name="{$grade.grade_name$}">{$ grade.grade_name $}</option>
+                            <option value="-1" grade-name="-1">无年级</option>
+                        </select>
+                        <select v-if="graduate_flag" id="graduate_year" v-model="graduate_year" @change="graduate_year_chged" placeholder="--请选择--">
+                            <option value="">毕业年份</option>
+                            <option v-for="value in graduate_year_obj" value="{$$key$}">{$ value $}</option>
+                        </select>
+                        <select class="hx-margin20-l" id="class_id" v-model="class_id" @change="grade_id_chged" placeholder="--请选择--">
+                            <option value="">全部班级</option>
+                            <option v-if="!graduate_flag" v-for="class in class_list | filterBy grade_num in 'grade_num'" value="{$class.id$}">{$ class.class_name $}</option>
+                            <option v-if="graduate_flag" v-for="class in graduate_class_list | filterBy graduate_year in 'graduate_year'" value="{$class.id$}">{$ class.class_name $}</option>
+                        </select>
+                        <select v-if="!graduate_flag" class="hx-margin20-l" id="kind" placeholder="--请选择--">
+                            <option value="">全部类型</option>
+                            <option v-for="kind in kind_list">{$ kind $}</option>
+                        </select>
+                        <input class="hx-margin20-l" id="name_or_code" placeholder="请输入姓名或学号">
+                        <button type="button" class="hx-margin20-l" onclick="reloadGrid()">查询</button>
+                    </span>
+                    <span class="hx-float-r">
+                        {% ifnotequal role_mask 8 %} <!--班主任不能创建删除学生-->
+                            <span v-show="!graduate_flag" class="tool-cell middle hx-margin20-l" onclick="add()">
+                                <img src="/static/resources/images/icon/icon-add.png">
+                                <span>新增</span>
+                            </span>
+                        {% endifnotequal %}
+                        {% ifnotequal role_mask 8 %} <!--班主任不能创建删除学生-->
+                            <span v-show="!graduate_flag" class="tool-cell middle hx-margin20-l" onclick="importExcel()">
+                                <img src="/static/resources/images/icon/icon-import.png">
+                                <span>导入</span>
+                            </span>
+                        {% endifnotequal %}
+                            <span class="tool-cell middle hx-margin20-l" onclick="exportExcel()">
+                                <img src="/static/resources/images/icon/icon-export.png">
+                                <span>导出</span>
+                            </span>
+                    </span>
+                </div>
+            </div><!--工具栏-->
+            <div class="grid">
+                <table id="grid"></table>
+                <div id="pager"></div>
+            </div>
+        </div>
+
+        <div>
+            <input id="role_mask" style="display: none;" value={{ role_mask }}>
+            <div id="modal_add" style="display: none;">
+                <form>
+                    <table class="table-form">
+                        <tr>
+                            <th width="14%"></th>
+                            <th width="35%"></th>
+                            <th width="14%"></th>
+                            <th width="35%"></th>
+                        </tr>
+                        <tr>
+                            <td><label class="required" for="CH_full_name">姓名</label></td>
+                            <td><input type="text" name="full_name" v-model="form.full_name" check="CH_full_name"></td>
+                            <td><label class="required" for="CH_sex">性别</label></td>
+                            <td>{% comment %}<select name="sex" v-model="form.sex" check="CH_sex">
+                                    <option>男</option>
+                                    <option>女</option>
+                                </select>{% endcomment %}
+                                <label class="radio-container"><input type="radio" name="sex" value="男" v-model="form.sex" check="CH_sex"/>男</label>
+                                <label class="radio-container"><input type="radio" name="sex" value="女" v-model="form.sex" check="CH_sex"/>女</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="required" for="CH_code">学籍号</label></td>
+                            <td><input type="text" name="code" v-model="form.code" check="CH_code"></td>
+                            <td><label class="required" for="CH_grade_class">年级/班级</label></td>
+                            <td><select name="grade_num" v-model="form.grade_num" @change="form_grade_id_chged" style="width: 98px;" check="CH_grade_class">
+                                    <option value="">--请选择--</option>
+                                    <option v-for="grade in grade_list" value="{$ grade.grade_num $}">{$ grade.grade_name $}</option>
+                                </select>
+                                <select name="class_id"  v-model="form.class_id" @change="form_class_id_chged" style="width: 98px;" check="CH_grade_class">
+                                    <option value="">--请选择--</option>
+                                    <option v-for="class in class_list | filterBy form.grade_num in 'grade_num'" value="{$ class.id $}">{$ class.class_name $}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>手机</label></td>
+                            <td><input type="tel" v-model="form.mobile" name="mobile"></td>
+                            <td><label>身份证</label></td>
+                            <td><input type="text" v-model="form.id_card" name="id_card"></td>
+                        </tr>
+                        <tr>
+                            <td><label>是否在读</label></td>
+                            <td>
+                                <label class="radio-container"><input type="radio" name="is_in" value="1" v-model="form.is_in"/>是</label>
+                                <label class="radio-container"><input type="radio" name="is_in" value="0" v-model="form.is_in"/>否</label>
+                            </td>
+                            <td><label>状态</label></td>
+                            <td><select name="kind" v-model="form.kind">
+                                    <option value="">--请选择--</option>
+                                    <option v-for="kind in kind_list">{$ kind $}</option>
+                                </select></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div id="modal_update_class" style="display: none;">
+                <div class="update-class-box">
+                    <div class="left-menu">
+                        <ul>
+                            <li v-for="item in update_class_form.grade_list" :class="item.grade_num==update_class_form.grade_num?'active':''" grade-id="{$item.grade_num$}" onclick="filter_class_list(this)">{$item.grade_name$}</li>
+                        </ul>
+                    </div>
+                    <div class="right-class">
+
+                        <div class="card-box">
+                            <div class="one-card">
+                                <div class="card-core">
+                                    <ul>
+                                        <li v-for="item in update_class_form.class_list" v-if="update_class_form.grade_num == '' || item.grade_num == update_class_form.grade_num" :class="item.id==update_class_form.class_id?'active':''" class-id="{$item.id$}" onclick="choose_class(this)">
+                                            <div class="one-little-box">
+                                                <div class="div-box">
+                                                    <img class="middle-img" src="/static/resources/images/icon/class-default.png">
+                                                    <div class="middle-context">
+                                                        <div class="class-name">{$item.class_name$}</div>
+                                                        <div class="class-num">{$item.student_amount$}人</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block myscript %}
+    <script>
+        document.write( " <script src='/static/pub/btImport/js/btImport.js?version=" + hxuc.version + " '></s" + "cript> " );
+        document.write( " <script src='/static/resources/js/school/manage/student/main.js?version=" + hxuc.version + " '></s" + "cript> " );
+    </script>
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends 'page/school/manage/share/route.html' %}
+
+{% block mylink %}
+    <link href="/static/pub/timeline/css/flik-timeline.min.css" rel="stylesheet" />
+    <link href="/static/pub/timeline/css/jquery.bxslider.min.css" rel="stylesheet" />
+    <link href="/static/pub/chooseUser/css/chooseUser.css" rel="stylesheet" />
+{% endblock %}
+
+{% block mycontent %}
+    <div id="content" v-cloak>
+        <div class="right-content-top">
+            <em id="test" class="close-btn" onclick="this.parentNode.style.display='none'"></em>
+            <div class="tips">
+                教师管理中添加教师后才能在创建的班级中选择教师作为班主任，学生管理中添加学生须与所创建的班级管理。如果您设置学段学制有误，部分年级可能无法显示，需要重新按照学校实际情况设置。
+            </div>
+        </div>
+        <div class="right-content-core">
+            <div class="period-box">
+                <div>
+                    <span>当前学段学制：{$ periodsection  $}</span>
+                    <span class="oper-link" onclick="url_go('/index?nav=config&view=periodsection')">设置</span>
+                </div>
+                <div class="style-box">
+                    <span>当前班级样式：{$ classstyle $}</span>
+                    <span class="oper-link" onclick="url_go('/index?nav=config&view=classstyle')">设置</span>
+                </div>
+            </div>
+            <div class="grade-box sline">
+                <div class="grade-all">
+                    <span class="lab">年级</span>
+                    <span class="split">|</span>
+                    <span class="lab val" :class="grade_num==''?'active':''" onclick="get_classList(-1)">全部</span>
+                </div>
+                <div class="grade-li">
+                    <ul>
+                        <li v-for="grade in grade_list" :class="grade_num==grade.grade_num?'active':''" grade="{$grade.grade_num$}" onclick="reloadclass(this)">
+                            {$ grade.grade_name $}
+                        </li>
+                        <li grade="GRADUATE" :class="grade_num=='GRADUATE'?'active':''" onclick="get_graduateList()">
+                            毕业班
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="class-list-box">
+                <div class="now-class-box" v-show="class_graduate_switch=='CLASS'">
+                    <div class="one-card" v-for="grade in grade_list" v-show="grade_num==''||grade_num==grade.grade_num">
+                        <div class="table-title">
+                            <span class="title-left middle">{$ grade.grade_name $}</span>
+                            <span class="title-right middle">
+                                <span grade-id="{$grade.id$}" onclick="add_bt(this)">
+                                    <img class="middle" src="/static/resources/images/icon/icon-add-bt.png">
+                                    <label class="middle oper">批量新增</label>
+                                </span>
+                                <span grade-id="{$grade.id$}" class="hx-margin20-l" onclick="add(this)">
+                                    <img class="middle" src="/static/resources/images/icon/icon-add.png">
+                                    <label class="middle oper">新增</label>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="table-box">
+                            <table>
+                                <thead>
+                                    <td width="15%">班级</td>
+                                    <td width="10%">班级码</td>
+                                    <td width="15%">别名</td>
+                                    <td width="15%">入学年份</td>
+                                    <td width="10%">学生人数</td>
+                                    <td width="20%">班主任</td>
+                                    <td width="15%">操作</td>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="class in class_list" v-if="grade.grade_num==class.grade_num" class=" $index%2?'even':'odd'" >
+                                        <td>{$ class.class_name $}</td>
+                                        <td>{$ class.class_code $}</td>
+                                        <td>{$ class.class_alias $}</td>
+                                        <td>{$ class.enrollment_year $}</td>
+                                        <td>{$ class.student_amount $}</td>
+                                        <td role="teacher">
+                                            <span v-for="teacher in class.teacher_data">
+{#                                                <img class="cell-photo" :src="teacher.image_url?teacher.image_url:'/static/resources/images/icon/photo-default.png'">#}
+                                                &nbsp;
+                                                {$ teacher.full_name $}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="more-oper mytooltip">
+                                                ···
+                                                <span class="mytooltiptext">
+                                                    <li class-id="{$ class.id $}" onclick="setmanager(this)">更换班主任</li>
+                                                    <li class-id="{$ class.id $}" onclick="edit(this)">更换班级别名</li>
+                                                    <li class-id="{$ class.id $}" onclick="del(this)">删除</li>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="graduate-class-box" v-show="class_graduate_switch=='GRADUATE'">
+                    <div id="timeline">
+                        <ul class="flik-timeline flik-timeline-1" style="display: none;" data-scroll-effect="default-effect">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div id="modal-add-bt-class" style="display: none;">
+            <span class="grade-name-content">一年级</span>共新增<input id="class_count" class="class-num" placeholder="请输入正整数（1-100" autocomplete="off">个班
+        </div>
+        <div id="modal-add-class" style="display: none;">
+            <p class="grade-content">
+            </p>
+            <p class="tips">
+                温馨提示：可在操作中编辑班级别名
+            </p>
+        </div>
+        <div id="modal-edit-class" style="display: none;">
+            <input id="class_alias_edit" class="class-name" placeholder="请输入班级别名，例如“火箭班”、“熊猫班”" autocomplete="off">
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block myscript %}
+    <script src="/static/pub/timeline/js/custom.min.js"></script>
+    <script src="/static/pub/timeline/js/jquery.bxslider.min.js"></script>
+    <script src="/static/pub/chooseUser/js/chooseUser.js"></script>
+    <script>
+        document.write( " <script src='/static/resources/js/school/manage/class/main.js?version=" + hxuc.version + " '></s" + "cript> " );
+    </script>
+    <script src="/static/pub/contrib/js/underscore-min.js"></script>
+{% endblock %}

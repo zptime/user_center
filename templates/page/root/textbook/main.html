@@ -1,0 +1,157 @@
+{% extends 'page/root/share/route.html' %}
+{% block mylink %}
+    <style>
+        .grad li{list-style:none;padding:15px}
+        #form01 td{width:300px}
+        #multiLi li{margin-right:20px;overflow: hidden;text-overflow: ellipsis;-o-text-overflow:ellipsis;}
+    </style>
+{% endblock %}
+{% block mycontent %}
+    <div id="content" v-cloak>
+
+        <div class="right-content-top">
+            <div class="grade-box">
+                <div class="grade-all">
+                    <span class="lab">年级</span>
+                    <span class="split">|</span>
+                    <span class="lab val" :class="grade_num==''?'active':''" grade="" onclick="reloadGrid(this,null)">全部</span>
+                </div>
+                <div class="grade-li">
+                    <ul>
+                        <li v-for="grade in grade_list" :class="grade_num==grade.grade_num?'active':''" grade="{$grade.grade_num$}" onclick="reloadGrid(this,null)">
+                            {$ grade.grade_name $}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="grade-box">
+                <div class="grade-all">
+                    <span class="lab">科目</span>
+                    <span class="split">|</span>
+                    <span class="lab val" :class="subject_id==''?'active':''" subject="" onclick="reloadGrid(null,this)">全部</span>
+                </div>
+                <div class="grade-li">
+                    <ul id="multiLi">
+                        <li title="{$ subject.name $}" subName="{$ subject.name $}" v-for="subject in subject_list" :class="subject_id==subject.id?'active':''" subject="{$ subject.id $}" onclick="reloadGrid(null,this)">
+                            {$ subject.name $}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-content-core">
+            <div class="toolblock-box"><!--工具栏-->
+                <div class="toolblock">
+                    <span class="hx-float-l">
+                        <label v-show='!frozen_flag' class="tips">学校管理和学生的学习需要依赖您所设置的学科教材，请按学校实际情况添加</label>
+                        <span v-show="frozen_flag" class="tool-cell hx-margin20-r" @click="switch_frozen_flag(false)">
+                            教材管理 > 冻结的教材
+                        </span>
+                    </span>
+                    <span class="hx-float-r">
+                        <span v-show='!frozen_flag' class="tool-cell middle hx-margin20-l" @click="switch_frozen_flag(true)">
+                            <span class="middle-context">冻结的教材</span>
+                        </span>
+                        <span v-show='!frozen_flag' class="tool-cell middle textbookButton" onclick="add()">
+                            <img class="middle-img" src="/static/resources/images/icon/icon-add.png">
+                            <span class="middle-context">新增</span>
+                        </span>
+                    </span>
+                </div>
+            </div><!--工具栏-->
+            <div>
+                <div class="grid">
+                    <table id="grid"></table>
+                    <div id="pager"></div>
+                </div>
+            </div>
+        </div>
+
+            <div id="addBook" hidden="hidden">
+                <div id="adminContainer">
+                    <table id="tableAdd" style="border-collapse:separate; border-spacing:20px">
+                        <tr>
+                            <td>
+                                <label>年级</label>
+                            </td>
+                            <td>
+                                <select id="selGradeNum" style="width:318px;">
+                                        <option value="">--请选择--</option>
+                                        <option value="{$ grade.grade_num $}" v-for="grade in grade_list">{$ grade.grade_name $}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>科目</label>
+                            </td>
+                            <td>
+                                <select id="selSubject" style="width:318px;">
+                                        <option value="">--请选择--</option>
+                                        <option value="{$ subject.id $}" v-for="subject in subject_list" onchange="sendSub(this)">{$ subject.name $}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>教材版本</label>
+                            </td>
+                            <td>
+                                <input id='bookName' style="width:300px;" placeholder="请输入教程内容">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div id="editBook" hidden="hidden">
+                <div id="adminContainer">
+                    <table id="tableAdd" style="border-collapse:separate; border-spacing:20px">
+                        <tr>
+                            <td>
+                                <label>年级</label>
+                            </td>
+                            <td>
+                                <select id="bookGrad" style="width:318px;">
+                                        <option value="">--请选择--</option>
+                                        <option value="{$ grade.grade_num $}" v-for="grade in grade_list">{$ grade.grade_name $}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>教材版本</label>
+                            </td>
+                            <td>
+                                <input id='bookNameSec' style="width:300px;" placeholder="请输入教程内容">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div id="freezeSub" hidden="hidden">
+                <div id="adminContainer">
+                    <table>
+                        <tr>
+                            <td><button type="button" style="float:left;width:20px;height:20px;border-radius:100%">!</button></td>
+                            <td>您确定冻结"{$ freezeBookName $}"教材吗？</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <a>冻结后的教材，请在冻结的教材的中进行查看！</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+    </div>
+
+
+{% endblock %}
+{% block myscript %}
+    <script>
+            document.write('<script src="/static/resources/js/root/textbook/main.js?rnd='+Math.random()+'"><'+'/script>');
+    </script>
+    <script src="/static/resources/js/share/cache.js"></script>
+{% endblock %}

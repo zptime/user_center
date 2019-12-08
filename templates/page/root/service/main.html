@@ -1,0 +1,37 @@
+{% extends 'page/root/share/route.html' %}
+
+{% block mylink %}
+{% endblock %}
+
+{% block mycontent %}
+    <div id="content" v-cloak style="background-color: white;padding:20px">
+        <div class="toolblock-box"><!--工具栏-->
+            <div class="toolblock">
+                <span class="hx-float-l">
+                    <input id="serviceCodeOrNameInput" placeholder="服务代码或名称">
+                    <button type="button" class="hx-margin20-l" onclick="reloadGrid()">查询</button>
+                </span>
+                <span class="hx-float-r">
+{#                    <span v-show="!frozen_flag" class="tool-cell middle hx-margin20-l" onclick="add()">#}
+{#                        <img src="/static/resources/images/icon/icon-add.png">#}
+{#                        <span>新增</span>#}
+{#                    </span>#}
+                </span>
+            </div>
+        </div><!--工具栏-->
+        <div class="grid">
+                <table id="grid"></table>
+                <div id="pager"></div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+{% block myscript %}
+    <script>
+        document.write( " <script src='/static/pub/btImport/js/btImport.js?version=" + hxuc.version + " '></s" + "cript> " );
+        document.write('<script src="/static/resources/js/root/service/main.js?rnd='+Math.random()+'"><'+'/script>');
+    </script>
+{% endblock %}

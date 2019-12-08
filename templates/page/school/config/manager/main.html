@@ -1,0 +1,71 @@
+{% extends 'page/school/config/share/route.html' %}
+
+{% block mylink %}
+    <style>
+        #adminDetail ul li{float:left;list-style:none;padding:15px}
+        .liAlone{width:300px;font-size: 18px;color:#444444;margin:30px 0 0 0}
+        .descMe{margin-left:10px;transform: translate(0,2px); color: #888888;font-size: 14px;}
+        .titleMe{font-weight: bold;font-size: 20px;color:#444444}
+        .adminLi{margin:15px 15px 0 0}
+        .adminA{font-size: 16px;color:#666666}
+        .adminAb{font-size: 16px;color:#666666}
+        .adminInput{position:absolute;height:1px;width:1px;visibility:hidden}
+        .img{width:17px;height:17px;vertical-align: middle;margin-right:3px}
+    </style>
+{% endblock %}
+{% block mycontent %}
+    <div id="content" v-cloak>
+
+        <div class="right-content-core">
+            <div class="toolblock-box"><!--工具栏-->
+                <div class="toolblock">
+                    <span class="hx-float-l">
+                        <label class="titleMe">管理员</label>
+                        <label class="descMe">负责各智慧校园各子系统的管理员角色的设置</label>
+                    </span>
+                </div>
+                <div class="toolblock">
+                    <span class="hx-float-l">
+                        <input  id="name_filter" style="width:152px" placeholder="请输入姓名">
+                         <button type="button" class="hx-margin20-l" style="width:90px" onclick="reloadGrid()">查询</button>
+                    </span>
+
+                    <span class="hx-float-r">
+                        <span class="tool-cell middle hx-margin20-l" onclick="exportExcel()">
+                            <img class="middle-img" src="/static/resources/images/icon/icon-export.png">
+                            <span class="middle-context">导出</span>
+                        </span>
+                    </span>
+                    <span class="hx-float-r">
+                        <span class="tool-cell middle hx-margin20-l" onclick="addDetail()">
+                            <img class="middle-img" src="/static/resources/images/icon/icon-add.png">
+                            <span class="middle-context">新增</span>
+                        </span>
+                    </span>
+                </div>
+            </div><!--工具栏-->
+            <div class="grid">
+                <table id="grid"></table>
+                <div id="pager"></div>
+            </div>
+        </div>
+
+            <div id="addAdmin" hidden="hidden">
+                <div style="width:150px;height:100%;float:left">
+                    <img src='' style="width:70px;height:70px;border-radius:35px;float:left;margin:28px 0 0 28px" alt="text" id="showPic">
+                    <a style="font-size: 18px;margin:12px 0 0 35px;float:left;color:#444444">{$ teacherName $}</a>
+                </div>
+                <div style="width:400px;float:left;height:100%;border-left:1px solid #EDEDED">
+                    <ul id="adminDetail" style="margin:0 0 0 30px">
+                    </ul>
+                </div>
+            </div>
+
+    </div>
+{% endblock %}
+
+{% block myscript %}
+    <script>
+        document.write( " <script src='/static/resources/js/school/config/manager/main.js?version=" + hxuc.version + " '></s" + "cript> " );
+    </script>
+{% endblock %}

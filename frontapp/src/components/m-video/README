@@ -1,0 +1,51 @@
+
+
+## Issues
+
+用于单个视频上传视图和显示视图（风采展示视频，风采发布视频）
+
+视频只能选一个，on-changed（data），data为object
+
+
+props属性
+
+1.uploadParms:暂时不用
+
+2.videoData 显示视图（无选择视频情况）外界赋值入口
+
+3.popupBtn  是否显示选择视频按钮
+
+4.btnSecStyle  调用组件界面，设置选择视频按钮的样式
+
+5.contentSecStyle  调用组件界面，设置视频显示的样式
+
+事件
+
+m-video通过@on-changed事件，向调用组件传值，调用位置需要通过这个事件，得到上传视频的数据
+
+数据结构如下（整个组件通用结构）：
+/*
+{
+"video_cover_url": "http://test-interact.hbeducloud.com:8088/media/public/fhxx/video_snapshot/image_18050709365121056745.jpg",
+"video_url": "http://test-interact.hbeducloud.com:8088/media/public/fhxx/video/video_18050709365020852457.mp4",
+"video_converted_status": 2,
+"video_type": "mp4",
+"video_duration": "0",
+"video_width": "480",
+"video_converted_url": "http://test-interact.hbeducloud.com:8088/media/public/fhxx/video/video_18050709365020852457_converted.mp4",
+"video_hight": "360",
+"video_id": 15,
+"video_size": "175855",
+"video_square": "480,360",
+"video_name": "video.mp4"
+}
+*/
+
+
+调用方法
+1. 显示视图（无选择视频情况）
+   e.g
+   <m-video :video-data="videoData" :popup-btn="false"></m-video>
+
+2.选择视图
+   <m-video :popup-btn="true" @on-changed="videoUploaded"></m-video>

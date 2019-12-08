@@ -1,0 +1,201 @@
+{% extends 'page/person/share/route.html' %}
+
+{% block mylink %}
+    <script>
+        document.write('<link rel="stylesheet" href="/static/pub/jedate/css/jedate.css?version='+hxuc.version+'">');
+    </script>
+{% endblock %}
+
+{% block mycontent %}
+    <div id="content" v-cloak>
+        <div class="info-mod">
+            <div class="mod-title">
+                <span class="hx-float-l">
+                    基本信息
+                </span>
+                <span class="mod-title-oper hx-float-r" onclick="editInfo()">
+                    <img class="img-active" src="/static/resources/images/icon/person/edit.png">
+                    <img class="img-dis" src="/static/resources/images/icon/person/edit-dis.png">
+                    编辑
+                </span>
+            </div>
+            <div class="mod-content">
+                <form>
+                    <input name="id" value="{{ id }}" hidden="hidden">
+                    <input name="account_id" value="{{ account_id }}" hidden="hidden">
+                    <table class="table-form">
+                        <tr>
+                            <th width="14%"></th>
+                            <th width="35%"></th>
+                            <th width="14%"></th>
+                            <th width="35%"></th>
+                        </tr>
+                        <tr>
+                            <td><label>用户名</label></td>
+                            <td>{$* form.username $}</td>
+                            <td><label>姓名</label></td>
+                            <td>{$* form.full_name $}</td>
+                        </tr>
+                        <tr>
+                            <td><label>性别</label></td>
+                            <td>{$* form.sex $}</td>
+                            <td><label>身份证</label></td>
+                            <td>{$* form.id_card $}</td>
+                        </tr>
+                        <tr>
+                            <td><label>生日</label></td>
+                            <td>{$* form.birthday $}</td>
+                            <td><label>手机号</label></td>
+                            <td>{$* form.mobile $}</td>
+                        </tr>
+                        <tr>
+                            <td><label>邮箱</label></td>
+                            <td>{$* form.email $}</td>
+                            <td><label>籍贯</label></td>
+                            <td>{$* form.native_place $}</td>
+                        </tr>
+                        {% ifequal user_type user_type_student %}
+                            <tr>
+                                <td><label>学校</label></td>
+                                <td>{$* form.school $}</td>
+                                <td><label>学号</label></td>
+                                <td>{$* form.code $}</td>
+                            </tr>
+                        {% endifequal %}
+                        {% ifequal user_type user_type_teacher %}
+                            <tr>
+                                <td><label>学校</label></td>
+                                <td>{$* form.school $}</td>
+                                <td><label>工号</label></td>
+                                <td>{$* form.school_code $}</td>
+                            </tr>
+                            <tr>
+{#                                <td><label>类型</label></td>#}
+{#                                <td>{$* form.kind $}</td>#}
+                                <td>
+                                    <label>在职</label>
+                                </td>
+                                <td>{$* c_is_in $}</td>
+                            </tr>
+{#                            <tr>#}
+{#                                <td><label>入职时间</label></td>#}
+{#                                <td>{$* form.in_date $}</td>#}
+{#                            </tr>#}
+                        {% endifequal %}
+                    </table>
+                </form>
+            </div>
+
+        </div>
+{% comment %}
+        <!--教师特有-->
+        <div class="info-mod">
+            <div class="mod-title">
+                任教班级
+            </div>
+            <div class="mod-content">
+                11
+            </div>
+        </div>
+        <div class="info-mod">
+            <div class="mod-title">
+                任教教材
+            </div>
+            <div class="mod-content">
+                11
+            </div>
+        </div>
+        <!--学生特有-->
+        <div class="info-mod">
+            <div class="mod-title">
+                当前班级
+            </div>
+            <div class="mod-content">
+                11
+            </div>
+        </div>
+{% endcomment %}
+
+        <!--隐藏的div-->
+        <div>
+            <div id="modal-edit" style="display: none;">
+                <form>
+                    <input id="id" name="id" value="{{ id }}" hidden="hidden">
+                    <input id="account_id" name="account_id" value="{{ account_id }}" hidden="hidden">
+                    <table class="table-form">
+                        <tr>
+                            <th width="14%"></th>
+                            <th width="35%"></th>
+                            <th width="14%"></th>
+                            <th width="35%"></th>
+                        </tr>
+                        <tr>
+                            <td><label class="required" for="CH_username">用户名</label></td>
+                            <td><input type="text" name="username" v-model="form.username" check="CH_username"  placeholder="输入用户名"></td>
+                            <td><label>姓名</label></td>
+                            <td><input type="text" name="full_name" v-model="form.full_name" placeholder="输入姓名" :disabled="form.user_type!=4"></td>
+                        </tr>
+                        <tr>
+                            <td><label class="required" for="CH_sex">性别</label></td>
+                            <td>
+                                <label class="radio-container"><input type="radio" name="sex" value="男" v-model="form.sex" check="CH_sex"/>男</label>
+                                <label class="radio-container"><input type="radio" name="sex" value="女" v-model="form.sex" check="CH_sex"/>女</label>
+                            </td>
+                            <td><label>身份证</label></td>
+                            <td><input type="text" v-model="form.id_card" name="id_card" placeholder="" disabled="disabled"></td>
+                        </tr>
+                        <tr>
+                            <td><label>生日</label></td>
+                            <td><input type="text" v-model="form.birthday" name="birthday" class="date-container" placeholder="选择生日" readonly></td>
+                            <td><label>手机号</label></td>
+                            <td><input type="tel" v-model="form.mobile" name="mobile" placeholder="" disabled="disabled"></td>
+                        </tr>
+                        <tr>
+                            <td><label>邮箱</label></td>
+                            <td><input type="text" v-model="form.email" name="email" placeholder="输入邮箱"></td>
+                            <td><label>籍贯</label></td>
+                            <td><input type="text" v-model="form.native_place" name="native_place" placeholder="输入籍贯"></td>
+                        </tr>
+                        {% ifequal user_type user_type_student %}
+                            <tr>
+                                <td><label>学校</label></td>
+                                <td><input type="text" v-model="form.school" name="school" placeholder="" disabled="disabled"></td>
+                                <td><label>学号</label></td>
+                                <td><input type="text" v-model="form.code" name="code" placeholder="" disabled="disabled"></td>
+                            </tr>
+                        {% endifequal %}
+
+                        {% ifequal user_type user_type_teacher %}
+                            <tr>
+                                <td><label>学校</label></td>
+                                <td><input type="text" v-model="form.school" name="school" placeholder="" disabled="disabled"></td>
+                                <td><label>工号</label></td>
+                                <td><input type="text" v-model="form.school_code" name="school_code" placeholder="" disabled="disabled"></td>
+                            </tr>
+                            <tr>
+{#                                <td><label>类型</label></td>#}
+{#                                <td><input type="text" v-model="form.kind" name="kind" placeholder="" disabled="disabled"></td>#}
+                                <td><label>在职</label></td>
+                                <td>{$ c_is_in $}</td>
+                            </tr>
+{#                            <tr>#}
+{#                                <td><label>入职时间</label></td>#}
+{#                                <td><input type="text" v-model="form.in_date" name="in_date" class="date-container" placeholder="选择入职时间" readonly></td>#}
+{#                            </tr>#}
+                        {% endifequal %}
+
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block myscript %}
+    <script src="/static/pub/jedate/jedate.js"></script>
+    <script src="/static/pub/contrib/js/jquery.form.min.js"></script>
+    <script>
+        document.write('<script src="/static/resources/js/person/info/main.js?rnd=' + hxuc.version + '"><'+'/script>');
+    </script>
+{% endblock %}

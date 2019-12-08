@@ -1,0 +1,31 @@
+{% extends 'page/school/share/route.html' %}
+
+{% block left-route %}
+    <ul>
+        {% if 'student' in view_list %}
+            <li id="student">
+                <a class="leftnavblock">学生管理</a>
+            </li>
+        {% endif %}
+        {% if 'teacher' in view_list %}
+            <li id="teacher">
+                <a class="leftnavblock">教师管理</a>
+            </li>
+        {% endif %}
+        {% if 'parent' in view_list %}
+            <li id="parent">
+                <a class="leftnavblock">家长管理</a>
+            </li>
+        {% endif %}
+        {% if 'class' in view_list %}
+            <li id="class">
+                <a class="leftnavblock">班级管理</a>
+            </li>
+        {% endif %}
+        {% if 'duty' in view_list %}
+            <li id="duty">
+                <a class="leftnavblock">职务管理</a>
+            </li>
+        {% endif %}
+    </ul>
+{% endblock %}

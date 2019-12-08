@@ -1,0 +1,73 @@
+tags:
+  en:
+    - native microphone
+  zh-CN:
+    - 本地麦克风
+props:
+  changeMode:
+    value: 'replace''append'
+    en: change data mode , default value 'replace' but you can set the value 'append'
+    zh-CN: '追加方式'， 默认是替换，可选追加
+  origin:
+    value: [], 举个栗子[{
+      "voice_id": "string",
+      "voice_name": "string",
+      "voice_size": "string",
+      "voice_duration": "string",
+      "voice_url": "string",
+      "voice_localPath":''  //本地上传的时候才有这个字段
+      "isPlaying":bool //播放本地音频状态 true 播放 false停止
+    }]
+    en: 'origin records you can use when create'
+    zh-CN: '创建录音选择器，初始传入录音数组'
+  url:
+    value: 'voice_url'
+    en:
+    zh-CN: '录音url字段名'
+  popupBtn:
+    value: true
+    en: show popupImage button if set true, default true
+    zh-CN: 是否展示录音的按钮，默认展示
+  removeIcon:
+    value: true
+    en: show remove icon if set true, default true
+    zh-CN: 是否展示一条录音的删除图标, 默认展示
+  btnSecStyle:
+    value: {}
+    en： icon btn style
+    zh-CN: 图标盒子样式
+  contentSecStyle:
+    value: {}
+    en： content style
+    zh-CN: content盒子样式
+events:
+  on-change:
+    params: '`(value)`'
+    en: 'emits when anyone image is change'
+    zh-CN: '图片发生变化时触发，包括图片数量、图片属性（src）, 注册此事件可满足大部分情况，推荐事件'
+  on-prepare:
+    params: '`(value)`'
+    en: emits before start record
+    zh-CN: '录音开始前预处理 ，可选事件'
+  on-start:
+    params: '`(value)`'
+    en: emits when start record
+    zh-CN: '开始录音时触发 ，可选事件'
+  on-remove:
+    params: '`(value)`'
+    en: 'emits when one record is removed'
+    zh-CN: '录音被删除时触发 ，可选事件'
+  on-complete:
+    params: '`(value)`'
+    en: emits when complete record
+    zh-CN: '录音完成时触发 ，可选事件'
+slots:
+
+methods:
+
+changes:
+  1.0.0:
+    en:
+      - call the native microphone
+    zh-CN:
+      - 唤起本地麦克风

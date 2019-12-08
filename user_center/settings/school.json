@@ -1,0 +1,52 @@
+{
+    "class_style": [
+        {
+            "style_example": "101班",
+            "pattern": "%d%02d班",
+            "args": "grade_num;class_num",
+            "school_period": 1
+        },
+        {
+            "style_example": "701班",
+            "pattern": "%d%02d班",
+            "args": "grade_num;class_num",
+            "school_period": 2
+        },
+        {
+            "style_example": "一年级1班",
+            "pattern": "%s年级%d班",
+            "args": "grade_num_cap;class_num",
+            "school_period": 1
+        },
+        {
+            "style_example": "七年级1班",
+            "pattern": "%s年级%d班",
+            "args": "grade_num_cap;class_num",
+            "school_period": 2
+        },
+        {
+            "style_example": "初一1班",
+            "pattern": "初%s%d班",
+            "args": "period_grade_num_cap;class_num",
+            "school_period": 2
+        },
+        {
+            "style_example": "高一1班",
+            "pattern": "高%s%d班",
+            "args": "period_grade_num_cap;class_num",
+            "school_period": 4
+        },
+        {
+            "style_example": "初一(1)班",
+            "pattern": "初%s(%d)班",
+            "args": "period_grade_num_cap;class_num",
+            "school_period": 2
+        },
+        {
+            "style_example": "高一(1)班",
+            "pattern": "高%s(%d)班",
+            "args": "period_grade_num_cap;class_num",
+            "school_period": 4
+        }
+    ]
+}

@@ -1,0 +1,70 @@
+{% extends 'page/school/share/route.html' %}
+{% block left-route %}
+    <ul id="left_menu">
+        <li id="total">
+            <el class="li-active-tag"></el>
+            <a class="leftnavblock active" >全部</a>
+        </li>
+        <li id="not_process">
+            <a class="leftnavblock">未处理</a>
+        </li>
+        <li id="approved">
+            <a class="leftnavblock">已同意</a>
+        </li>
+        <li id="refused">
+            <a class="leftnavblock">已拒绝</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block mylink %}
+    <style type="text/css">
+        .main-frame {display: none}
+    </style>
+    <script>
+    </script>
+{% endblock %}
+{% block mycontent %}
+    <div id="content" v-cloak>
+
+        <div class="right-content-core">
+            <div class="toolblock-box"><!--工具栏-->
+                <div class="toolblock" v-show="application_status">
+                    <span class="hx-float-l">
+                        <span>
+                            <input type="checkbox" id="grid_multipleBtn"><label>全选</label></input>
+                        </span>
+                        <span v-show="application_status==1" onclick="approve()" class="tool-cell hx-margin20-l">
+                            同意
+                        </span>
+                        <span v-show="application_status==1" onclick="refuse()" class="tool-cell hx-margin20-l">
+                            拒绝
+                        </span>
+                        <span v-show="application_status==2||application_status==3" onclick="del()" class="tool-cell hx-margin20-l">
+                            删除
+                        </span>
+                    </span>
+                </div>
+                <div class="toolblock">
+                    <span class="hx-float-l">
+                        <input id="name_or_code" placeholder="请输入学生姓名">
+                        <button type="button" class="hx-margin20-l" onclick="reloadGrid()">查询</button>
+                    </span>
+                    <span class="hx-float-r">
+                    </span>
+                </div>
+            </div><!--工具栏-->
+            <div class="grid">
+                <table id="grid"></table>
+                <div id="pager"></div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block myscript %}
+    <script>
+        document.write( " <script src='/static/resources/js/school/manage/student/application_main.js?version=" + hxuc.version + " '></s" + "cript> " );
+    </script>
+{% endblock %}

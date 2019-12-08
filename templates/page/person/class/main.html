@@ -1,0 +1,50 @@
+{% extends 'page/person/share/route.html' %}
+
+{% block mylink %}
+{% endblock %}
+
+{% block mycontent %}
+    <div id="content" style="background-color: white;padding:20px" v-cloak>
+        <!--影藏-->
+        <div class="myclass-box">
+            <div id="modal-join" v-if="!form.class_id"><!--未申请班级-->
+                <p>
+                    <label class="required" for="CH_class_code" style="display: none;">班级码</label>
+                    <input id="class_code" class="local-input" placeholder="请输入班级码（必填）" autocomplete="off" check="CH_class_code">
+                </p>
+                <p>
+                    <label class="required" for="CH_comments" style="display: none;">申请理由</label>
+                    <input id="comments" class="local-input" placeholder="请输入申请理由（必填）" autocomplete="off" check="CH_comments">
+                </p>
+                <div class="btn-box">
+                    <button onclick="applyClass()">申请</button>
+                </div>
+            </div>
+            <div id="modal-wait" v-if="form.class_id && form.status==1"><!--等待验证-->
+                <p>
+                    您加入“{$ form.class_name $}”的申请已经发出，请等待班主任回复 ！
+                </p>
+            </div>
+            <div id="modal-reject" v-if="form.class_id && form.status==3"><!--已被拒绝加入-->
+                <p>
+                    {$ form.class_master $}(班主任)  拒绝了你的申请 ！
+                </p>
+                <div class="btn-box">
+                    <button onclick="rejoinClass()">重新申请</button>
+                </div>
+            </div>
+            <div id="modal-alreadyin" v-if="form.class_id && form.status==2"><!--已加入班级-->
+                <p>
+                    您现在就读于“{$ form.class_name $}”！
+                </p>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block myscript %}
+    <script>
+        document.write('<script src="/static/resources/js/person/class/main.js?rnd=' + hxuc.version + '"><'+'/script>');
+    </script>
+{% endblock %}

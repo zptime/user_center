@@ -1,0 +1,4674 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: 智慧校园用户中心
+tags:
+  - name: Account
+    description: 账号
+  - name: Student
+    description: 学生
+  - name: Teacher
+    description: 教师
+  - name: Parent
+    description: 家长    
+  - name: Service
+    description: 服务/角色/管理员
+  - name: School
+    description: 学校/年级/班级
+  - name: Subject
+    description: 科目/教材/章节  
+  - name: Common
+    description: 公共部分
+  - name: Open
+    description: 开放接口
+  - name: Admin
+    description: 后台管理接口
+  - name: Weixin
+    description: 微信相关接口
+
+paths:
+
+  /api/admin/add/school:
+    post:
+      tags:
+      - Admin
+      description: |
+        添加一个学校
+      parameters:
+        - name: school_code 
+          in: formData
+          description: 学校代码
+          type: string
+          required: true
+        - name: school_name 
+          in: formData
+          description: 学校名称
+          type: string
+          required: true
+        - name: primary_years 
+          in: formData
+          description: 小学年制
+          type: string
+          required: true
+        - name: junior_years 
+          in: formData
+          description: 初中年制
+          type: string
+          required: true
+        - name: senior_years 
+          in: formData
+          description: 高中年制
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/admin/update/school_service:
+    post:
+      tags:
+      - Admin
+      description: |
+        更新学校开通服务
+      parameters:
+        - name: school_id 
+          in: formData
+          description: 学校ID
+          type: string
+          required: true
+        - name: service_id_list 
+          in: formData
+          description: 服务ID列表[1,2,3]
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/admin/add/manager:
+    post:
+      tags:
+      - Admin
+      description: |
+        添加学校管理员
+      parameters:
+        - name: school_id 
+          in: formData
+          description: 学校ID
+          type: string
+          required: true
+        - name: username 
+          in: formData
+          description: 管理员用户名
+          type: string
+          required: true
+        - name: full_name
+          in: formData
+          description: 姓名
+          type: string
+          required: true
+        - name: password 
+          in: formData
+          description: 管理员密码
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/admin/list/school:
+    post:
+      tags:
+      - Admin
+      description: |
+        查询学校列表
+      parameters:
+        - name: name_or_code 
+          in: formData
+          description: 学校编码或名称
+          type: string
+          required: false
+
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    code:
+                      type: string
+                    name_full:
+                      type: string
+                    name_simple:
+                      type: string
+                    type:
+                      type: string
+                    academic_year:
+                      type: string
+
+  /api/admin/list/service:
+    post:
+      tags:
+      - Admin
+      description: |
+        查询服务列表
+      parameters:
+        - name: school_id 
+          in: formData
+          description: 学校ID
+          type: string
+          required: false
+
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    code:
+                      type: string
+                    name:
+                      type: string
+                    intranet_url:
+                      type: string
+                    internet_url:
+                      type: string
+            
+  /api/list/student:
+    post:
+      tags:
+      - Student
+      description: |
+        查询 `学生`列表.只显示未毕业学生
+      parameters:
+        - name: full_name 
+          in: formData
+          description: 姓名
+          type: string
+          required: false
+        - name: code 
+          in: formData
+          description: 学籍号
+          type: string
+          required: false
+        - name: name_or_code 
+          in: formData
+          description: 学籍号/姓名
+          type: string
+          required: false          
+        - name: is_in 
+          in: formData
+          description: 在读状态
+          type: string
+          required: false
+        - name: kind 
+          in: formData
+          description: 学生类型
+          type: string
+          required: false          
+        - name: is_available 
+          in: formData
+          description: 是否可用
+          type: string
+          required: false
+        - name: grade_name
+          in: formData
+          description: 年级名称
+          type: string
+          required: false
+        - name: class_id 
+          in: formData
+          description: 班级ID
+          type: string
+          required: false 
+        - name: enrollment_year 
+          in: formData
+          description: 年级（入学年度）
+          type: string
+          required: false           
+        - name: verbose 
+          in: formData
+          description: 不带该参数：在读学生, (0：在读学生，1：毕业学生，2：所有学生)
+          type: string
+          required: false
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/student'
+  
+  /api/detail/student:
+    post:
+      tags:
+      - Student
+      description: |
+        查询一个学生的详细信息
+      parameters:
+        - name: student_id 
+          in: formData
+          description: 学生ID
+          type: string
+          required: True
+        - name: account_id 
+          in: formData
+          description: 帐号ID
+          type: string
+          required: True          
+
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/student_info'
+                  
+  /api/update/student:
+    post:
+      tags:
+      - Student
+      description: |
+        更新学生
+      parameters:
+        - name: account_id 
+          in: formData
+          description: 帐号ID，自己修改自己的信息需要提供该信息
+          type: string
+          required: False
+        - name: student_info 
+          in: formData
+          description: 用户信息 格式参见student_info，ID为必填
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/add/student:
+    post:
+      tags:
+      - Student
+      description: |
+        添加一个学生信息
+      parameters:
+        - name: student_info 
+          in: formData
+          description: 用户信息 格式参见student_info，ID不填
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/delete/student:
+    post:
+      tags:
+      - Student
+      description: |
+        删除学生
+      parameters:
+        - name: student_id_list
+          in: formData
+          description: 学生ID列表["10","11","12"]
+          required: true
+          type: string
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'   
+
+  /api/update/student_class:
+    post:
+      tags:
+      - Student
+      description: |
+        删除学生
+      parameters:
+        - name: student_id_list
+          in: formData
+          description: 学生ID列表["10","11","12"]
+          required: true
+          type: string
+        - name: class_id
+          in: formData
+          description: 调到的班级ID
+          required: true
+          type: string        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'   
+            
+
+  /api/import/student:
+    post:
+      tags:
+      - Student
+      description: |
+        导入学生信息
+      parameters:
+        - name: is_override
+          in: formData
+          description: 遇到相同ID的学生是否覆盖["0","1"]
+          required: false
+          type: string 
+        - name: file
+          in: formData
+          description: 文件
+          required: true
+          type: file 
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/export/student:
+    post:
+      tags:
+      - Student
+      description: |
+        导出学生信息 
+      parameters:
+        - name: full_name 
+          in: formData
+          description: 姓名
+          type: string
+          required: false
+        - name: code 
+          in: formData
+          description: 学籍号
+          type: string
+          required: false
+        - name: is_in 
+          in: formData
+          description: 在读状态
+          type: string
+          required: false
+        - name: kind 
+          in: formData
+          description: 学生类型
+          type: string
+          required: false          
+        - name: is_available 
+          in: formData
+          description: 是否可用
+          type: string
+          required: false
+        - name: grade_id
+          in: formData
+          description: 年级ID
+          type: string
+          required: false
+        - name: class_id 
+          in: formData
+          description: 班级ID
+          type: string
+          required: false          
+        - name: verbose 
+          in: formData
+          description: 显示所有学生,只显示在读学生
+          type: string
+          required: false
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: file 
+            
+  /api/add/student_class_application:
+    post:
+      tags:
+      - Student
+      description: |
+        发起一次加入班级申请
+      parameters:
+        - name: class_code 
+          in: formData
+          description: 班级编码
+          type: string
+          required: true
+        - name: comments
+          in: formData
+          description: 备注
+          type: string
+          required: false
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/delete/student_class_application:
+    post:
+      tags:
+      - Student
+      description: |
+        删除加入班级申请
+      parameters:
+        - name: id_list
+          in: formData
+          description: 申请ID列表["10","11","12"]
+          required: true
+          type: string
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'   
+
+  /api/update/student_class_application:
+    post:
+      tags:
+      - Student
+      description: |
+        同意或拒绝加入班级申请
+      parameters:
+        - name: status
+          in: formData
+          description: 2：同意， 3：拒绝
+          required: true
+          type: string      
+        - name: id_list
+          in: formData
+          description: 申请ID列表["10","11","12"]
+          required: true
+          type: string
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'  
+
+  /api/list/student_class_application:
+    post:
+      tags:
+      - Student
+      description: |
+        查询加入班级申请
+      parameters:
+        - name: status 
+          in: formData
+          description: 不带该参数：查询所有, (1：未处理，2：已同意，3：已拒绝)
+          type: string
+          required: false
+        - name: student_name 
+          in: formData
+          description: 学生姓名
+          type: string
+          required: false          
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/student_class_application'
+
+  /api/detail/student_class_application:
+    post:
+      tags:
+      - Student
+      description: |
+        学生查询班级申请
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/student_class'
+
+  /api/list/teacher:
+    post:
+      tags:
+      - Teacher
+      description: |
+        查询 `教师`列表.
+      parameters:
+        - name: full_name 
+          in: formData
+          description: 姓名
+          type: string
+          required: false
+        - name: code 
+          in: formData
+          description: 工号
+          type: string
+          required: false
+        - name: name_or_code
+          in: formData
+          description:  姓名或工号。
+          type: string
+          required: false
+        - name: in_date
+          in: formData
+          description:  入职时间。
+          type: string
+          required: false
+        - name: is_in 
+          in: formData
+          description: 是否在职
+          type: string
+          required: false
+        - name: kind 
+          in: formData
+          description: 员工类型
+          type: string
+          required: false
+        - name: title 
+          in: formData
+          description: 职务
+          type: string
+          required: false            
+        - name: is_available 
+          in: formData
+          description: 是否可用
+          type: string
+          required: false
+        - name: verbose
+          in: formData
+          description: 不带该参数：在校教师, (0：在校教师，1：离校教师，2：所有教师)
+          type: string
+          required: false
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/teacher'
+                  
+  /api/detail/teacher:
+    post:
+      tags:
+      - Teacher
+      description: |
+         查询一个学生的详细信息
+      parameters:
+        - name: teacher_id
+          in: formData
+          description:   教师ＩＤ
+          type: string
+          required: True
+        - name: account_id 
+          in: formData
+          description: 帐号ID
+          type: string
+          required: True     
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/teacher_info'
+      
+                
+  /api/update/teacher:
+    post:
+      tags:
+      - Teacher
+      description: |
+        更新教师信息
+      parameters:
+        - name: account_id 
+          in: formData
+          description: 帐号ID，自己修改自己的信息需要提供该信息
+          type: string
+          required: False
+        - name: teacher_info 
+          in: formData
+          description: 用户信息 格式参见teacher_info，ID为必填
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/add/teacher:
+    post:
+      tags:
+      - Teacher
+      description: |
+        添加教师信息
+
+      parameters:
+        - name: teacher_info
+          in: formData
+          description: 用户信息 格式参见teacher_info，ID为必填
+          type: string
+          required: true  
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/leave/teacher:
+    post:
+      tags:
+      - Teacher
+      description: |
+        老师离校
+      parameters:
+        - name: teacher_id_list
+          in: formData
+          description:  教职工ID列表['id1','id2',...]
+          required: True
+          type: string
+        - name: is_leave
+          in: formData
+          description: 离校操作标志(0：返校，1：离校)
+          required: True
+          type: string      
+      responses:
+        200:
+          description:  返回结果，
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/delete/teacher:
+    post:
+      tags:
+      - Teacher
+      description: |
+        删除老师
+      parameters:
+        - name: teacher_id_list
+          in: formData
+          description:  教职工ID列表['id1','id2',...]
+          required: True
+          type: string
+      
+      responses:
+        200:
+          description:  返回结果，
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/import/teacher:
+    post:
+      tags:
+      - Teacher
+      description: |
+        导入教师信息
+      parameters:
+        - name: file
+          in: formData
+          description: 文件
+          required: true
+          type: file 
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/export/teacher:
+    post:
+      tags:
+      - Teacher
+      description: |
+        导出教师信息 
+      parameters:
+        - name: full_name 
+          in: formData
+          description: 姓名
+          type: string
+          required: false
+        - name: code 
+          in: formData
+          description: 工号
+          type: string
+          required: false
+        - name: is_in 
+          in: formData
+          description: 是否在校
+          type: string
+          required: false
+        - name: kind 
+          in: formData
+          description: 员工类型
+          type: string
+          required: false          
+        - name: is_available 
+          in: formData
+          description: 是否可用
+          type: string
+          required: false
+        - name: verbose 
+          in: formData
+          description: 显示所有教师,默认只显示在读教师
+          type: string
+          required: false
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: file 
+
+  /api/list/teacher_class:
+    post:
+      tags:
+      - Teacher
+      description: |
+        查询教师所授班级
+      parameters:
+        - name: teacher_id
+          in: formData
+          description: 查询自己所授班级，不需要该参数
+          required: False
+          type: string
+      
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    class_id:
+                      type: string                  
+                    class_name:
+                      type: string
+                    class_alias:
+                      type: string
+
+  /api/delete/teacher_class:
+    post:
+      tags:
+      - Teacher
+      description: |
+        移除老师和教授班级
+      parameters:
+        - name: teacher_id
+          in: formData
+          description: 移除自己所授班级，不需要该参数
+          required: False
+          type: string      
+        - name: class_id_list
+          in: formData
+          description:  班级ID列表['id1','id2',...]
+          required: True
+          type: string
+      
+      responses:
+        200:
+          description:  返回结果，
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/add/teacher_class:
+    post:
+      tags:
+      - Teacher
+      description: |
+        添加老师和教授班级
+      parameters:
+        - name: teacher_id
+          in: formData
+          description: 添加自己所授班级，不需要该参数
+          required: False
+          type: string      
+        - name: class_id_list
+          in: formData
+          description:  班级ID列表['id1','id2',...]
+          required: True
+          type: string
+      
+      responses:
+        200:
+          description:  返回结果，
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/list/teacher_textbook:
+    post:
+      tags:
+      - Teacher
+      description: |
+        查询教师所授教材
+      parameters:
+        - name: teacher_id
+          in: formData
+          description: 查询自己所授教材，不需要该参数
+          required: False
+          type: string
+        - name: subject_id
+          in: formData
+          description: 教材ID
+          required: False
+          type: string      
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    textbook_id:
+                      type: string                  
+                    textbook_name:
+                      type: string
+                    is_current:
+                      type: string
+                    subject_name:
+                      type: string
+
+  /api/delete/teacher_textbook:
+    post:
+      tags:
+      - Teacher
+      description: |
+        移除老师和教授教材
+      parameters:
+        - name: teacher_id
+          in: formData
+          description: 移除自己所授教材，不需要该参数
+          required: False
+          type: string      
+        - name: textbook_id_list
+          in: formData
+          description:  班级ID列表['id1','id2',...]
+          required: True
+          type: string
+      
+      responses:
+        200:
+          description:  返回结果，
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/add/teacher_textbook:
+    post:
+      tags:
+      - Teacher
+      description: |
+        添加老师和教授教材
+      parameters:
+        - name: teacher_id
+          in: formData
+          description: 添加自己所授教材，不需要该参数
+          required: False
+          type: string      
+        - name: textbook_id_list
+          in: formData
+          description:  教材ID列表['id1','id2',...]
+          required: True
+          type: string
+      
+      responses:
+        200:
+          description:  返回结果，
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/update/teacher_textbook:
+    post:
+      tags:
+      - Teacher
+      description: |
+        修改教师主授教材
+      parameters:
+        - name: teacher_id
+          in: formData
+          description: 添加自己所授教材，不需要该参数
+          required: False
+          type: string      
+        - name: textbook_id
+          in: formData
+          description:  教材ID
+          required: True
+          type: string
+      
+      responses:
+        200:
+          description:  返回结果，
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/list/parent_student:
+    post:
+      tags:
+      - Parent
+      description: |
+        学生、或家长个人，查询家长和学生关系信息
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/parent_student'
+
+  /api/delete/parent_student:
+    post:
+      tags:
+      - Parent
+      description: |
+        学生、或家长，删除家长或学生关系信息
+      parameters:
+        - name: parent_student_id
+          in: formData
+          description: 家长学生ID
+          required: True
+          type: string      
+      responses:
+        200:
+          description:  返回结果，
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/update/parent_student:
+    post:
+      tags:
+      - Parent
+      description: |
+        学生、或家长，更新家长或学生关系信息
+      parameters:
+        - name: parent_student_id
+          in: formData
+          description: 学生家长ID
+          required: True
+          type: string
+        - name: relation
+          in: formData
+          description: 称谓
+          required: False
+          type: string
+        - name: status
+          in: formData
+          description: 家长同意或拒绝加入家庭的邀请(2：同意， 3：拒绝)
+          required: False
+          type: string
+      responses:
+        200:
+          description:  返回结果，
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/list/parent:
+    post:
+      tags:
+      - Parent
+      description: |
+        查询 `家长`列表.默认显示该学校所有在读学生的家长信息
+      parameters:
+        - name: full_name 
+          in: formData
+          description: 姓名
+          type: string
+          required: false
+        - name: student_name 
+          in: formData
+          description: 学生姓名
+          type: string
+          required: false
+        - name: student_id 
+          in: formData
+          description: 学生ID
+          type: string
+          required: false          
+        - name: verbose 
+          in: formData
+          description: 显示所有学生的家长，包括已经毕业的学生家长
+          type: string
+          required: false
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/parent'
+
+  /api/detail/parent:
+    post:
+      tags:
+      - Parent
+      description: |
+        查询 `家长`详细信息
+      parameters:
+        - name: parent_id 
+          in: formData
+          description: 家长ID
+          type: string
+          required: true
+        - name: account_id 
+          in: formData
+          description: 帐号ID
+          type: string
+          required: True     
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/parent_info'
+
+                
+  /api/update/parent:
+    post:
+      tags:
+      - Parent
+      description: |
+        更新家长信息
+      parameters:
+        - name: account_id 
+          in: formData
+          description: 帐号ID，自己修改自己的信息需要提供该信息
+          type: string
+          required: False
+        - name: parent_info 
+          in: formData
+          description: 用户信息 parent_info，ID为必填
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/add/parent:
+    post:
+      tags:
+      - Parent
+      description: |
+        添加一个家长信息
+      parameters:
+        - name: parent_info 
+          in: formData
+          description: 用户信息 格式参见parent_info，ID不填
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+
+  /api/add/parent_by_student:
+    post:
+      tags:
+      - Parent
+      description: |
+        学生添加一个没有注册的家长信息
+      parameters:
+        - name: mobile 
+          in: formData
+          description: 家长手机号
+          type: string
+          required: true
+        - name: messagecode 
+          in: formData
+          description: 手机验证码
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/delete/parent:
+    post:
+      tags:
+      - Parent
+      description: |
+        删除家长
+      parameters:
+        - name: parent_id_list
+          in: formData
+          description: 家长ID列表["10","11","12"]
+          required: true
+          type: string
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'  
+
+
+  /api/active/parent:
+    post:
+      tags:
+      - Parent
+      description: |
+        删除家长
+      parameters:
+        - name: parent_id_list
+          in: formData
+          description: 家长ID列表["10","11","12"]
+          required: true
+          type: string
+        - name: is_active
+          in: formData
+          description: 是否激活（0：冻结 1：解冻）
+          required: true
+          type: string        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'  
+
+  /api/import/parent:
+    post:
+      tags:
+      - Parent
+      description: |
+        导入家长信息
+      parameters:
+        - name: file
+          in: formData
+          description: 文件
+          required: true
+          type: file 
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/export/parent:
+    post:
+      tags:
+      - Parent
+      description: |
+        导出家长信息 
+      parameters:
+        - name: full_name 
+          in: formData
+          description: 姓名
+          type: string
+          required: false
+        - name: student_name 
+          in: formData
+          description: 学生姓名
+          type: string
+          required: false
+        - name: student_id 
+          in: formData
+          description: 学生ID
+          type: string
+          required: false
+        - name: verbose 
+          in: formData
+          description: 显示所有学生的家长，包括已经毕业的学生家长
+          type: string
+          required: false
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: file 
+            
+  /api/upload/image:
+    post:
+      tags:
+      - Common
+      description: |
+        上传 `获奖信息`图片
+      parameters:
+        - name: image
+          in: formData
+          description: 图片
+          required: true
+          type: file 
+          
+      responses:
+        200:
+          description: 返回结果，image_id放在返回的Data中
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/image'
+
+  /api/common/upload/image:
+    post:
+      tags:
+      - Common
+      description: |
+        上传图片, 为兼容移动端改造接口格式
+      parameters:
+        - name: image
+          in: formData
+          description: 图片
+          required: true
+          type: file
+      responses:
+        200:
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/image'
+
+  /api/get/imagecode:
+    get:
+      tags:
+      - Common
+      description: |
+        获取图片验证码
+      responses:
+        200:
+          description:  返回结果 
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/check/imagecode:
+    post:
+      tags:
+      - Common
+      description: |
+        图片验证码检验 
+      parameters:
+        - name: code
+          in: formData
+          description:  图片验证码
+          required: true
+          type: string
+      responses:
+        200:
+          description:  返回结果 
+          schema:
+            $ref: '#/definitions/result'
+            
+          
+  
+  /api/verify/imagecode:
+    post:
+      tags:
+      - Common
+      description: |
+         图像验证码检验 
+      parameters:
+        - name: mobile
+          in: formData
+          description:  手机号 
+          required:  true
+          type: string
+        - name: code
+          in: formData
+          description:  验证码 
+          required: true
+          type: string
+        - name: check_mobile_account
+          in: formData
+          description:  是否验证手机号为帐号（0：验证手机号没有对应帐号，1：验证手机号有对应帐号2：不验证手机号是否有帐号） 
+          required: true
+          type: string          
+      responses:
+        200:
+          description:  返回结果 
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/send/messagecode:
+    get:
+      tags:
+      - Common
+      parameters:
+        - name: mobile
+          in: query
+          description:  手机号 
+          required: true
+          type: string
+      description: |
+         发送手机短信验证码 
+      responses:
+        200:
+          description:  返回结果 
+          schema:
+            $ref: '#/definitions/result'
+      
+  /api/verify/messagecode:
+    post:
+      tags:
+      - Common
+      description: |
+         短信验证码检验 
+      parameters:
+        - name: mobile
+          in: formData
+          description:  手机号 
+          required:  true
+          type: string
+        - name: code
+          in: formData
+          description:  验证码 
+          required: true
+          type: string
+      responses:
+        200:
+          description:  返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/unset/password:
+    post:
+      tags:
+      - Common
+      description: |
+       重置密码 
+      parameters:
+        - name: mobile
+          in: formData
+          description:  手机号 
+          required: true
+          type: string
+        - name: newpassword
+          in: formData
+          description:  新密码 
+          required: true
+          type: string
+        - name: newcopy
+          in: formData
+          description:  重新输入新密码
+          required: false
+          type: string
+      responses:
+        200:
+          description:  返回结果 
+          schema:
+            $ref: '#/definitions/result'
+  
+  /api/login:
+    post:
+      tags:
+      - Account
+      description: |
+        用户登录
+      parameters:
+        - name: username
+          in: formData
+          description: 用户名 
+          required: true
+          type: string 
+        - name: password
+          in: formData
+          description: 密码 
+          required: true
+          type: string 
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/logout:
+    post:
+      tags:
+      - Account
+      description: |
+        用户登出
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/reset/mobile:
+    post:
+      tags:
+      - Account
+      description: |
+        重置手机号
+      parameters:
+        - name: new_mobile
+          in: formData
+          description: 新手机号 
+          required: true
+          type: string
+        - name: messagecode
+          in: formData
+          description: 短信验证码 
+          required: true
+          type: string
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/reset/password:
+    post:
+      tags:
+      - Account
+      description: |
+        重置密码
+      parameters:
+        - name: account_id
+          in: formData
+          description: 用户帐号ID 
+          required: false
+          type: string
+        - name: old_password
+          in: formData
+          description: 旧密码（管理员该字段可以为空） 
+          required: false
+          type: string 
+        - name: new_password
+          in: formData
+          description: 新密码 
+          required: true
+          type: string 
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+
+  /api/batch_reset/password:
+    post:
+      tags:
+      - Account
+      description: |
+        重置密码
+      parameters:
+        - name: account_id_list
+          in: formData
+          description: 用户帐号ID列表
+          required: true
+          type: string
+        - name: new_password
+          in: formData
+          description: 新密码 
+          required: true
+          type: string 
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+            
+  /api/check/username:
+    post:
+      tags:
+      - Account
+      description: |
+        重置密码
+      parameters:
+        - name: username
+          in: formData
+          description: 用户名
+          required: true
+          type: string 
+
+      responses:
+        200:
+          description: 返回结果，若用户名可用c为0
+          schema:
+            $ref: '#/definitions/result'  
+            
+  /api/detail/account:
+    post:
+      tags:
+      - Account
+      description: |
+        查看用户的当前类型信息
+      parameters:
+        - name: username
+          in: formData
+          description: 用户名 
+          required: false
+          type: string 
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/account'
+                  
+  /api/list/user_type:
+    post:
+      tags:
+      - Account
+      description: |
+        查看用户的（学校，类型）列表
+      parameters:
+        - name: account_id
+          in: formData
+          description: 用户帐号ID 
+          required: false
+          type: string 
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/account'    
+                  
+  /api/change/user_type:
+    post:
+      tags:
+      - Account
+      description: |
+        修改用户当前类型
+      parameters:
+        - name: school_id
+          in: formData
+          description: 学校ID
+          required: true
+          type: string
+        - name: type_id
+          in: formData
+          description: 用户类型ID
+          required: true
+          type: string 
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result' 
+
+  /api/detail/account_by_mobile:
+    post:
+      tags:
+      - Account
+      description: |
+        查询手机对应的用户信息
+      parameters:
+        - name: mobile 
+          in: formData
+          description: 手机号
+          type: string
+          required: false
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    full_name:
+                      type: string
+                    mobile:
+                      type: string
+                    username:
+                      type: string
+
+  /api/detail/school:
+    post:
+      tags:
+      - School
+      description: |
+        查看学校信息，包括学段学制
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/school'                  
+            
+  /api/list/grade:
+    post:
+      tags:
+      - School
+      description: |
+        查看年级列表
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/grade'
+
+  /api/list/class:
+    post:
+      tags:
+      - School
+      description: |
+        查看在校班级列表
+      parameters:
+        - name: grade_num
+          in: formData
+          description: 年级序号 
+          required: false
+          type: string
+        - name: teach_class
+          in: formData
+          description: 该参数为“1”，会标记该班级是否为该用户所教班级 
+          required: false
+          type: string      
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/class'
+
+  /api/list/graduated_class:
+    post:
+      tags:
+      - School
+      description: |
+        查看班级列表，默认不显示已经毕业的班级
+      parameters:
+        - name: graduated_year
+          in: formData
+          description: 毕业年度 
+          required: false
+          type: string
+        - name: gt_graduated_year
+          in: formData
+          description: 查询大于该毕业年度的班级 
+          required: false
+          type: string   
+        - name: max_num
+          in: formData
+          description: 查询班级数量，不足一个年度向上取整 
+          required: false
+          type: string 
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/class'
+                  
+                  
+  /api/add/grade_class:
+    post:
+      tags:
+      - School
+      description: |
+        新创建一个年级的所有班级
+      parameters:
+        - name: grade_id
+          in: formData
+          description: 年级ID 
+          required: true
+          type: string
+        - name: class_count
+          in: formData
+          description: 班级数量 
+          required: true
+          type: string
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+                  
+  /api/delete/class:
+    post:
+      tags:
+      - School
+      description: |
+        删除班级
+      parameters:
+        - name:  id_list
+          in: formData
+          description: |
+            [id1,id2,id3...]
+          required: true
+          type: string
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'   
+            
+  /api/add/class:
+    post:
+      tags:
+      - School
+      description: |
+        增加一个班级
+      parameters:
+        - name: grade_id
+          in: formData
+          description: 年级ID 
+          required: true
+          type: string
+        - name: class_alias
+          in: formData
+          description: 班级别名
+          required: false
+          type: string
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/update/class:
+    post:
+      tags:
+      - School
+      description: |
+        更新一个班级
+      parameters:
+        - name: class_id
+          in: formData
+          description: 班级ID 
+          required: true
+          type: string
+        - name: class_alias
+          in: formData
+          description: 班级别名
+          required: false
+          type: string
+        - name: teacher_ids
+          in: formData
+          description:  班级管理员
+          required: false
+          type: string
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result' 
+
+  /api/update/class_code:
+    post:
+      tags:
+      - School
+      description: |
+        检查班级码是否正确
+      parameters:
+        - name: class_code
+          in: formData
+          description: 班级码 
+          required: true
+          type: string
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result' 
+            
+  /api/list/class_style:
+    post:
+      tags:
+      - School
+      description: |
+          查询班级样式列表
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    primary:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string                  
+                          style_example:
+                            type: string
+                          school_period:
+                            type: string
+                    junior:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string                  
+                          style_example:
+                            type: string
+                          school_period:
+                            type: string
+                    senior:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string                  
+                          style_example:
+                            type: string
+                          school_period:
+                            type: string
+
+              
+  /api/detail/class_style:
+    post:
+      tags:
+      - School
+      description: |
+         查询所在学校的班级样式
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    primary:
+                      type: object
+                      properties:
+                        id:
+                          type: string                  
+                        style_example:
+                          type: string
+                        school_period:
+                          type: string
+                    junior:
+                      type: object
+                      properties:
+                        id:
+                          type: string                  
+                        style_example:
+                          type: string
+                        school_period:
+                          type: string
+                    senior:
+                      type: object
+                      properties:
+                        id:
+                          type: string                  
+                        style_example:
+                          type: string
+                        school_period:
+                          type: string
+
+
+  /api/update/class_style:
+    post:
+      tags:
+      - School
+      description: |
+         更新所在学校的班级样式
+      parameters:
+        - name: primary_class_style_id
+          in: formData
+          description: 小学班级样式ID
+          type: string
+        - name: junior_class_style_id
+          in: formData
+          description: 初中班级样式ID
+          type: string
+        - name: senior_class_style_id
+          in: formData
+          description: 高中班级样式ID
+          type: string          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+             $ref: '#/definitions/result'
+                      
+  /api/annually_update/grade:
+    post:
+      tags:
+      - School
+      description: |
+          升级班级
+      responses:
+        200:
+          description: 返回结果
+          schema:
+             $ref: '#/definitions/result'
+             
+  /api/undo_update/grade:
+    post:
+      tags:
+      - School
+      description: |
+          还原班级升级，
+      responses:
+        200:
+          description: 返回结果
+          schema:
+             $ref: '#/definitions/result'
+             
+  /api/display/update_time:
+    post:
+      tags:
+      - School
+      description: |
+          显示升级日期
+      responses:
+        200:
+          description:  返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: object
+                properties:
+                  month:
+                    type: string
+                  day:
+                    type: string
+            
+  /api/config/update_time:
+    post:
+      tags:
+      - School
+      description: |
+         设置升级年级日期
+      parameters:
+        - name: month
+          in: formData
+          description:  月份
+          type: string
+        - name: day
+          in: formData
+          description:  日期
+          type: string
+      responses:
+        200:
+          description:  返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/display/current_term:
+    post:
+      tags:
+      - School
+      description: |
+         显示 显示学年 
+      responses:
+        200: 
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/update/learning_period:
+    post:
+      tags:
+      - School
+      description: |
+         设置学段学制
+      parameters:
+        - name: primary_years
+          in: formData
+          description:  小学年制
+          type: string
+        - name: junior_years
+          in: formData
+          description:  初中年制
+          type: string
+        - name: senior_years
+          in: formData
+          description:  高中年制
+          type: string
+      responses:
+        200:
+          description:  返回结果
+          schema:
+            $ref: '#/definitions/result'
+          
+  /api/add/title:
+    post:
+      tags:
+      - School
+      description: |
+        创建一个新的职务
+      parameters:
+        - name: name
+          in: formData
+          description: 职务名称 
+          required: true
+          type: string
+        - name: comment
+          in: formData
+          description: 职务描述 
+          required: true
+          type: string
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/update/title:
+    post:
+      tags:
+      - School
+      description: |
+        修改一个职务
+      parameters:
+        - name: tile_id
+          in: formData
+          description: 职务ID
+          required: true
+          type: string      
+        - name: name
+          in: formData
+          description: 职务名称 
+          required: true
+          type: string
+        - name: comment
+          in: formData
+          description: 职务描述 
+          required: true
+          type: string
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/delete/title:
+    post:
+      tags:
+      - School
+      description: |
+        删除一个职务
+      parameters:
+        - name: id_list
+          in: formData
+          description: 职务ID列表
+          required: true
+          type: string      
+
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/list/title:
+    post:
+      tags:
+      - School
+      description: |
+        查询职务列表
+      parameters:
+        - name: exclude_class_master
+          in: formData
+          description: (1:排除班主任)
+          required: true
+          type: string 
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string                  
+                    name:
+                      type: string
+                    comments:
+                      type: string
+                    teacher_amount:
+                      type: integer
+                      
+  /api/admin_add/subject:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台添加科目
+      parameters:
+        - name: subject_name
+          in: formData
+          description: 科目名称
+          required: true
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/admin_list/subject:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台查询科目列表
+      parameters:
+        - name: is_active
+          in: formData
+          description: 是否有效(1:有效 0:冻结, 默认为1)
+          required: false
+          type: string
+        - name: subject_name
+          in: formData
+          description: 科目名称(过滤条件)
+          required: false
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string                  
+                    name:
+                      type: string
+                    editor_name:
+                      type: string
+                    update_time:
+                      type: string
+            
+  /api/admin_edit/subject:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台编辑科目
+      parameters:
+        - name: subject_id
+          in: formData
+          description: 科目id
+          required: true
+          type: string
+        - name: subject_name
+          in: formData
+          description: 科目名称
+          required: true
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/admin_freeze/subject:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台冻结科目
+      parameters:
+        - name: subject_id_list
+          in: formData
+          description: 科目id列表
+          required: true
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/admin_unfreeze/subject:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台解冻科目
+      parameters:
+        - name: subject_id_list
+          in: formData
+          description: 科目id列表
+          required: true
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/admin_delete/subject:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台删除科目
+      parameters:
+        - name: subject_id_list
+          in: formData
+          description: 科目id列表
+          required: true
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/admin_import/subject:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台导入科目
+      parameters:
+        - name: file
+          in: formData
+          description: 文件
+          required: true
+          type: file
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/admin_export/subject:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台导出科目
+      parameters:
+        - name: is_active
+          in: formData
+          description: 1:导出有效的科目，0：导出冻结的科目，默认为1
+          required: false
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: file
+            
+            
+  /api/school_add/subject:
+    post:
+      tags:
+      - Subject
+      description: |
+        学校管理中心添加科目
+      parameters:
+        - name: subject_id_list
+          in: formData
+          description: 科目id列表
+          required: true
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/school_list/subject:
+    post:
+      tags:
+      - Subject
+      description: |
+        学校管理中心查看科目列表
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string                  
+                    name:
+                      type: string
+                      
+  
+  /api/school_check/subject:
+    post:
+      tags:
+      - Subject
+      description: |
+        学校管理中心查询科目下学校是否已存在教材
+      parameters:
+        - name: subject_id
+          in: formData
+          description: 科目id
+          required: true
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+  
+  /api/school_update/subject:
+    post:
+      tags:
+      - Subject
+      description: |
+        学校管理中心更新科目
+      parameters:
+        - name: subject_id_list
+          in: formData
+          description: 科目id列表
+          required: true
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+      
+            
+  /api/school_delete/subject:
+    post:
+      tags:
+      - Subject
+      description: |
+        学校管理中心删除科目
+      parameters:
+        - name: subject_id_list
+          in: formData
+          description: 科目id列表
+          required: true
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/admin_add/textbook:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台添加教材
+      parameters:
+        - name: subject_id
+          in: formData
+          description: 科目id
+          required: true
+          type: string
+        - name: textbook_name
+          in: formData
+          description: 教材名称
+          required: true
+          type: string
+        - name: grade_num
+          in: formData
+          description: 年级编号
+          required: true
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/admin_list/textbook:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台查看教材列表
+      parameters:
+        - name: is_active
+          in: formData
+          description: 是否有效(1:查看有效的教材 0:查看冻结的教材, 默认为1)
+          required: false
+          type: string
+        - name: grade_num_list
+          in: formData
+          description: 年级编号(过滤条件)
+          required: false
+          type: string
+        - name: subject_id_list
+          in: formData
+          description: 科目id列表(过滤条件)
+          required: false
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    grade_num:
+                      type: string
+                    grade_name:
+                      type: string
+                    textbook_name:
+                      type: string
+                    subject_name:
+                      type: string
+                    chapter_count:
+                      type: string
+                      
+                      
+  /api/admin_detail/textbook:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台查看教材详情
+      parameters:
+        - name: textbook_id
+          in: formData
+          description: 教材id
+          required: true
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    grade_num:
+                      type: string
+                    grade_name:
+                      type: string
+                    textbook_name:
+                      type: string
+                    subject_name:
+                      type: string
+                    chapter_count:
+                      type: string
+            
+  /api/admin_edit/textbook:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台编辑教材
+      parameters:
+        - name: textbook_id
+          in: formData
+          description: 教材id
+          required: true
+          type: string
+        - name: textbook_name
+          in: formData
+          description: 教材名称
+          required: true
+          type: string
+        - name: grade_num
+          in: formData
+          description: 年级编号
+          required: true
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/admin_freeze/textbook:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台冻结教材
+      parameters:
+        - name: textbook_id
+          in: formData
+          description: 教材id
+          required: true
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/admin_unfreeze/textbook:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台解冻教材
+      parameters:
+        - name: textbook_id
+          in: formData
+          description: 教材id
+          required: true
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/admin_delete/textbook:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台删除教材
+      parameters:
+        - name: textbook_id
+          in: formData
+          description: 教材id
+          required: true
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/school_add/textbook:
+    post:
+      tags:
+      - Subject
+      description: |
+        学校管理中心添加教材
+      parameters:
+        - name: textbook_id
+          in: formData
+          description: 教材id
+          required: true
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/school_list/textbook:
+    post:
+      tags:
+      - Subject
+      description: |
+        学校管理中心查看教材列表
+      parameters:
+        - name: grade_num_list
+          in: formData
+          description: 年级编号列表(过滤条件) 
+          required: false
+          type: string
+        - name: subject_id_list
+          in: formData
+          description: 科目id列表(过滤条件) 
+          required: false
+          type: string
+        - name: not_belong_flag
+          in: formData
+          description: 是否为学校未添加的教材（1：是，0：否，默认为0）
+          required: false
+          type: string
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    grade_num:
+                      type: string
+                    textbook_name:
+                      type: string
+                    subject_id:
+                      type: string
+                    subject_name:
+                      type: string
+            
+  /api/school_delete/textbook:
+    post:
+      tags:
+      - Subject
+      description: |
+        学校管理中心删除教材
+      parameters:
+        - name: textbook_id
+          in: formData
+          description: 教材id 
+          required: true
+          type: string
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/admin_add/chapter:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台添加章节
+      parameters:
+        - name: textbook_id
+          in: formData
+          description: 教材id 
+          required: true
+          type: string
+        - name: chapter_name
+          in: formData
+          description: 章节名称
+          required: true
+          type: string
+        - name: parent_id
+          in: formData
+          description: 父节点id 
+          required: true
+          type: string
+        - name: sn
+          in: formData
+          description: 章节顺序的编号 
+          required: true
+          type: string
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+            
+  /api/admin_list/chapter:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台查看章节列表
+      parameters:
+        - name: textbook_id
+          in: formData
+          description: 教材id 
+          required: true
+          type: string
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    pId:
+                      type: integer
+                    open:
+                      type: boolean
+                    sn:
+                      type: string
+            
+  /api/admin_edit/chapter:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台编辑章节
+      parameters:
+        - name: chapter_id
+          in: formData
+          description: 章节id 
+          required: true
+          type: string
+        - name: chapter_name
+          in: formData
+          description: 章节名称
+          required: true
+          type: string
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result' 
+            
+  /api/admin_move/chapter:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台移动章节
+      parameters:
+        - name: chapter_id
+          in: formData
+          description: 章节id 
+          required: true
+          type: string
+        - name: parent_id
+          in: formData
+          description: 移动目的地的父节点id 
+          required: true
+          type: string
+        - name: sn
+          in: formData
+          description: 章节顺序的编号 
+          required: true
+          type: string
+          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result' 
+  
+  
+  /api/admin_delete/chapter:
+    post:
+      tags:
+      - Subject
+      description: |
+        华校后台删除章节
+      parameters:
+        - name: chapter_id
+          in: formData
+          description: 章节id 
+          required: true
+          type: string
+        
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result' 
+
+
+  /api/list/admin_user:
+    post:
+      tags:
+      - Service
+      description: |
+        查询管理员列表
+      parameters:
+        - name: service_name
+          in: formData
+          description: 服务名称 
+          required: false
+          type: string 
+        - name: user_name
+          in: formData
+          description: 用户姓名 
+          required: false
+          type: string 
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/admin_user' 
+
+  /api/list/admin_role:
+    post:
+      tags:
+      - Service
+      description: |
+        查询服务角色列表
+      parameters:
+        - name: teacher_id
+          in: formData
+          description: 教师ID，若带该字段，对于该用户已经是该角色is_already为1 
+          required: false
+          type: string 
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/admin_role' 
+
+
+  /api/update/admin_user:
+    post:
+      tags:
+      - Service
+      description: |
+        更新用户管理员角色
+      parameters:
+        - name: role_id_list
+          in: formData
+          description: 角色ID列表 
+          required: true
+          type: string
+        - name: teacher_id
+          in: formData
+          description: 教师ID 
+          required: true
+          type: array
+          items:
+            type: string  
+
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result' 
+
+  /api/delete/admin_user:
+    post:
+      tags:
+      - Service
+      description: |
+        删除用户管理员角色
+      parameters:
+        - name: user_role_id_list
+          in: formData
+          description: 用户角色ID列表 
+          required: true
+          type: string
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/export/admin_user:
+    post:
+      tags:
+      - Service
+      description: |
+        导出管理员用户
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: file 
+
+  /api/list/role_user:
+    post:
+      tags:
+      - Service
+      description: |
+        查看服务角色列表
+      parameters:
+        - name: service_name
+          in: formData
+          description: 服务名称 
+          required: false
+          type: string 
+
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/role_user' 
+                  
+  /api/update/role_user:
+    post:
+      tags:
+      - Service
+      description: |
+        更新服务角色用户
+      parameters:
+        - name: role_id
+          in: formData
+          description: 角色ID 
+          required: true
+          type: string
+        - name: user_list
+          in: formData
+          description: 用户ID列表 
+          required: true
+          type: array
+          items:
+            type: string  
+
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result' 
+
+  /open/list/api:
+    post:
+      tags:
+      - Open
+      description: |
+        获取API信息
+      parameters:
+        - name: service
+          in: formData
+          description: 服务代码 
+          required: false
+          type: string
+        - name: api
+          in: formData
+          description: :API代码 
+          required: false
+          type: string          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/api'
+
+  /open/reset/password:
+    post:
+      tags:
+      - Open
+      description: |
+        找回用户密码
+      parameters:
+        - name: account_id
+          in: formData
+          description: 用户帐号
+          required: false
+          type: string
+        - name: new_password
+          in: formData
+          description: :新密码
+          required: false
+          type: string
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            $ref: '#/definitions/result'
+
+  /api/list/service_apps:
+    post:
+      tags:
+      - Service
+      description: |
+         显示应用列表
+      responses:
+        200:
+          description:  服务列表
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                    $ref: '#/definitions/app_info'
+
+  /open/list/subnet:
+    post:
+      tags:
+      - Open
+      description: |
+        获取内网子网列表
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/api'                  
+
+
+  /open/list/items:
+    post:
+      tags:
+      - Open
+      description: |
+        查询 数据库表中的数据
+      parameters:
+        - name: model_name 
+          in: formData
+          description: 表名
+          type: string
+          required: true
+        - name: update_time
+          in: formData
+          description: 最后一个元素的更新时间
+          type: string
+          required: true
+        - name: item_id
+          in: formData
+          description: 最后一个元素的ID
+          type: string
+          required: true          
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: string
+
+
+  /open/detail/update_time:
+    post:
+      tags:
+      - Open
+      description: |
+        查询 数据库表的更新时间
+      parameters:
+        - name: model_name 
+          in: formData
+          description: 表名
+          type: string
+          required: true            
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: string
+
+                    
+  /open/call/api:
+    post:
+      tags:
+      - Open
+      description: |
+        调用API
+      parameters:
+        - name: api_name 
+          in: formData
+          description: 接口名
+          type: string
+          required: true   
+        - name: user_id 
+          in: formData
+          description: 用户ID
+          type: string
+          required: true 
+        - name: parameters 
+          in: formData
+          description: 请求参数
+          type: string
+          required: false
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: string
+
+  /open/list/school:
+    post:
+      tags:
+      - Open
+      description: |
+        查询学校列表
+      parameters:
+        - name: name_or_code
+          in: formData
+          description: 学校编码或名称
+          type: string
+          required: false
+
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    code:
+                      type: string
+                    name_full:
+                      type: string
+
+  /open/list/class:
+    post:
+      tags:
+      - Open
+      description: |
+        查看在校班级列表
+      parameters:
+        - name: school_id
+          in: formData
+          description: 学校ID
+          type: string
+          required: yes
+        - name: grade_num
+          in: formData
+          description: 年级序号
+          required: false
+          type: string
+
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/class'
+
+  /open/list/student:
+    post:
+      tags:
+      - Open
+      description: |
+        查询 `学生`列表
+      parameters:
+        - name: school_id
+          in: formData
+          description: 学校ID
+          type: string
+          required: yes
+        - name: full_name
+          in: formData
+          description: 姓名
+          type: string
+          required: false
+        - name: code
+          in: formData
+          description: 学籍号
+          type: string
+          required: false
+        - name: verbose
+          in: formData
+          description: 不带该参数：在读学生, (0：在读学生，1：毕业学生，2：所有学生)
+          type: string
+          required: false
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/student'
+
+  /open/list/teacher:
+    post:
+      tags:
+      - Open
+      description: |
+        查询 `教师`列表.
+      parameters:
+        - name: school_id
+          in: formData
+          description: 学校ID
+          type: string
+          required: yes
+        - name: full_name
+          in: formData
+          description: 姓名
+          type: string
+          required: false
+        - name: code
+          in: formData
+          description: 工号
+          type: string
+          required: false
+        - name: verbose
+          in: formData
+          description: 不带该参数：在校教师, (0：在校教师，1：离校教师，2：所有教师)
+          type: string
+          required: false
+
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/teacher'
+
+  /api/wx/class/qrcode:
+    get:
+      tags:
+      - Weixin
+      description: |
+        返回base64的班级二维码
+      parameters:
+        - name: class_id
+          in: query
+          description: 班级ID
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/result'
+
+  /api/wx/school/qrcode:
+    get:
+      tags:
+      - Weixin
+      description: |
+        返回base64的学校二维码, 如果传入sid，则查询传入的学校的二维码。如果不传，则直接取登陆用户的学校二维码。
+      parameters:
+        - name: sid
+          in: query
+          description: 学校ID
+          type: string
+          required: false
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/result'
+
+  /api/wx/parent/qrcode:
+    get:
+      tags:
+      - Weixin
+      description: |
+        返回base64的家长邀请二维码, 如果传入parent_id，则查询传入的家长的二维码。如果不传，则直接取登陆用户的家长邀请二维码。
+      parameters:
+        - name: parent_id
+          in: query
+          description: 家长ID
+          type: string
+          required: false
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/result'
+
+  /wx/get/jsconfig:
+    post:
+      tags:
+      - Weixin
+      description: |
+        返回jsapi_config参数
+      parameters:
+        - name: sid
+          in: formData
+          description: 学校ID
+          type: string
+          required: false
+        - name: appid
+          in: formData
+          description: 微信appid
+          type: string
+          required: false
+        - name: url
+          in: formData
+          description: URL
+          type: string
+          required: false
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/result'
+
+  /wx/mod/webdebugmod:
+    post:
+      tags:
+      - Weixin
+      description: |
+        修改全局web调试模式状态，后台服务器重启后，将自动关闭调试模式。
+      parameters:
+        - name: debug_status
+          in: formData
+          description: 1：打开调试模式，0：关闭调试模式。
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: string
+
+  /get/access_token:
+    get:
+      tags:
+      - Weixin
+      description: |
+        获取access_token
+      parameters:
+        - name: sid
+          in: query
+          description: 学校ID
+          type: string
+          required: true
+        - name: appid
+          in: query
+          description: 微信appid
+          type: string
+          required: false
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/result'
+
+
+  /api/wx/get/accountopenid:
+    post:
+      tags:
+      - Weixin
+      description: |
+        通过accountid查询openid，用于互动平台发送消息
+      parameters:
+        - name: sid
+          in: formData
+          description: 学校ID
+          type: string
+          required: true
+        - name: account_id_list
+          in: formData
+          description: 逗号分隔的account_id列表
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: string
+
+  /api/wx/service/list:
+    get:
+      tags:
+      - Weixin
+      description: |
+        查询微信的服务列表
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: string
+
+  /api/wx/service/domain:
+    get:
+      tags:
+      - Weixin
+      description: |
+        查询微信的服务列表
+      parameters:
+        - name: app_code
+          in: query
+          description: 服务编码code
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: string
+
+
+  /api/wx/send/teacherbind/messagecode:
+    get:
+      tags:
+      - Weixin
+      description: |
+        发送老师绑定短信
+      parameters:
+        - name: mobile
+          in: query
+          description: 电话号码
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/result'
+
+
+  /api/wx/send/parentbind/messagecode:
+    get:
+      tags:
+      - Weixin
+      description: |
+        发送家长绑定短信
+      parameters:
+        - name: mobile
+          in: query
+          description: 电话号码
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  $ref: '#/definitions/result'
+
+  /api/wx/bind/teacher:
+    post:
+      tags:
+      - Weixin
+      description: |
+        老师绑定微信，同时可添加家长绑定孩子
+      parameters:
+        - name: mobile
+          in: formData
+          description: 电话号码
+          type: string
+          required: true
+        - name: address
+          in: formData
+          description: 地址
+          type: string
+          required: false
+        - name: student_list_json
+          in: formData
+          description: 学生信息列表,格式[{"full_name":"张文428", "code":"G20160528", "sex":"男", "relation":"父亲"}, {"full_name":"张文429", "code":"G20160529", "sex":"男", "relation":"父亲"}]
+          type: string
+          required: false
+        - name: messagecode
+          in: formData
+          description: 短信验证码
+          type: string
+          required: true
+        - name: openid
+          in: formData
+          description: 微信openid
+          type: string
+          required: true
+        - name: sid
+          in: formData
+          description: 学校编码
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: string
+
+  /api/wx/bind/parent:
+    post:
+      tags:
+      - Weixin
+      description: |
+        家长绑定微信，同时可添加绑定孩子
+      parameters:
+        - name: mobile
+          in: formData
+          description: 电话号码
+          type: string
+          required: true
+        - name: fullname
+          in: formData
+          description: 家长姓名
+          type: string
+          required: false
+        - name: sex
+          in: formData
+          description: 家长性别
+          type: string
+          required: false
+        - name: address
+          in: formData
+          description: 地址
+          type: string
+          required: false
+        - name: student_list_json
+          in: formData
+          description: 学生信息列表,格式[{"full_name":"张文428", "code":"G20160528", "sex":"男", "relation":"父亲"}, {"full_name":"张文429", "code":"G20160529", "sex":"男", "relation":"父亲"}]
+          type: string
+          required: true
+        - name: messagecode
+          in: formData
+          description: 短信验证码
+          type: string
+          required: true
+        - name: openid
+          in: formData
+          description: 微信openid
+          type: string
+          required: true
+        - name: sid
+          in: formData
+          description: 学校编码
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: string
+
+  /api/wx/add/child_by_parent:
+    post:
+      tags:
+      - Weixin
+      description: |
+        系统中现有的家长添加孩子
+      parameters:
+        - name: student_list_json
+          in: formData
+          description: 学生信息列表,格式[{"full_name":"张文428", "code":"G20160528", "sex":"男", "relation":"父亲"}, {"full_name":"张文429", "code":"G20160529", "sex":"男", "relation":"父亲"}]
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: string
+
+  /api/wx/invite/parent:
+    post:
+      tags:
+      - Weixin
+      description: |
+        家长邀请其它人成为自己孩子的家长
+      parameters:
+        - name: parent_id
+          in: formData
+          description: 邀请来源家长的家长id
+          type: string
+          required: true
+        - name: mobile
+          in: formData
+          description: 电话号码
+          type: string
+          required: true
+        - name: fullname
+          in: formData
+          description: 家长姓名
+          type: string
+          required: true
+        - name: sex
+          in: formData
+          description: 家长性别
+          type: string
+          required: true
+        - name: address
+          in: formData
+          description: 地址
+          type: string
+          required: false
+#        - name: student_list_json
+#          in: formData
+#          description: 学生信息列表,格式[{"full_name":"张文428", "code":"G20160528", "sex":"男", "relation":"父亲"}, {"full_name":"张文429", "code":"G20160529", "sex":"男", "relation":"父亲"}]
+#          type: string
+#          required: true
+        - name: messagecode
+          in: formData
+          description: 短信验证码
+          type: string
+          required: true
+        - name: openid
+          in: formData
+          description: 微信openid
+          type: string
+          required: true
+        - name: relation
+          in: formData
+          description: 家长与学生关系
+          type: string
+          required: true
+      responses:
+        200:
+          description: 返回结果
+          schema:
+            type: object
+            properties:
+              c:
+                type: integer
+              m:
+                type: string
+              d:
+                type: array
+                items:
+                  type: string
+
+definitions:
+  result:
+    type: object
+    properties:
+      c:
+        type: integer
+      m:
+        type: string
+      d:
+        type: array
+        items:
+          type: string
+  account:
+    type: object
+    properties:
+      id:
+        type: string
+      account_id:
+        type: string
+      full_name: #姓名
+        type: string
+      school_id:
+        type: string
+      school_name:
+        type: string
+      type_id: #学生(1)/教师(2)/家长(4)
+        type: string
+      type_name:
+        type: string
+
+  student:
+    type: object
+    properties:
+      id:
+        type: string
+      account_id:
+        type: string        
+      username:
+        type: string
+      full_name: #姓名
+        type: string
+      id_card: #身份证号
+        type: string
+      code: #学籍号
+        type: string
+      sex:
+        type: string
+      mobile:
+        type: string
+      email:
+        type: string
+      class_name:
+        type: string
+      grade_name:
+        type: string
+      entry_date:
+        type: string        
+      out_date:
+        type: string
+      is_in:
+        type: string
+      kind:
+        type: string
+      comments:
+        type: string
+      last_login:
+        type: string
+      image_url:
+        type: string           
+        
+  student_info:
+    type: object
+    properties:
+      id:
+        type: string
+      account_id:
+        type: string        
+      username:
+        type: string
+      password:
+        type: string
+      full_name: #姓名
+        type: string
+      id_card: #身份证号
+        type: string
+      code: #学籍号
+        type: string
+      tmp_code: #学籍号
+        type: string
+      sex:
+        type: string
+      mobile:
+        type: string
+      email:
+        type: string
+      address:
+        type: string
+      class_name:
+        type: string
+      class_id:
+        type: string        
+      grade_name:
+        type: string
+      entry_date:
+        type: string
+      out_date:
+        type: string
+      is_in:
+        type: string
+      kind:
+        type: string
+      comments:
+        type: string
+      image_url:
+        type: string
+      birthday:
+        type: string   
+      native_place:
+        type: string 
+        
+  teacher:
+    type: object
+    properties:
+      id:
+        type: string
+      account_id:
+        type: string
+      username:
+        type: string
+      id_card:
+        type: string      
+      school_code:
+        type: string
+      tmp_code: 
+        type: string        
+      full_name: #姓名
+        type: string
+      sex:
+        type: string
+      email:
+        type: string
+      mobile:
+        type: string 
+      type: #教师，学生，家长
+        type: string    
+
+      title:
+        type: string         
+      cls_id:
+        type: string
+      kind:
+        type: string
+      is_in:
+        type: string
+      is_available:
+        type: string
+      in_date:
+        type: string
+      out_date:
+        type: string         
+      comments:
+        type: string 
+      last_login:
+        type: string
+      image_url:
+        type: string        
+ 
+  teacher_info:
+    type: object
+    properties:
+      id:
+        type: string
+      username:
+        type: string
+      full_name:
+         type: string
+      id_card:
+        type: string
+      school_code:
+        type: string
+      tmp_code:
+        type: string
+      cls_id:
+        type: string
+      class_name:
+        type: string
+      sex:
+        type: string
+      mobile:
+        type: string
+      email:
+        type: string
+      address:
+        type: string
+      kind:
+        type: string
+      is_in:
+        type: string
+      is_available:
+        type: string
+      in_date:
+        type: string
+      out_date:
+        type: string
+      comments:
+        type: string
+      image_url:
+        type: string
+      title:
+        type: string
+      birthday:
+        type: string   
+      native_place:
+        type: string          
+
+  parent:
+    type: object
+    properties:
+      account_id:
+        type: string
+      username:
+        type: string
+      password:
+        type: string
+      id_card:
+        type: string      
+      full_name: #姓名
+        type: string
+      sex:
+        type: string
+      email:
+        type: string
+      mobile:
+        type: string 
+      address:
+        type: string
+      company:
+        type: string
+      last_login:
+        type: string
+      image_url:
+        type: string         
+      children:
+        type: array
+        items:
+          type: object
+          properties:
+            student_id:
+              type: string
+            student_full_name:
+              type: string
+            student_code:
+              type: string
+            student_class_name:
+              type: string
+            relation:
+              type: string
+            comments:
+              type: string
+
+  parent_info:
+    type: object
+    properties:
+      id:
+        type: string    
+      account_id:
+        type: string
+      username:
+        type: string
+      password:
+        type: string
+      id_card:
+        type: string      
+      full_name: #姓名
+        type: string
+      sex:
+        type: string
+      email:
+        type: string
+      mobile:
+        type: string 
+      address:
+        type: string
+      company:
+        type: string
+      image_url:
+        type: string
+      birthday:
+        type: string   
+      native_place:
+        type: string         
+        
+      children:
+        type: array
+        items:
+          type: object
+          properties:
+            student_id:
+              type: string
+            student_full_name:
+              type: string
+            student_code:
+              type: string
+            relation:
+              type: string
+            comments:
+              type: string
+
+  parent_student:
+    type: object
+    properties:
+      id:
+        type: string
+      student_id:
+        type: string
+      student_full_name:
+        type: string
+      student_code:
+        type: string
+      student_class_name:
+        type: string
+      student_image_url:
+        type: string
+      parent_id:
+        type: string
+      parent_full_name:
+        type: string
+      parent_mobile:
+        type: string
+      parent_image_url:
+        type: string
+      relation:
+        type: string
+      comments:
+        type: string
+      status:
+        type: string
+        
+  class:
+    type: object
+    properties:
+      id:
+        type: string
+      enrollment_year:
+        type: string
+      grade_num:
+        type: string
+      grade_name:
+        type: string
+      class_num: 
+        type: string
+      class_name:
+        type: string
+      class_alias:
+        type: string
+      student_amount:
+        type: string
+      class_code:
+        type: string  # 班级的唯一标识码     
+      is_teach:
+        type: string # (1:在教班级，0：不在该班级)
+      teacher_data:
+        type: array
+        items:
+          type: object
+          properties:
+            id: 
+              type: string
+            full_name: 
+              type: string
+            image_url:
+              type: string
+  graduated_class:
+    type: object
+    properties:
+      id:
+        type: string
+      enrollment_year:
+        type: string
+      grade_num:
+        type: string
+      grade_name:
+        type: string
+      class_num: 
+        type: string
+      class_name:
+        type: string
+      class_alias:
+        type: string        
+      class_code:
+        type: string  # 班级的唯一标识码
+      student_amount:
+        type: string
+      school_period:
+        type: string
+      school_years:
+        type: string        
+
+  grade:
+    type: object
+    properties:
+      id:
+        type: string
+      grade_num:
+        type: string
+      grade_name: 
+        type: string
+      class_amount: 
+        type: string
+
+  admin_user:
+    type: object
+    properties:
+      user_role_id: # 删除时使用
+        type: string
+      user_id:
+        type: string
+      user_name:
+        type: string
+      mobile:
+        type: string 
+      service_name:
+        type: string
+      role_id:
+        type: string        
+      role_name:
+        type: string
+      last_login:
+        type: string
+
+  admin_role:
+    type: object
+    properties:
+      service_name:
+        type: string
+      role_id:
+        type: string        
+      role_name:
+        type: string
+      is_already: # 用户是否已经是该角色，【0、1】
+        type: string
+
+
+  role_user:
+    type: object
+    properties:
+      service_name:
+        type: string
+      role_id:
+        type: string        
+      role_name:
+        type: string
+      user_list: 
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+            full_name:
+              type: string
+              
+  api:
+    type: object
+    properties:
+      code:
+        type: string
+      version:
+        type: string
+      name:
+        type: string        
+      url:
+        type: string
+      comments:
+        type: string
+  image:
+    type: object
+    properties:
+      id:
+        type: string
+      url:
+        type: string
+
+        
+  app_info:
+    type: object
+    properties:
+      id: 
+        type: string
+      user_role:
+        type: string
+      services:
+        type: array
+        items:
+          type: object
+          properties:
+            category:
+              type: string
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  id: 
+                    type: string
+                  code:
+                    type: string
+                  name:
+                    type: string
+                  url:
+                    type: string
+                  type:
+                    type: string
+                  comments:
+                    type: string
+                    
+  school:
+    type: object
+    properties:
+      id: 
+        type: string
+      code:
+        type: string
+      name_full:
+        type: string
+      name_simple:
+        type: string        
+      type:
+        type: string  
+      academic_year:
+        type: string 
+      primary_years:
+        type: string
+      junior_years:
+        type: string
+      senior_years:
+        type: string
+        
+  student_class_application:
+    type: object
+    properties:
+      id: 
+        type: string
+      student_code: # 学号
+        type: string
+      student_full_name: # 姓名
+        type: string
+      comments: #申请理由
+        type: string 
+      status: # 处理状态
+        type: string
+
+  student_class:
+    type: object
+    properties:
+      class_id:
+        type: string
+      class_name:
+        type: string
+      class_master: # 班主任
+        type: string
+      status: # 处理状态
+        type: string
+      

@@ -1,0 +1,133 @@
+{% extends 'page/root/share/route.html' %}
+
+{% block mylink %}
+{% endblock %}
+
+{% block mycontent %}
+    <div id="content" v-cloak style="background-color: white;padding:20px">
+        <div class="toolblock-box"><!--工具栏-->
+
+            <div class="toolblock">
+                <span class="hx-float-l">
+                    <input id="name_or_code" placeholder="学校名称或代码">
+                    <button type="button" class="hx-margin20-l" onclick="reloadGrid()">查询</button>
+                </span>
+                <span class="hx-float-r">
+                        <span v-show="!frozen_flag" class="tool-cell middle hx-margin20-l" onclick="add()">
+                            <img src="/static/resources/images/icon/icon-add.png">
+                            <span>新增</span>
+                        </span>
+                </span>
+            </div>
+        </div><!--工具栏-->
+        <div class="grid">
+                <table id="grid"></table>
+                <div id="pager"></div>
+        </div>
+
+        <!--弹出框-->
+        <div id="addSchool" hidden="hidden">{% comment %}添加学校{% endcomment %}
+        <table class="table-form">
+          <tr>
+                <td>
+                    <label>学校代码</label>
+                </td>
+                <td>
+                    <input id='schoolAddCode' style="width:280px;text-align: center" placeholder="请输入学校代码">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>学校名称</label>
+                </td>
+                <td>
+                    <input id='schoolAddFullName'  style="width:280px;text-align: center" placeholder="请输入学校名称">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>小学年制</label>
+                </td>
+                <td>
+                    <select id="selPrimaryYears" style="width:300px; padding-left: 110px">
+                        <option value="0">--请选择--</option>
+                        <option value="5">小学五年制</option>
+                        <option value="6">小学六年制</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>初中年制</label>
+                </td>
+                <td>
+                    <select id="selJuniorYears" style="width:300px; padding-left: 110px">
+                        <option value="0">--请选择--</option>
+                        <option value="3">初中三年制</option>
+                        <option value="4">初中四年制</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>高中年制</label>
+                </td>
+                <td>
+                    <select id="selSeniorYears" style="width:300px; padding-left: 110px">
+                        <option value="0">--请选择--</option>
+                        <option value="3">高中三年制</option>
+                    </select>
+                </td>
+            </tr>
+      </table>
+    </div>
+        <div id="editService" hidden="hidden">{% comment %}编辑服务{% endcomment %}
+            <li style="padding: 5px;">
+                <input id="allSelectService" type="checkbox" /> 全选
+            </li>
+            <ul v-for="item in service_list">
+                <li style="padding: 5px; font-size: medium">
+                    <input class="serviceChkBox" type="checkbox" value="{$ item.id $}" v-model="item.open"/> {$ item.name $} - {$ item.internet_url $}
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+
+    <div id="addManager" hidden="hidden">{% comment %}添加管理员{% endcomment %}
+        <table class="table-form">
+          <tr>
+                <td>
+                    <label>姓名</label>
+                </td>
+                <td>
+                    <input id='managerName' style="width:280px;text-align: center" placeholder="请输入管理员姓名">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>用户名</label>
+                </td>
+                <td>
+                    <input id='managerUsername'  style="width:280px;text-align: center" placeholder="请输入用户名">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>密码</label>
+                </td>
+                <td>
+                    <input id='managerPassword'  style="width:280px;text-align: center" placeholder="请输入用户密码">
+                </td>
+            </tr>
+      </table>
+    </div>
+
+{% endblock %}
+
+{% block myscript %}
+    <script>
+        document.write('<script src="/static/resources/js/root/school/main.js?rnd='+Math.random()+'"><'+'/script>');
+    </script>
+{% endblock %}

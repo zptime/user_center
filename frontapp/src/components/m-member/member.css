@@ -1,0 +1,199 @@
+.member{width:100%;text-align:left;}
+.search{margin:1.5rem 0 1rem 0;}
+.left{float:left;}
+.right{float:right;}
+.hide{display: none;}
+.show{display: block;}
+.clb:after{content:'';display:block;clear:both;}
+.action-title{font-size:0.6rem;color:#666;}
+.action-del{color:#fd5555;}
+/*边框弧度-4px*/
+.borderRadius{
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+}
+/*蓝色虚边阴影*/
+.boxShadowBlue{
+  box-shadow: 0 0 10px 1px rgba(70, 133, 255, 0.4);
+  -moz-box-shadow: 0 0 10px 1px rgba(70, 133, 255, 0.4);
+  -webkit-box-shadow: 0 0 10px 1px rgba(70, 133, 255, 0.4);
+}
+/*水平垂直居中*/
+.middleCenter{
+  text-align: center;
+  display:flex;/*Flex布局*/
+  display: -webkit-flex; /* Safari */
+  justify-content: center;/*实现水平居中*/
+  align-items:center; /*实现垂直居中*/
+}
+
+/*列表-滚动，定位-公用样式*/
+.list-common{
+  position: absolute;
+  width: 100%;
+  overflow-y: auto;
+  background-color: #fff;
+  -webkit-overflow-scrolling : touch;
+  bottom:4rem;
+  top:4.8rem;
+}
+
+/*批量编辑页面-成员列表定位样式*/
+.member .member-list-common{
+  position: fixed;
+  width:100%;
+  z-index: 9;
+  overflow-y:auto;
+  bottom: 0;
+  top: 7.1rem;
+  background-color: #fff;
+  -webkit-overflow-scrolling : touch;
+}
+.member .member-single-list{
+  bottom:4rem;
+  top:6.85rem;
+}
+/*成员列表样式*/
+.member .member-list{
+  /*bottom: 4rem;*/
+  /*top: 9.1rem;*/
+}
+.member .item{
+  margin-bottom:4px;
+}
+.member .item .item-title{
+  height: 2rem;
+  line-height: 2rem;
+  padding:0 0.75rem;
+  background-color: #fafafa;
+}
+.member .item .item-title  .other-all{
+  width:80%;
+}
+.member .item .item-title .arrow{
+  display:inline-block;
+  width:0;
+  height:0;
+  margin:0.8rem 0.5rem 0 0;
+  border-style:solid;
+  border-width:0.4rem;
+  border-color:#a2c2ff transparent transparent transparent;
+}
+.member .item .item-title .toggle img{
+  width:0.6rem;
+  height:0.6rem;
+  margin-left:0.5rem;
+}
+.member .item .item-title .title{
+  color:#444;
+  font-size: 0.8rem;
+}
+.member .item .item-title .number{
+  font-size: 0.6rem;
+  color: #888;
+}
+.member .item .item-title .operate{
+  font-size: 0.6rem;
+}
+.member .item .item-title .bulk_edit,.deselect_all{
+  color:#ff9e35;
+}
+.member .item .item-title .check_all{
+  color:#23d42e;
+}
+.member .item .item-detail{
+  margin:0 0.75rem;
+  background-color: #fff;
+  height:2.75rem;
+  line-height:2.75rem;
+  color:#444;
+  font-size: 0.8rem;
+  border-bottom:1px solid #eee;
+}
+.member .item-border-none{
+  border-bottom: none !important;
+}
+.member .item .item-detail .other-left{
+  width:70%;
+}
+.member .item .item-detail .other-right{
+  width:28%;
+}
+.member .item .item-detail .avatar img{
+  margin-top:0.5rem;
+  width:1.75rem;
+  height:1.75rem;
+  -webkit-border-radius: 0.9rem;
+  -moz-border-radius: 0.9rem;
+  -ms-border-radius: 0.9rem;
+  -o-border-radius: 0.9rem;
+  border-radius: 0.9rem;
+}
+.member .item .item-detail span{
+  display: inline-block;
+  height: inherit;
+}
+.member .item .item-detail .username{
+  font-size:0.8rem;
+  color:#444;
+  margin:0 0.5rem;
+}
+.member .item .item-detail .desc{
+  font-size:0.6rem;
+  color:#aaa;
+}
+.member .item .item-detail .opt-common{
+  height:1.25rem;
+  width:1.25rem;
+  margin:0.75rem 0;
+}
+.member .item .item-detail .opt-check{
+  height: 1.45rem;
+  width: 1.45rem;
+  margin: 0.65rem 0;
+}
+.member .item .item-detail .opt-check-not{
+  border-radius: 0.63rem;
+  background-color: #f8f8f8;
+}
+
+.member .item .item-detail .opt-del{
+  width:2.5rem;
+  line-height: 1.25rem;
+  background-color: #fd5555;
+  color:#fff;
+  font-size: 0.6rem;
+  text-align: center;
+}
+
+/*已选择人员样式*/
+.selected{
+  margin: 1.5rem 0.75rem 0 0.75rem;
+}
+.selected .person{
+  height: 1.35rem;
+  width:86%;
+  overflow: hidden;
+}
+.selected .person .person-single{
+  /*width: 2.5rem;*/
+  width:2.7rem;
+  height: 1.25rem;
+  line-height: 1.25rem;
+  font-size: 0.6rem;
+  color: #fff;
+  background-color: #4685ff;
+  display: inline-block;
+  text-align: center;
+  margin:0 0.5rem 0.5rem 0;
+  /*padding:0 0.5rem;*/
+}
+.selected .count{
+  font-size: 0.6rem;
+  color:#444;
+  height: 1.25rem;
+  line-height: 1.25rem;
+}

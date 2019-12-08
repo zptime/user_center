@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>绑定手机号</title>
+    <link href="/static/resources/css/login/getpassport/base.css" type="text/css" rel="stylesheet" />
+    <link href="/static/resources/css/login/getpassport/forgot.css" type="text/css" rel="stylesheet"/>
+    <script>
+        document.write('<link rel="stylesheet" href="/static/pub/btImport/css/btImport.css?version=' +  Math.random() + '" /> ');
+    </script>
+    <style>
+        body{width: 840px;height: 430px;overflow: hidden;}
+        .btn-box{text-align: center;position: absolute;top:290px;width: 100%;}
+        button.btn-bind{width: 120px;border-radius: 4px; background-color: #308ce3;height: 30px; color: #fff; border: 0px;}
+        button:hover{background-color: rgba(70,133,255,.9)}
+        #content .mod-forgot {  min-height: 400px; position: relative;}
+        .mod-forgot {  height: 400px;  margin-left: 20px;  width: 840px; }
+    </style>
+</head>
+<body>
+<div id="wrapper">
+    <div id="content">
+		<div class="mod-forgot">
+			<ul class="mod-sub-nav">
+				<li class="mod-sub-list1 list1-active">填写家长信息</li>
+				<li class="mod-sub-list2">验证家长</li>
+				<li class="mod-sub-list3">完成邀请</li>
+			</ul>
+			<form action="" method="post" id="forgotsel">
+				<div class="mod-step-detail">
+					<div class="pass-input-container clearfix" id="pass-auth-select">
+						<input type="text" class="pass-input pass-input-forgot" name="relation" value="" id="relation"/>
+						<label class="pass-input-label input-label-new1 w260" for="relation">请输入称谓，例如：爸爸、妈妈</label>
+						<span class="fix-clear userName-clearbtn" id="userName_clearBtn"></span>
+						<span class="pass-input-msg l-h40"></span>
+					</div>
+					<div class="pass-input-container clearfix" id="pass-auth-select">
+						<input type="text" class="pass-input pass-input-forgot" name="username" value="" id="account"/>
+						<label class="pass-input-label input-label-new1 w260" for="account">请输入家长的账号或手机号</label>
+						<span class="fix-clear userName-clearbtn" id="userName_clearBtn"></span>
+						<span class="pass-input-msg l-h40"></span>
+					</div>
+					<div class="pass-input-container vcode-container clearfix">
+						<input type="text" class="pass-input pass-input-forgot vcode-input vcode-input-width" name="veritycode" value="" id="veritycode"/>
+						<label class="pass-input-label input-label-new1 vcode-label" for="veritycode">请输入验证码</label>
+						<img class="vcode-img vcode-img-big" alt="验证码图片" title="验证码图片" src="/api/get/imagecode" id="imgcode"/>
+						<a href="###" class="vcode-img-change p-t13" id="changecode">换一张</a>
+						<input type="hidden" name="captcha_str" value=""/>
+						<span class="pass-input-msg l-h40"></span>
+					</div>
+                    <div class="clearfix">
+                        <label style="float: left;line-height: 20px;">&nbsp;</label>
+                        <span class="pass-input-msg" style="line-height: 0px;" id="error-tip"></span>
+                    </div>
+					<div class="btn-box">
+						<button class="btn-bind" type="button" id="submit">下一步</button>
+						<input type="hidden" value="false" id="veritycode_flag">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</body>
+<script src="/static/pub/contrib/js/jquery.min.js"></script>
+<script src="/static/resources/js/person/family/step1.js"></script>
+</html>

@@ -1,0 +1,18 @@
+{% extends 'page/setting.html' %}
+
+{% block hx-title %}<title>无访问权限</title>{% endblock %}
+{% block hx-link %}
+    <style>
+        .box300-content {text-align: center;position:relative;top:150px;}
+        button{margin-top:50px;width: 150px;height: 32px;border: 1px solid #0088bb;
+                background-color:#0066cc;border-radius: 5px;color: #ffffff;}
+        button:hover{ background-color:#0088bb;}
+    </style>
+{% endblock %}
+{% block hx-head-extend %} {% endblock %}
+
+{% block hx-custom %}
+    <div class="box300-content">
+        <h3>无访问权限</h3>
+    </div>
+{% endblock %}

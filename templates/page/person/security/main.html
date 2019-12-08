@@ -1,0 +1,54 @@
+{% extends 'page/person/share/route.html' %}
+
+{% block mylink %}
+
+{% endblock %}
+
+{% block mycontent %}
+    <div id="content" class="security">
+        <div class="card-box hx-float-l">
+            <img src="/static/resources/images/icon/person/mobile.png">
+            <div class="c-msg">
+                <span>手机号码</span><br>
+                <span>{$ encrypt() $}</span>
+                <div class="tips">
+                    可用此手机号登录华校平台
+                </div>
+            </div>
+            <button class="btn-120 c-btn upmobile">{$ form.mobile ? '更换手机号':'绑定手机号'$}</button>
+        </div>
+        <div class="card-box hx-float-r">
+            <img src="/static/resources/images/icon/person/hxaccount.png">
+            <div class="c-msg">
+                <span>华校帐号</span><br>
+                <span>{$ get_user_name() $}</span>
+            </div>
+            <button class="btn-120 c-btn uppwd">修改密码</button>
+        </div>
+
+        <!--隐藏-->
+        <div id="modal-setpwd" style="display: none;">
+        <table class="table" style="border-collapse: separate;border-spacing: 20px;">
+            <tr>
+                <td>旧密码</td>
+                <td><input id="oldpwd" type="password" name="oldpwd" style="width: 330px;"></td>
+            </tr>
+            <tr>
+                <td>新密码</td>
+                <td><input id="newpwd" type="password" name="newpwd" style="width: 330px;"></td>
+            </tr>
+            <tr>
+                <td>重复新密码</td>
+                <td><input id="newpwd2" type="password" name="newpwd2" style="width: 330px;" onkeyup="pwdConfirm()"></td>
+            </tr>
+        </table>
+        <div id="tishi" style="display:none;color:#ff0000;text-align: center;">两次密码不相同</div>
+    </div>
+    </div>
+{% endblock %}
+
+{% block myscript %}
+    <script>
+        document.write('<script src="/static/resources/js/person/security/main.js?rnd=' + hxuc.version + '"><'+'/script>');
+    </script>
+{% endblock %}

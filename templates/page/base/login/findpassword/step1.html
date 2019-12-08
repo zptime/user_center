@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>找回密码-确认帐号</title>
+{#    <script>#}
+{#        /*PV量统计*/#}
+{#        var _hmt = _hmt || [];#}
+{#        (function() {#}
+{#          var hm = document.createElement("script");#}
+{#          hm.src = "https://hm.baidu.com/hm.js?335181d6e2081bdb34e8bfd2a2ee236b";#}
+{#          var s = document.getElementsByTagName("script")[0];#}
+{#          s.parentNode.insertBefore(hm, s);#}
+{#        })();#}
+{#    </script>#}
+    <link href="/static/resources/css/login/getpassport/base.css" type="text/css" rel="stylesheet" />
+    <link href="/static/resources/css/login/getpassport/forgot.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<div id="wrapper" class="">
+    <div class="L_header">
+        <div class="L_wrap">
+            <div class="logo">
+                <img src="/static/resources/images/login/findpassword/H_password.png" alt="华校Logo" width="363px" height="45px">
+            </div>
+        </div>
+    </div>
+	<div id="nav">
+		<div class="nav-2">
+			<div class="mod-nav clearfix">
+				<h1 class="page-type-notab">找回密码</h1>
+			</div>
+		</div>
+	</div>
+	<div id="content">
+		<div class="mod-forgot">
+			<ul class="mod-sub-nav">
+				<li class="mod-sub-list1 list1-active">确认帐号</li>
+				<li class="mod-sub-list2">安全验证</li>
+				<li class="mod-sub-list3">重置密码</li>
+			</ul>
+			<form action="" method="post" id="forgotsel">
+				<div class="mod-step-detail">
+					<p class="step-email-info">
+						请填写您需要找回的帐号
+					</p>
+					<div class="pass-input-container clearfix" id="pass-auth-select">
+						<input type="text" class="pass-input pass-input-forgot" name="username" value="" id="account"/>
+						<label class="pass-input-label input-label-new1 w260" for="account">请您输入手机</label>
+						<span class="fix-clear userName-clearbtn" id="userName_clearBtn"></span>
+						<span class="pass-input-msg l-h40"></span>
+					</div>
+					<div class="pass-input-container vcode-container clearfix">
+						<input type="text" class="pass-input pass-input-forgot vcode-input vcode-input-width" name="veritycode" value="" id="veritycode"/>
+						<label class="pass-input-label input-label-new1 vcode-label" for="veritycode">请输入验证码</label>
+						<img class="vcode-img vcode-img-big" alt="验证码图片" title="验证码图片" src="/api/get/imagecode" id="imgcode"/>
+						<a href="###" class="vcode-img-change p-t13" id="changecode">换一张</a>
+						<input type="hidden" name="captcha_str" value=""/>
+						<span class="pass-input-msg l-h40"></span>
+					</div>
+                    <div class="clearfix">
+                        <label style="float: left;line-height: 20px;">&nbsp;</label>
+                        <span class="pass-input-msg" style="line-height: 0px;" id="error-tip"></span>
+                    </div>
+					<div>
+						<input type="button" name="" value="下一步" class="pass-button-submit" id="submit"/>
+						<input type="hidden" value="false" id="veritycode_flag">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div id="foot">
+		<div class="mod-footer">
+			<div class="copy-box">
+                Copyright © 2015-2020 湖北省武汉市 All Rights Reserved.
+			</div>
+		</div>
+	</div>
+</div>
+<script src="/static/pub/contrib/js/jquery.min.js"></script>
+<script src="/static/resources/js/base/login/findpassword/step1.js"></script>
+</body>
+</html>

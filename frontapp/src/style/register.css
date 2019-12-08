@@ -1,0 +1,99 @@
+::-webkit-input-placeholder { /* WebKit browsers */
+  font-size:0.8rem;
+  color:#aaa;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  font-size:0.8rem;
+  color:#aaa;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  font-size:0.8rem;
+  color:#aaa;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+  font-size:0.8rem;
+  color:#aaa;
+}
+
+
+/*教师、家长注册样式*/
+.info{margin-top:1.5rem;}
+.info .weui-cell{width:17rem;}
+.info .vux-x-input{  padding:0 !important; }
+.info .vux-x-textarea{ padding:8px 0 !important;line-height: 1.2rem; }
+.info .warn{
+  font-size: 0.6rem;
+  color:#fd5555;
+  padding:0 0.75rem;
+  margin-bottom:0.5rem;
+}
+.info .base-info .title{
+  height: 2rem;
+  line-height: 2rem;
+  padding:0 0.75rem;
+  background-color: #fafafa;
+  font-size: 0.6rem;
+  color: #888;
+}
+.title span{
+  display: inline-block;
+  float:left;
+}
+.title .num{
+  line-height: 1rem;
+  margin-top: 0.5rem;
+  /*padding-top:1px;*/
+}
+.title .del{
+  color:#fd5555;
+}
+.info .base-info .detail .detail-item{
+  margin:0 0.75rem;
+  background-color: #fff;
+  height:2.75rem;
+  line-height:2.75rem;
+  color:#444;
+  font-size: 0.8rem;
+  border-bottom:1px solid #eee;
+}
+.detail-item-addr{
+  height: auto !important;
+  line-height: normal !important;
+}
+.detail-item-addr .detail-opt{
+  float:none !important;
+  display: block !important;
+}
+.border-bottom-none{
+  border-bottom:none !important;
+}
+.info .base-info .detail .detail-item span{
+  display: inline-block;
+  height: inherit;
+  float:left;
+}
+.detail-item .detail-title{
+  width:5rem;
+}
+.detail-title-long{
+  width:8rem !important;
+}
+.detail-item .relation{
+  margin-right:0.5rem;
+}
+.detail-item .sex-opt img{
+  width:1.25rem;
+  height: 1.25rem;
+  margin:0.75rem 0.5rem 0.75rem 0;
+}
+.detail-item .sex-opt .sex{
+  margin-right:2.7rem;
+}
+.detail-item .select-opt {
+  float: right !important;
+}
+.detail-item .select-opt img{
+  width:1rem;
+  height: 1rem;
+  margin:0.88rem 0;
+}

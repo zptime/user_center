@@ -1,0 +1,37 @@
+{% extends 'page/school/config/share/route.html' %}
+
+{% block mylink %}
+    <style>
+        .blueDiv{float:left;margin:0 40px 30px 0;text-align:center;line-height:60px;width:160px;height:60px;background-color: #83BDF5;color:white;border-radius: 4px;cursor:pointer}
+        .grayDiv{float:left;margin:0 40px 30px 0;text-align:center;line-height:60px;width:160px;height:60px;background-color: #EEEEEE;color:#444;border-radius: 4px;cursor:pointer}
+    </style>
+{% endblock %}
+{% block mycontent %}
+    <div style="background-color: white;width:100%">
+        <div class="frame" id='norm'  style="background-color: white;padding:50px;min-height: 400px;">
+            <div style="height:80px">
+                <a style="font-size: large">学校当前所开设的科目</a>
+                <button style="width: 120px;height:30px;border-radius: 5px;float:right" onclick="setModal()">设置科目</button>
+            </div>
+            <div>
+                <ul id="subContainer">
+                </ul>
+            </div>
+        </div>
+
+        <div id='setSub' hidden="hidden"  style="background-color: white;padding:50px;min-height: 400px;">
+            <div style="height:80px">
+                <a style="font-size: large">所有科目</a>
+                <button style="width: 50px;border-radius: 5px;float:right;margin-right:20px" onclick="cancelIt()">取消</button>
+                <button style="width: 50px;border-radius: 5px;float:right;margin-right:20px" onclick="keepIt()">保存</button>
+            </div>
+            <div id="subAll"></div>
+            <div style="clear: both"></div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block myscript %}
+    <script src="/static/resources/js/school/config/subject/subject.js"></script>
+{% endblock %}

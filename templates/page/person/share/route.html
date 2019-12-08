@@ -1,0 +1,91 @@
+{% extends 'page/setting.html' %}
+{% block hx-title %}<title>个人中心</title>{% endblock %}
+{% block hx-link %}
+    {% include 'page/base/package.html' %}
+    <script>
+        document.write('<link rel="stylesheet" href="/static/resources/css/main.css?version='+hxuc.version+'">');
+        document.write('<link rel="stylesheet" href="/static/resources/css/person/person.css?version='+hxuc.version+'">');
+    </script>
+    {% block mylink %}
+    {% endblock %}
+{% endblock %}
+{% block hx-head-extend %}
+{% endblock %}
+{% block app-name %}个人中心{% endblock %}
+
+{% block hx-custom-outerbefore %}
+    <div hidden="hidden">
+        <input id="nav_val" hidden="hidden" value="{{ nav_val }}">
+        <input id="user_type" hidden="user_type" value="{{ user_type }}">
+        <input id="recache" value="{{ recache }}">
+    </div>
+{% endblock %}
+{% block hx-custom %}
+    <div class="main-frame">
+        <div style="height: 30px;"></div>
+        <div class="person-firstcoke-box">
+            <div class="person-box">
+                <div class="person-photo-box">
+                    <img class="person-photo">
+                    <em class="up-person-photo-box">
+                        <img class="img-dis" src="/static/resources/images/icon/person/edit-dis.png" >
+                        <img class="img-active" src="/static/resources/images/icon/person/edit.png" >
+                    </em>
+                </div>
+                <div class="person-name">
+
+                </div>
+                <div class="person-school">
+
+                </div>
+            </div>
+        </div>
+        <div id="main-nav"class="main-nav">
+            <ul>
+                <li id="info">
+                    <a class="navblock {% ifequal 'info' nav_val %}active{% endifequal %}">个人信息</a>
+                    {% ifequal 'info' nav_val %}<hr>{% endifequal %}
+                </li>
+                <li id="security">
+                    <a class="navblock {% ifequal 'security' nav_val %}active{% endifequal %}">安全设置</a>
+                    {% ifequal 'security' nav_val %}<hr>{% endifequal %}
+                </li>
+{#                <li id="identity">#}
+{#                    <a class="navblock {% ifequal 'identity' nav_val %}active{% endifequal %}">身份管理</a>#}
+{#                    {% ifequal 'identity' nav_val %}<hr>{% endifequal %}#}
+{#                </li>#}
+                {% ifnotequal user_type user_type_teacher %}
+                <li id="family">
+                    <a class="navblock {% ifequal 'family' nav_val %}active{% endifequal %}">家庭管理</a>
+                    {% ifequal 'family' nav_val %}<hr>{% endifequal %}
+                </li>
+                {% endifnotequal %}
+                {% ifequal user_type user_type_student %}
+                <li id="class">
+                    <a class="navblock {% ifequal 'class' nav_val %}active{% endifequal %}">加入班级</a>
+                    {% ifequal 'class' nav_val %}<hr>{% endifequal %}
+                </li>
+                {% endifequal %}
+            </ul>
+        </div>
+    </div>
+    <div class="main-content">
+        {% block mycontent %}{% endblock %}
+        <div hidden="hidden">
+            <input id="id" type="hidden" value="{{ id }}">
+            <input id="account_id" type="hidden" value="{{ account_id }}">
+        </div>
+    </div>
+    <div style="clear: both"></div>
+{% endblock %}
+{% block hx-script %}
+    <script src="/static/pub/contrib/js/vue.js"></script>
+    <script>
+        document.write( " <script src='/static/resources/js/base/URLs.js?version=" + hxuc.version + " '></s" + "cript> " );
+        document.write( " <script src='/static/resources/js/base/utils.js?version=" + hxuc.version + " '></s" + "cript> " );
+        document.write( " <script src='/static/resources/js/base/resource.js?version=" + hxuc.version + " '></s" + "cript> " );
+        document.write( " <script src='/static/resources/js/share/cache.js?version=" + hxuc.version + " '></s" + "cript> " );
+        document.write( " <script src='/static/resources/js/person/share/route.js?version=" + hxuc.version + " '></s" + "cript> " );
+    </script>
+    {% block myscript %}{% endblock %}
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'page/school/config/share/route.html' %}
+
+{% block mylink %}
+
+{% endblock %}
+{% block mycontent %}
+
+    <div id="content" v-cloak>
+        <div class="right-content-core">
+            <div>
+                <div class="toolblock-box"><!--工具栏-->
+                    <div class="toolblock">
+                        <span class="hx-float-l">
+                            <label class="title">班级展示样式设置</label>
+                        </span>
+                    </div>
+                </div><!--工具栏-->
+                <div class="cfg-card">
+                    <table style="width: 100%;">
+                        <tr v-for="(key,data) in class_style" v-if="data.length>0">
+                            <td width="14%" class="col-label font-light">{$ get_section_name($key) $}当前班级样式:</td>
+                            <td width="10%" class="font-light">{$ current_style[$key].style_example $}</td>
+                            <td width="10%" class="col-label">更改样式:</td>
+                            <td style="text-align: left">
+                                <select id="style" style="width: 140px;" v-model="form.styleID[$key]">
+                                    <option v-for="item in data" value="{$ item.id $}">{$ item.style_example $}</option>
+                                </select></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="btm-box">
+                <button type="submit" class="button-light" onclick="save()">保存</button>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block myscript %}
+    <script>
+        document.write( " <script src='/static/resources/js/school/config/classstyle/main.js?version=" + hxuc.version + " '></s" + "cript> " );
+    </script>
+{% endblock %}

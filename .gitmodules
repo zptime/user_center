@@ -1,0 +1,6 @@
+[submodule "static/resources/common"]
+	path = static/resources/common
+	url = git@git.hbeducloud.com:/data/git/common/static/resources/common
+[submodule "templates/common"]
+	path = templates/common
+	url = git@git.hbeducloud.com:/data/git/common/templates/common

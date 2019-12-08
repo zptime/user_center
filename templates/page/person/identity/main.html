@@ -1,0 +1,16 @@
+{% extends 'page/person/share/route.html' %}
+
+{% block mylink %}
+{% endblock %}
+
+{% block mycontent %}
+    <div id="content" style="background-color: white;padding:20px">
+        这里身份信息
+    </div>
+{% endblock %}
+
+{% block myscript %}
+    <script>
+        document.write('<script src="/static/resources/js/person/identity/main.js?rnd=' + hxuc.version + '"><'+'/script>');
+    </script>
+{% endblock %}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Cropper</title>
+  <link rel="stylesheet" href="/static/pub/cropper/cropper.css">
+  <style>
+    body{
+        font-family: "microsoft yahei";
+        font-size: 14px;
+    }
+    .container {
+      width: 600px;
+      height: 280px;
+      margin: 20px auto;
+      background-color: #c4c5c3;
+    }
+    img {
+      max-width: 100%;
+    }
+    button{background-color: #308ce3;height: 22px;border-radius: 4px;border: none;width: 80px;color: #fff;font-family: "microsoft yahei"}
+{#    input[type="file"]#}
+    /* Override Cropper's styles */
+    .cropper-view-box,
+    .cropper-face {
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+
+  <div>
+      <input type="file" id="file-upload" onchange="upload_img(this)" style="display: none;"/>
+      <button type="button" onclick="openFile()"> 选择文件</button>
+      <span id="file_name_box">未选择任何文件</span>
+  </div>
+
+  <div class="">
+      <div class="container">
+            <img id="image">
+      </div>
+  </div>
+  <button type="button" onclick="rotate_left()" style="margin-right: 10px;"> 向左旋转</button>
+  <button type="button" onclick="rotate_right()"> 向右旋转</button>
+  <button type="button" id="submit_photo" style="display: none" onclick="save_photo()"></button>
+  <!-- Scripts -->
+  <script src="/static/pub/contrib/js/jquery.min.js"></script>
+  <script src="/static/pub/cropper/cropper.js"></script>
+  <script src="/static/pub/layer/layer.js"></script>
+  <script src="/static/resources/js/person/share/upload_photo.js"></script>
+</body>
+</html>

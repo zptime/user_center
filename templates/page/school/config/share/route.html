@@ -1,0 +1,36 @@
+{% extends 'page/school/share/route.html' %}
+
+{% block left-route %}
+    <ul>
+        {% if 'periodsection' in view_list %}
+            <li id="periodsection">
+                <a class="leftnavblock">学段学制</a>
+            </li>
+        {% endif %}
+        {% if 'manager' in view_list %}
+            <li id="manager">
+                <a class="leftnavblock">管理员设置</a>
+            </li>
+        {% endif %}
+        {% if 'upgrade' in view_list %}
+            <li id="upgrade">
+                <a class="leftnavblock">学年升级</a>
+            </li>
+        {% endif %}
+        {% if 'classstyle' in view_list %}
+            <li id="classstyle">
+                <a class="leftnavblock">班级样式</a>
+            </li>
+        {% endif %}
+        {% if 'subject' in view_list %}
+            <li id="subject">
+                <a class="leftnavblock">科目管理</a>
+            </li>
+        {% endif %}
+        {% if 'textbook' in view_list %}
+            <li id="textbook">
+                <a class="leftnavblock">教材管理</a>
+            </li>
+        {% endif %}
+    </ul>
+{% endblock %}

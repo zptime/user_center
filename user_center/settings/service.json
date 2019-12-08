@@ -1,0 +1,439 @@
+{
+    "service": [
+        {
+            "code": "user_center",
+            "name": "学校管理中心",
+            "type": "1",
+            "intranet_url": "http://127.0.0.1/index",
+            "internet_url": "http://usercenter.hbeducloud.com/index",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 0,
+            "is_cls_adviser_as_mgr": 1,
+            "classify": 1
+        },
+        {
+            "code": "awardsys_manager",
+            "name": "获奖信息系统-后台管理",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/manager",
+            "internet_url": "http://awardsys.hbeducloud.com/manager",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 0,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 1
+        },
+        {
+            "code": "awardsys",
+            "name": "获奖信息系统",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/teacher",
+            "internet_url": "http://awardsys.hbeducloud.com/teacher",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 2,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 1
+        },
+        {
+            "code": "course_choose",
+            "name": "选课系统",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://course_choose.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 1,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 1
+        },
+        {
+            "code": "moment@interact",
+            "name": "圈子",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/html/moment",
+            "internet_url": "http://interact.hbeducloud.com/html/moment",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 7,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 5
+        },
+        {
+            "code": "message",
+            "name": "消息中心",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://message.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 0,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 1
+        },
+        {
+            "code": "repair",
+            "name": "报修系统",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://repair.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 2,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 2
+        },
+        {
+            "code": "evaluate",
+            "name": "学生评价",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://evaluate.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 2,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 3
+        },
+        {
+            "code": "attendance",
+            "name": "考勤系统",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://attendance.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 2,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 2
+        },
+        {
+            "code": "teacher_source_manger",
+            "name": "教师云盘-管理",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/manager",
+            "internet_url": "http://pan.hbeducloud.com/manager",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 0,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 3
+        },
+        {
+            "code": "teacher_source",
+            "name": "教师云盘",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://pan.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 2,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 3
+        },
+        {
+            "code": "convert_service",
+            "name": "公共转码服务",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 0,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 1
+        },
+        {
+            "code": "oa",
+            "name": "办公OA",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://oa.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 2,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 2
+        },
+        {
+            "code": "classboard",
+            "name": "电子班牌",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://classboard.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 0,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 5
+        },
+        {
+            "code": "score",
+            "name": "成绩查询",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://score.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 2,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 3
+        },
+        {
+            "code": "dayoff",
+            "name": "请假调课",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://dayoff.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 2,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 2
+        },
+        {
+            "code": "cookbook",
+            "name": "食谱",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://cookbook.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 0,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 2
+        },
+        {
+            "code": "home_page",
+            "name": "个人门户",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://i.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 7,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 1
+        },
+        {
+            "code": "teacher_archive",
+            "name": "教师档案",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://teacherarchive.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 2,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 4
+        },
+        {
+            "code": "salaryv1",
+            "name": "工资系统",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://salary-v1.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 2,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 2
+        },
+        {
+            "code": "training_mgmt",
+            "name": "教师培训",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://training.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 2,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 4
+        },
+        {
+            "code": "mngcheck",
+            "name": "晨检",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://mngcheck.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 0,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 2
+        },
+        {
+            "code": "netagent",
+            "name": "邮件/日志/短信等外网网关",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 0,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 1
+        },
+        {
+            "code": "blog",
+            "name": "班级博客",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://blog.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 7,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 5
+        },
+        {
+            "code": "teacher_study_activity",
+            "name": "教师教研",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://jiaoyan.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 2,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 3
+        },
+        {
+            "code": "asset",
+            "name": "资产管理",
+            "type": 1,
+            "intranet_url": "http://127.0.0.1/",
+            "internet_url": "http://asset.hbeducloud.com/",
+            "access_key": "",
+            "secret_key": "",
+            "comments": "",
+            "access_mask": 0,
+            "is_cls_adviser_as_mgr": 0,
+            "classify": 2
+        }
+    ],
+    "role": [
+        {
+            "service_code": "user_center",
+            "role_code": "1",
+            "name": "学校管理中心-系统管理员"
+        },
+        {
+            "service_code": "user_center",
+            "role_code": "2",
+            "name": "学校管理中心-学生管理员"
+        },
+        {
+            "service_code": "user_center",
+            "role_code": "4",
+            "name": "学校管理中心-教师管理员"
+        },
+        {
+            "service_code": "awardsys_manager",
+            "role_code": "1",
+            "name": "获奖信息-系统管理"
+        },
+        {
+            "service_code": "course_choose",
+            "role_code": "1",
+            "name": "选课系统-系统管理"
+        },
+        {
+            "service_code": "repair",
+            "role_code": "1",
+            "name": "报修系统-系统管理员"
+        },
+        {
+            "service_code": "evaluate",
+            "role_code": "1",
+            "name": "学生评价-系统管理员"
+        },
+        {
+            "service_code": "attendance",
+            "role_code": "1",
+            "name": "考勤系统-系统管理员"
+        },
+        {
+            "service_code": "teacher_source_manager",
+            "role_code": "1",
+            "name": "教师云盘-系统管理员"
+        },
+        {
+            "service_code": "oa",
+            "role_code": "1",
+            "name": "办公OA-系统管理员"
+        },
+        {
+            "service_code": "dayoff",
+            "role_code": "1",
+            "name": "请假系统-系统管理员"
+        },
+        {
+            "service_code": "cookbook",
+            "role_code": "1",
+            "name": "食谱-系统管理员"
+        },
+        {
+            "service_code": "teacher_archive",
+            "role_code": "1",
+            "name": "教师档案-系统管理员"
+        },
+        {
+            "service_code": "salaryv1",
+            "role_code": "1",
+            "name": "工资系统-系统管理员"
+        },
+        {
+            "service_code": "training_mgmt",
+            "role_code": "1",
+            "name": "教师培训-系统管理员"
+        },
+        {
+            "service_code": "mngcheck",
+            "role_code": "1",
+            "name": "晨检系统-系统管理员"
+        },
+        {
+            "service_code": "blog",
+            "role_code": "1",
+            "name": "班级博客-系统管理员"
+        },
+        {
+            "service_code": "teacher_study_activity",
+            "role_code": "1",
+            "name": "教师教研-系统管理员"
+        },
+        {
+            "service_code": "asset",
+            "role_code": "1",
+            "name": "资产管理-系统管理员"
+        }
+    ]
+}

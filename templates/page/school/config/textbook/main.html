@@ -1,0 +1,137 @@
+{% extends 'page/school/config/share/route.html' %}
+
+{% block mylink %}
+    <style>
+        .grad li{float:left;list-style:none;padding:15px}
+        .table-form label.required:before{content: '*';color: #f74747;}
+        #multiLi li{margin-right:20px;overflow: hidden;text-overflow: ellipsis;-o-text-overflow:ellipsis;}
+    </style>
+{% endblock %}
+{% block mycontent %}
+    <div id="content" v-cloak>
+        <div class="right-content-top">
+            <div class="grade-box">
+                <div class="grade-all">
+                    <span class="lab">年级</span>
+                    <span class="split">|</span>
+                    <span class="lab val" :class="grade_num==''?'active':''" flagReload="grade" grade="" onclick="reloadGrid(this,null)">全部</span>
+                </div>
+                <div class="grade-li">
+                    <ul>
+                        <li v-for="grade in grade_list" :class="grade_num==grade.grade_num?'active':''" flagReload='grade' grade="{$grade.grade_num$}" onclick="reloadGrid(this,null)">
+                            {$ grade.grade_name $}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="grade-box">
+                <div class="grade-all">
+                    <span class="lab">科目</span>
+                    <span class="split">|</span>
+                    <span class="lab val" :class="subject_id==''?'active':''" flagReload="subject" subject="" subId="" onclick="reloadGrid(null,this)">全部</span>
+                </div>
+                <div class="grade-li">
+                    <ul id="multiLi">
+                        <li title="{$ subject.name $}" v-for="subject in subject_list_disp" :class="subject_id==subject.id?'active':''" flagReload='subject' subject="{$subject.name$}" subId="{$subject.id$}" onclick="reloadGrid(null,this)">
+                            {$ subject.name $}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-content-core">
+            <div class="toolblock-box"><!--工具栏-->
+                <div class="toolblock">
+                    <span class="hx-float-l">
+                        <label v-show='!frozen_flag' class="desc">学校管理和学生的学习需要依赖您所设置的学科教材，请按学校实际情况添加</label>
+                    </span>
+                </div>
+            </div><!--工具栏-->
+
+            <div class="class-list-box">
+                <div class="one-card" v-for="grade in grade_list" v-show="grade_num==''||grade_num==grade.grade_num">
+                    <p class="table-title">
+                        <span class="title-left middle">{$ grade.grade_name $}</span>
+                        <span class="title-right middle">
+                            <span grade_num="{$grade.grade_num$}" grade-name="{$ grade.grade_name $}" class="hx-margin20-l" onclick="add(this)">
+                                <img class="middle" src="/static/resources/images/icon/icon-add.png">
+                                <label class="middle oper">新增</label>
+                            </span>
+                        </span>
+                    </p>
+                    <div class="table-box">
+                        <table>
+                            <thead>
+                                <td width="35%">学科</td>
+                                <td width="45%">教材</td>
+                                <td width="15%">操作</td>
+                            </thead>
+                            <tbody>
+                                <tr v-for="textbook in textbook_list | filterBy grade.grade_num in 'grade_num'" v-if="subjectName==''||subjectName==textbook.subject_name"   :class=" $index%2?'even':'odd'" >
+                                    <td>{$ textbook.subject_name $}</td>
+                                    <td>{$ textbook.textbook_name $}</td>
+                                    <td>
+                                        <span class="more-oper mytooltip">
+                                            ···
+                                            <span class="mytooltiptext">
+                                                <li textbook-id="{$ textbook.id $}" textbook-name="{$ textbook.textbook_name $}" onclick="del(this)">删除</li>
+                                            </span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+            <div id="addBook" hidden="hidden">
+                <div id="adminContainer">
+                    <table id="tableAdd" class="table-form" style="border-collapse:separate; border-spacing:20px 10px;">
+                        <tr>
+                            <td>
+                                <label>年级：</label>
+                            </td>
+                            <td>
+                                <select id="tbGrade" style="width:318px;background-color: white" onchange="locateDetail()"  disabled="disabled">
+                                        <option value="{$ grade.grade_num $}" v-for="grade in grade_list">{$ grade.grade_name $}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>科目</label>
+                            </td>
+                            <td>
+                                <select id="selSubject" style="width:318px" onchange="locateDetail()">
+                                        <option value="">--请选择--</option>
+                                        <option value="{$ subject.id $}" v-for="subject in subject_list">{$ subject.name $}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="required" for="CH_selTextbook">教材</label>
+                            </td>
+                            <td>
+                                <select id="selTextbook" style="width:318px;" check="CH_selTextbook">
+                                        <option value="">--请选择--</option>
+                                        <option value="{$ book.id $}" v-for="book in selBookList">{$ book.textbook_name $}</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+    </div>
+
+{% endblock %}
+
+{% block myscript %}
+    <script>
+        document.write('<script src="/static/resources/js/school/config/textbook/main.js?rnd='+Math.random()+'"><'+'/script>');
+    </script>
+{% endblock %}

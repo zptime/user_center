@@ -1,0 +1,144 @@
+{% extends 'page/school/manage/share/route.html' %}
+
+{% block mylink %}
+    <script>
+        document.write('<link rel="stylesheet" href="/static/pub/btImport/css/btImport.css?version=' +  hxuc.version + '" /> ');
+    </script>
+{% endblock %}
+{% block mycontent %}
+    <div id="content" v-cloak>
+        <div class="right-content-core">
+            <div class="toolblock-box"><!--工具栏-->
+                <div class="toolblock">
+                    <span class="hx-float-l">
+                        <span v-show="frozen_flag" class="hx-margin20-r">
+                            <span class="breadcrumbs-box">
+                                <a @click="switch_frozen_flag(false)">家长管理</a>
+                                <span class="split">></span>
+                                <a>冻结的家长</a>
+                            </span>
+                        </span>
+                        <span>
+                            <input type="checkbox" id="grid_multipleBtn"><label>全选</label></input>
+                        </span>
+                        <span v-show="!frozen_flag&&multiple" onclick="freeze()" class="tool-cell hx-margin20-l">
+                            冻结家长
+                        </span>
+                        <span v-show="frozen_flag&&multiple" onclick="freeze()" class="tool-cell hx-margin20-l">
+                            解除冻结
+                        </span>
+                        <span v-show="multiple" onclick="restpwd()" class="tool-cell hx-margin20-l">
+                            重置密码
+                        </span>
+                        <span v-show="frozen_flag&&multiple" onclick="del()" class="tool-cell hx-margin20-l">
+                            删除
+                        </span>
+                    </span>
+                    <span class="hx-float-r">
+                        <span v-show="!frozen_flag" class="tool-cell middle" @click="switch_frozen_flag(true)">
+                            <span>冻结的家长</span>
+                        </span>
+                    </span>
+                </div>
+
+                <div class="toolblock">
+                        <span class="hx-float-l">
+                            <select id="grade_num" v-model="grade_num" @change="grade_id_chged" placeholder="--请选择--">
+                                <option value="" grade-name="">全部年级</option>
+                                <option v-for="grade in grade_list" value="{$grade.grade_num$}" grade-name="{$grade.grade_name$}">{$ grade.grade_name $}</option>
+                            </select>
+                            <select class="hx-margin20-l" id="class_id" v-model="class_id" @change="grade_id_chged" placeholder="--请选择--">
+                                <option value="">全部班级</option>
+                                <option v-for="class in class_list | filterBy grade_num in 'grade_num'" value="{$class.id$}">{$ class.class_name $}</option>
+                            </select>
+                            <input class="hx-margin20-l" id="full_name" name="full_name" placeholder="请输入姓名">
+                            <button type="button" class="hx-margin20-l" onclick="reloadGrid()">查询</button>
+                        </span>
+                        <span class="hx-float-r">
+                            <span v-show="!frozen_flag" class="tool-cell middle hx-margin20-l" onclick="add()">
+                                <img class="middle-img" src="/static/resources/images/icon/icon-add.png">
+                                <span class="middle-context">新增</span>
+                            </span>
+                            <span v-show="!frozen_flag" class="tool-cell middle hx-margin20-l" onclick="importExcel()">
+                                <img class="middle-img" src="/static/resources/images/icon/icon-import.png">
+                                <span class="middle-context">导入</span>
+                            </span>
+                            <span class="tool-cell middle hx-margin20-l" onclick="exportExcel()">
+                                <img class="middle-img" src="/static/resources/images/icon/icon-export.png">
+                                <span class="middle-context">导出</span>
+                            </span>
+                        </span>
+                </div>
+
+            </div><!--工具栏-->
+            <div class="grid">
+                <table id="grid"></table>
+                <div id="pager"></div>
+            </div>
+        </div>
+
+        <div>
+            <div id="modal_add" style="display: none;height: 345px;">
+                <form>
+                    <table class="table-form">
+                        <tr>
+                            <th width="14%"></th>
+                            <th width="35%"></th>
+                            <th width="14%"></th>
+                            <th width="35%"></th>
+                        </tr>
+                        <tr>
+                            <td><label class="required" for="CH_full_name">姓名</label></td>
+                            <td><input type="text" name="full_name" v-model="form.full_name" check="CH_full_name"  placeholder="输入姓名"></td>
+                            <td><label class="required" for="CH_sex">性别</label></td>
+                            <td>
+                                <label class="radio-container"><input type="radio" name="sex" value="男" v-model="form.sex" check="CH_sex"/>男</label>
+                                <label class="radio-container"><input type="radio" name="sex" value="女" v-model="form.sex" check="CH_sex"/>女</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="required" for="CH_mobile">手机号</label></td>
+                            <td><input type="tel" v-model="form.mobile" name="mobile" check="CH_mobile" placeholder="输入手机号"></td>
+                            <td><label>身份证</label></td>
+                            <td><input type="text" v-model="form.id_card" name="id_card" placeholder="输入身份证号码"></td>
+                        </tr>
+                    </table>
+
+                    <table class="table-form">
+                        <tr class="relation">
+                            <td width="13%" class="top-title">关联学生信息</td>
+                            <td width="40%">&nbsp;</td>
+                            <td width="13%">&nbsp;</td>
+                            <td width="25%" class="top-btn-box">
+                                <span @click="add_child()" class="btn-box">
+                                    <img src="/static/resources/images/icon/icon-add.png">
+                                    添加关联学生
+                                </span>
+                            </td>
+                        </tr>
+                        <tr class="relation" v-for="child in form.children">
+                            <td width="111px;"><label class="required" for="CH_student_id">姓名/学籍号</label></td>
+                            <td>
+                                <input type="text" v-model="child.student_id" hidden="hidden">
+                                <input id="student_id_{$$index$}" type="text" v-model="child.student_nameANDcode" name="student_id"
+                                    style="width: 260px;" index="{$$index$}"  student-id="" check="CH_student_id" placeholder="请输入学生姓名或学籍号">
+                            </td>
+                            <td>与学生关系</td>
+                            <td><input type="text" v-model="child.relation" style="width:160px;"placeholder="请输入与学生的关系">
+                                <span type="button" class="remove" @click="remove_child( $index )">×</span></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block myscript %}
+    <script src="/static/pub/jquery-ui/jquery-ui.min.js"></script>
+    <script>
+        document.write( " <script src='/static/pub/btImport/js/btImport.js?version=" + hxuc.version + " '></s" + "cript> " );
+        document.write( " <script src='/static/resources/js/school/manage/parent/main.js?version=" + hxuc.version + " '></s" + "cript> " );
+    </script>
+{% endblock %}

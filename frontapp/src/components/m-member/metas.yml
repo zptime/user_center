@@ -1,0 +1,120 @@
+tags:
+  zh-CN:
+    - 人员列表操作（展示、选择、编辑、删除）
+    - 选择人员实例（/m/phone/choosePersonTest），具体使用参照ChoosePersonTest.vue
+    - 选择通知对象实例（/m/phone/chooseTargetTest），具体使用参照ChooseTargetTest.vue
+props:
+  groupId:
+    value: ''
+    zh-CN: '群组id'
+  origin:
+    value: [], 举个栗子[{
+      "data": [{//人员数据列表
+         "account_id":"13",
+         "avatar":"http://test-usercenter.hbeducloud.com:8088/school_center_dev/1/3b72b9f01a564a2496931206dc43976a.jpg",
+         "desc":"老师",
+         "is_creator":"1",
+         "school_id":"1",
+         "user_type_id":"2",
+         "username":"赵欣",
+      }],
+      "id":'group_id',//班级、群组id
+      "title":'群组成员',//标题
+      "number":1,//数组长度
+      "show":true //是否默认显示人员列表
+    }]
+    zh-CN: '创建人员列表，初始传入列表数据'
+  username:
+    value: 'username'
+    zh-CN: '人员名称字段名'
+  avatar:
+    value: 'avatar'
+    zh-CN: '人员头像字段名'
+  toggleBtn:
+    value: false
+    zh-CN: 是否可以通过标题行来隐藏和显示人员列表数据，默认不可以
+  removeBtn:
+    value: false
+    zh-CN: 是否处于编辑状态（出现'批量编辑'、'移除按钮'），默认否
+  chooseBtn:
+    value: false
+    zh-CN: 是否处于选择状态（出现'全选'、'取消全选'），默认否
+  showDesc:
+    value: false
+    zh-CN: 是否显示人员列表中的人员描述，默认不显示
+  showTotal:
+    value: false
+    zh-CN: 是否显示群组的总人数，默认不显示
+  showSearch:
+    value: false
+    zh-CN: 是否显示搜索框，默认不显示
+  showChoose:
+    value: false
+    zh-CN: 是否显示已选人员及个数统计，默认不显示
+  showOptBtn:
+    value: false
+    zh-CN: 是否显示底部操作按钮(确定，取消)，默认不显示
+data:
+  members:
+    value: []
+    zh-CN: 人员列表数据
+events:
+  on-init:
+    params: ''
+    zh-CN: '处理完成后，刷新页面数据'
+  on-cancel:
+    params: ''
+    zh-CN: '点击取消按钮时触发，当showOptBtn为true时，才会显示，可选事件'
+  on-sure:
+    params: '`(value)`'
+    zh-CN: '点击确定按钮时触发，返回已选择的人员列表数据，当showOptBtn为true时，才会显示，可选事件'
+slots:
+  default:
+    en: 'content slot for `flexbox-item`'
+    zh-CN: '标题行的内容插槽'
+
+methods:
+  isShow:
+    params: '`(index)`'
+    zh-CN: '人员详细列表的展开和收缩，例如：通过群组成员标题控制群组成员的展开和收缩'
+  avatarKey:
+    params: '`(item)`'
+    zh-CN: '通过传入的某个字段获取用户的头像，默认为avatar'
+  nameKey:
+    params: '`(item)`'
+    zh-CN: '通过传入的某个字段获取用户的姓名，默认为username'
+  fillMembers:
+    params: '`(members)`'
+    zh-CN: '填充人员列表数组，即初始化'
+  getMemberLength:
+    params: '`(member)`'
+    zh-CN: '获取传入列表数组的长度'
+  addMember:
+    params: '`(parentIndex,items)`'
+    zh-CN: '在某群组中添加成员'
+  removeMember:
+    params: '`(parentIndex,items)`'
+    zh-CN: '在某群组中删除成员'
+  bulkEdit:
+    params: '`(value)`'
+    zh-CN: '批量编辑事件，进入批量删除页面(value=delete)或者已选择人员页面(value=choose)'
+  closeBulkPopup:
+    params: ''
+    zh-CN: '关闭批量编辑popup页面'
+  toggleRotate:
+    params: '`(rotateFlag,rotateAngle)`'
+    zh-CN: '关闭、收缩图片显示的旋转（向上、向下或者向左、向右）'
+  toggleCheckAll:
+    params: '`(pIndex)`'
+    zh-CN: ' 某群组或班级的全选、取消全选事件'
+  toggleCheckOne:
+    params: '`(pIndex,cIndex)`'
+    zh-CN: ' 某群组或班级内成员的选择、取消选择事件'
+  choosePerson:
+    params: ''
+    zh-CN: ' 获取已经被选择的成员列表'
+
+changes:
+  1.0.0:
+    zh-CN:
+      - 人员列表操作（展示、选择、编辑、删除）

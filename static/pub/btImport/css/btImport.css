@@ -1,0 +1,32 @@
+/**
+ * Created by jie on 2017/4/11.
+ */
+
+/*layer import */
+.layui-layer .modal-import-box{margin: -10px 10px;}
+.modal-import-box .mod-guide-container{text-align:left;overflow: hidden;}
+/*.modal-import-box .mod-step-content{height: 300px;}*/
+.modal-import-box .mod-sub-nav{height:34px;background:url(/static/resources/images/guide/mod_sub_nav.png) no-repeat 0 0;margin:10px 0;line-height:34px;color:#888;}
+.modal-import-box .mod-sub-nav li{float:left;padding-left:66px}
+.modal-import-box .mod-sub-list1{width:175px}
+.modal-import-box .mod-sub-list2{width:163px}
+.modal-import-box .mod-sub-nav li.list1-active{background:url(/static/resources/images/guide/sub_nav_1.png) no-repeat 0 0;color:#2e82ff}
+.modal-import-box .mod-sub-nav li.list2-active{background:url(/static/resources/images/guide/sub_nav_2.png) no-repeat 0 0;color:#2e82ff;margin-left:-12px;padding-left:78px}
+.modal-import-box .mod-sub-nav li.list3-active{background:url(/static/resources/images/guide/sub_nav_3.png) no-repeat 0 0;color:#2e82ff;margin-left:-12px;padding-left:78px;width:163px}
+.modal-import-box .mod-step-content .step-1,
+.modal-import-box .mod-step-content .step-2,
+.modal-import-box .mod-step-content .step-3{/*height:230px;overflow: hidden;*/}
+.modal-import-box .mod-step-content .step-1 .download-box{margin: 60px 0 0 0;}
+.modal-import-box .mod-step-content .step-1 .file-box{margin: 30px 0 0 0;}
+.modal-import-box .mod-step-content .step-1 .file-box .file-desc{display: inline-block;vertical-align: middle;font-size: 14px;}
+.modal-import-box .mod-step-content .step-1 .file-box .file-name-box{display: block;margin: 20px 0 0 0;}
+.modal-import-box .mod-step-content .step-1 .file-box .file-error-box{display: block;color: #f74747;margin: 10px 0 0 0;}
+.modal-import-box .mod-step-content .step-2 .error-box{margin: 20px 0;height: 260px;}
+.modal-import-box .mod-step-content .step-2 .error-box .error-msg{color: #308ce3;}
+.modal-import-box .mod-step-content .step-2 .error-box .error-data{max-height: 240px;line-height:24px;}
+.modal-import-box .mod-step-content .step-2 .error-box .error-data .e-box{height: 240px;}
+.modal-import-box .mod-step-content .step-2 .waiting-box{text-align: center;margin:100px auto 0 auto;}
+.modal-import-box .mod-step-content .step-2 .waiting-box .gif-box{display: inline-block;vertical-align: middle;width: 40px;height: 40px;}
+.modal-import-box .mod-step-content .step-3 .import-success{margin: 100px 0 0 0;text-align:center;}
+.modal-import-box .mod-step-content .step-3 .icon-success{display:inline-block;vertical-align:middle;width: 40px;height: 40px;margin-right: 15px;}
+.modal-import-box .mod-step-content .bottom-btn-box{position:absolute;top: 390px;text-align: center;width: 780px}

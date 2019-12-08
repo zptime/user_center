@@ -1,0 +1,58 @@
+{% extends 'page/school/config/share/route.html' %}
+
+{% block mylink %}
+
+{% endblock %}
+{% block mycontent %}
+
+    <div id="content" v-cloak>
+        <div class="right-content-core">
+            <div>
+                <div class="toolblock-box"><!--工具栏-->
+                    <div class="toolblock">
+                        <span class="hx-float-l">
+                            <label class="title">升年级设置</label>
+                        </span>
+                    </div>
+                </div><!--工具栏-->
+                <div class="cfg-card">
+                    <div>
+                        <p class="tips">
+                            提示：可选择手动升级学年或者设置自动升年级日期，每年当日将自动升级学年
+                        </p>
+                    </div>
+                    <div style="margin: 20px 0">
+                        <font color="308ce3" weight="bold">当前学年 {$ current_term $}</font>
+                        <button type="button" class="hx-margin20-lr" onclick="upgrade()">升年级</button>
+                        <button  type="button" onclick="upgrade_back()">回退年级</button>
+                    </div>
+                    <div style="margin: 20px 0">
+                        自动升年级日期
+                        <select id="month" name="month" v-model="month">
+                            <option v-for="item in month_list">
+                                {$ item $}
+                            </option>
+                        </select>
+                        月
+                        <select id="day" name="day" v-model="day">
+                            <option v-for="item in c_day_list">
+                                {$ item $}
+                            </option>
+                        </select>
+                        日
+                    </div>
+                </div>
+            </div>
+            <div class="btm-box">
+                <button class="button-light" onclick="save()">保存</button>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block myscript %}
+    <script>
+        document.write( " <script src='/static/resources/js/school/config/upgrade/main.js?version=" + hxuc.version + " '></s" + "cript> " );
+    </script>
+{% endblock %}

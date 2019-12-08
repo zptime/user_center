@@ -1,0 +1,53 @@
+m-recordAudioView使用方法
+
+属性介绍
+1.recordState
+表示当前视图录音的状态 只有 0，1，2三种。0：正在录音  1.停止录音 2.初始状态
+
+2.isRecording
+是否真正录音
+
+3.showHandleButton
+确定、取消按钮的显示的隐藏
+
+方法介绍
+
+1.recordAudio()
+根据recordState的值进行操作
+recordState == 0时 录音开始 ，发送事件on-startRecord给父组件
+
+recordState == 1时 停止开始 ，发送事件on-stopRecord给父组件
+
+recordState == 1时 初始状态
+
+
+2.stopRecordBySuper  录音时间到所执行的方法 由父组件调用//popup点击遮罩，需要在popup的on-hide方法中执行这一句
+m-recordAudioView在父组件中绑定ref，e.g：ref='recordView'，父组件调用方法this.$refs.recordView.stopRecordBySuper();
+
+3.uploadRecord（time）  确定按钮点击，发送事件on-makeSure给父组件，传递录音时长给父组件
+
+4.cancleRecord 取消按钮点击，发送事件on-cancleClick给父组件.
+
+注意：
+1.m-recordAudioView配合popup使用，需要在popup隐藏的时候，popup的回调@on-hide中关闭微信录音，以及调用m-recordAudioView的stopRecordBySuper方法。
+
+2.父组件中必须制定popup的高度为12.5rem
+
+3.m-recordAudioView只负责视图显示和记录录音时间，以及点击事件传递，不依赖微信的JSSDK,JSSDK的使用在父组件中；
+
+4.m-recordAudioView已经定死了一分钟的录音时间，录音时间到自动处理UI，不需要父组件调用stopRecordBySuper;
+
+5.父组件接受的on-makeSure事件中，需要在微信上传音频完毕中，关闭popup。
+
+6.父组件中，录音时间到达微信录音上限一分钟的时候，需要在JSSDK的onVoiceRecordEnd方法中，关闭popup。
+
+
+
+整体使用例子：
+父组件中：
+  <popup v-model="needRecordAudio" height="12.5rem" @on-hide="popupHide" is-transparent >
+       <recordView ref="audioView" @on-startRecord="startRecrod" @on-stopRecord="stopRecord" @on-makeSure="makeSure" @on-cancleClick="cancelClick"></recordView>
+  </popup>
+
+
+完整的demo代码，TestLogin中的代码；

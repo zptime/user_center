@@ -1,0 +1,97 @@
+{% extends 'page/root/share/route.html' %}
+
+{% block mylink %}
+    <script>
+        document.write('<link rel="stylesheet" href="/static/pub/btImport/css/btImport.css?version=' +  hxuc.version + '" /> ');
+    </script>
+{% endblock %}
+{% block mycontent %}
+    <div id="content" v-cloak style="background-color: white;padding:50px">
+        <div class="toolblock-box"><!--工具栏-->
+            <div class="toolblock">
+                <span class="hx-float-l">
+                    <span v-show="frozen_flag" class="tool-cell hx-margin20-r" @click="switch_frozen_flag(false)">
+                        科目管理 > 冻结的科目
+                    </span>
+                    <span>
+                        <input type="checkbox" id="grid_multipleBtn"><label style="margin-left: 12px;font-size: 14px;color:#444444">全选</label></input>
+                    </span>
+                    <span v-show="frozen_flag&&multiple" onclick="freeze()" class="tool-cell hx-margin20-l">
+                        解冻
+                    </span>
+                    <span v-show="frozen_flag&&multiple" onclick="del()" class="tool-cell hx-margin20-l">
+                        删除
+                    </span>
+                    <span v-show="!frozen_flag&&multiple" onclick="freeze()" class="tool-cell hx-margin20-l">
+                        冻结科目
+                    </span>
+                </span>
+                <span class="hx-float-l">
+                    <span v-show="!frozen_flag" class="textForSub" @click="switch_frozen_flag(true)">
+                        <span>冻结的科目</span>
+                    </span>
+                </span>
+            </div>
+            <div class="toolblock">
+                <span class="hx-float-l">
+                    <input id="subjectName" placeholder="请输入科目名称">
+                    <button type="button" class="hx-margin20-l" onclick="reloadGrid()">查询</button>
+                </span>
+                <span class="hx-float-r">
+                        <span v-show="!frozen_flag" class="tool-cell middle hx-margin20-l" onclick="add()">
+                            <img src="/static/resources/images/icon/icon-add.png">
+                            <span>新增</span>
+                        </span>
+                        <span v-show="!frozen_flag" class="tool-cell middle hx-margin20-l" onclick="importExcel()">
+                            <img src="/static/resources/images/icon/icon-import.png">
+                            <span>导入</span>
+                        </span>
+                        <span v-show="!frozen_flag" class="tool-cell middle hx-margin20-l" onclick="exportExcel(1)">
+                            <img src="/static/resources/images/icon/icon-export.png">
+                            <span>导出</span>
+                        </span>
+                        <span v-show="frozen_flag" class="tool-cell middle hx-margin20-l" onclick="exportExcel(0)">
+                            <img src="/static/resources/images/icon/icon-export.png">
+                            <span>导出</span>
+                        </span>
+                </span>
+            </div>
+        </div><!--工具栏-->
+        <div class="grid">
+                <table id="grid"></table>
+                <div id="pager"></div>
+        </div>
+    </div>
+
+            <div id="addSub" hidden="hidden">{% comment %}添加课程{% endcomment %}
+                <div id="adminContainer" style="margin-top:80px;text-align: center">
+                    <label>课程名称</label>
+                    <input id='subNameAdd' class="hx-margin20-l" style="width:280px;text-align: center" placeholder="请输入课程名称">
+                </div>
+            </div>
+            <div id="editSub" hidden="hidden">{% comment %}编辑课程{% endcomment %}
+                <div id="adminContainer" style="margin-top:80px;text-align: center">
+                    <label>课程名称</label>
+                    <input id='subName' class="hx-margin20-l" style="width:280px;text-align: center" placeholder="请输入课程名称">
+                </div>
+            </div>
+            <div id="freezeSub" style="width:100%" hidden="hidden">{% comment %}冻结课程{% endcomment %}
+                <div id="adminContainer" style="padding:100px 0 0 50px ">
+                    <div style="width:100%;float:left">
+                        <button type="button" style="float:left;width:20px;height:20px;border-radius:100%"></button>
+                        <a style="float:left">您确定冻结“”科目吗？</a>
+                    </div>
+                    <div style="width:100%;float:left">
+                       <a style="float:left">冻结后的科目，请在冻结的科目中进行查看！</a>
+                    </div>
+                </div>
+            </div>
+
+{% endblock %}
+
+{% block myscript %}
+    <script>
+        document.write( " <script src='/static/pub/btImport/js/btImport.js?version=" + hxuc.version + " '></s" + "cript> " );
+        document.write('<script src="/static/resources/js/root/subject/main.js?rnd='+Math.random()+'"><'+'/script>');
+    </script>
+{% endblock %}

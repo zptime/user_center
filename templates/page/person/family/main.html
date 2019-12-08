@@ -1,0 +1,46 @@
+{% extends 'page/person/share/route.html' %}
+
+{% block mylink %}
+{% endblock %}
+
+{% block mycontent %}
+    <div id="content" class="family" v-cloak>
+
+        {% ifequal user_type user_type_student %}
+            <button class="btn-120 btn-add-parent" onclick="openStep1()">邀请家长</button>
+        {% endifequal %}
+
+        <div>
+            <div v-for="item in parent_student_list" class="card-box hx-float-l">
+                <img :src="get_img_url($index)">
+                <div class="c-msg">
+                    <div class="name">
+                        {$ form.user_type==1 ? item.parent_full_name : item.student_full_name $}
+                    </div>
+                    <div class="tips">
+                        {$ get_tips($index) $}
+                    </div>
+                </div>
+                <div class="btn-box">
+                    <button v-if="form.user_type==4&&item.status==1" index="{$ $index $}" onclick="dealApply(this,1)">同意</button>
+                    <button v-if="form.user_type==4&&item.status==1"  style="margin-left: 20px;" index="{$ $index $}" onclick="dealApply(this,0)">拒绝</button>
+                    <a v-if="form.user_type==1&&item.status==2" class="e-btn" index="{$ $index $}" onclick="editRelation(this)">修改称谓</a>
+                    <a v-if="item.status==2||item.status==3" class="e-btn" index="{$ $index $}" onclick="del(this)">删除</a>
+                </div>
+            </div>
+        </div>
+        <!--影藏-->
+        <div>
+            <div id="modal-edit-relation" style="display: none;">
+                <input name="relation" class="relation-name" placeholder="请输入称谓，例如：爸爸、妈妈" autocomplete="off">
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block myscript %}
+    <script>
+        document.write('<script src="/static/resources/js/person/family/main.js?rnd=' + hxuc.version + '"><'+'/script>');
+    </script>
+{% endblock %}

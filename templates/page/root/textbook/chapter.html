@@ -1,0 +1,56 @@
+{% extends 'page/root/share/route.html' %}
+{% block mylink %}
+    <script>
+        document.write('<link rel="stylesheet" href="/static/pub/zTree/css/zTreeStyle.css?version=' +  hxuc.version + '" /> ');
+    </script>
+    <style>
+        .chapter .cha-title{margin: 20px 0;width: 100%;}
+        .cha-title .t-left{width: 20%;display: inline-block;vertical-align: middle;text-align: left;}
+        .cha-title .t-center{width: 60%;display: inline-block;vertical-align: middle;text-align: center;}
+        .cha-title .t-right{width: 19%;display: inline-block;vertical-align: middle;text-align: right;}
+        #treeContainer{margin: 50px 20px 20px 200px;}
+        .tree-title{position:absolute;float: left;z-index: 9;transform: translate(-30px, 10px);font-size: 20px;font-weight: bold;}
+
+
+    </style>
+{% endblock %}
+{% block mycontent %}
+    <div id="content" class="chapter" v-cloak>
+        <div class="cha-title">
+            <span class="t-left">
+                <span class="breadcrumbs-box">
+                    <a href="/root/index?nav=textbook">教材管理</a>
+                    <span class="split">></span>
+                    <a>新增章节</a>
+                </span>
+            </span>
+            <span class="t-center">
+                <label style="font-size: x-large;">{$ textbook.textbook_name $}</label>
+            </span>
+            <span class="t-right">
+
+            </span>
+        </div>
+
+        <div id="treeContainer">
+            <label class="tree-title">章节</label>
+
+            <ul id="zTree" class="ztree"></ul>
+        </div>
+
+        <div hidden="hidden">
+            <input id="textbook_id" value="{{ textbookId }}">
+        </div>
+    </div>
+{% endblock %}
+{% block myscript %}
+{#    <script src="/static/pub/zTree/js/jquery.ztree.core.js"></script>#}
+{#    <script src="/static/pub/zTree/js/jquery.ztree.excheck.js"></script>#}
+{#    <script src="/static/pub/zTree/js/jquery.ztree.exedit.js"></script>#}
+   <script>
+        document.write('<script src="/static/pub/zTree/js/jquery.ztree.core.js?rnd='+Math.random()+'"><'+'/script>');
+        document.write('<script src="/static/pub/zTree/js/jquery.ztree.excheck.js?rnd='+Math.random()+'"><'+'/script>');
+        document.write('<script src="/static/pub/zTree/js/jquery.ztree.exedit.js?rnd='+Math.random()+'"><'+'/script>');
+        document.write('<script src="/static/resources/js/root/textbook/chapter.js?rnd='+Math.random()+'"><'+'/script>');
+    </script>
+{% endblock %}

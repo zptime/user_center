@@ -1,0 +1,65 @@
+﻿{% extends 'page/setting.html' %}
+{% block hx-title %}<title>学校管理中心</title>{% endblock %}
+{% block hx-link %}
+    {% include 'page/base/package.html' %}
+    <script>
+        document.write('<link rel="stylesheet" href="/static/pub/jqGrid/css/ui.jqgrid.css?version=' +  hxuc.version + '" /> ');
+        document.write('<link rel="stylesheet" href="/static/resources/css/style.css?version=' +  hxuc.version + '" /> ');
+        document.write('<link rel="stylesheet" href="/static/resources/css/main.css?version='+hxuc.version+'">');
+    </script>
+    {% block mylink %}
+    {% endblock %}
+{% endblock %}
+{% block hx-head-extend %}
+{% endblock %}
+{% block hx-custom-outerbefore %}
+    <div hidden="hidden">
+        <input id="nav_val" hidden="hidden" value="{{ nav_val }}">
+        <input id="view_val" hidden="hidden" value="{{ view_val }}">
+        <input id="recache" value="{{ recache }}">
+    </div>
+{% endblock %}
+{% block hx-custom %}
+    <div class="main-frame">
+        <div id="main-nav"class="main-nav">
+            <ul>
+                {% if 'manage' in nav_list %}
+                    <li id="manage">
+                        <a class="navblock">学校管理</a>
+                        {% ifequal 'manage' nav_val %}<hr>{% endifequal %}
+                    </li>
+                {% endif %}
+                {% if 'config' in nav_list %}
+                    <li id="config">
+                        <a class="navblock">学校设置</a>
+                        {% ifequal 'config' nav_val %}<hr>{% endifequal %}
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="left-view">
+            {% block left-route %}{% endblock %}
+        </div>
+        <div class="right-content">
+            {% block mycontent %}{% endblock %}
+        </div>
+    </div>
+    <div style="clear: both"></div>
+{% endblock %}
+{% block hx-script %}
+    <script src="/static/pub/contrib/js/underscore-min.js"></script>
+    <script src="/static/pub/contrib/js/vue.js"></script>
+    <script src="/static/pub/contrib/js/jquery.form.min.js"></script>
+    <script>
+        document.write( " <script src='/static/pub/jqGrid/js/jquery.jqGrid.min.js?version=" + hxuc.version + " '></s" + "cript> " );
+        document.write( " <script src='/static/pub/jqGrid/js/i18n/grid.locale-cn.js?version=" + hxuc.version + " '></s" + "cript> " );
+        document.write( " <script src='/static/resources/js/base/URLs.js?version=" + hxuc.version + " '></s" + "cript> " );
+        document.write( " <script src='/static/resources/js/base/utils.js?version=" + hxuc.version + " '></s" + "cript> " );
+        document.write( " <script src='/static/resources/js/base/resource.js?version=" + hxuc.version + " '></s" + "cript> " );
+        document.write( " <script src='/static/resources/js/share/cache.js?version=" + hxuc.version + " '></s" + "cript> " );
+        document.write( " <script src='/static/resources/js/school/share/route.js?version=" + hxuc.version + " '></s" + "cript> " );
+    </script>
+    {% block myscript %}{% endblock %}
+{% endblock %}

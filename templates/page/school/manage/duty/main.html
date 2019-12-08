@@ -1,0 +1,38 @@
+{% extends 'page/school/manage/share/route.html' %}
+
+{% block mycontent %}
+    <div id="content" v-cloak>
+        <div class="right-content-core">
+            <div class="toolblock-box"><!--工具栏-->
+                <div class="toolblock">
+                    <span class="hx-float-l">
+                        <label class="title">职务</label>
+                        <label class="desc">学校行政和工作类别的划分</label>
+                    </span>
+                    <span class="hx-float-r">
+                        <span class="tool-cell middle hx-margin20-l" onclick="add()">
+                            <img class="middle-img" src="/static/resources/images/icon/icon-add.png">
+                            <span class="middle-context">新增</span>
+                        </span>
+                    </span>
+                </div>
+            </div><!--工具栏-->
+            <div class="grid">
+                <table id="grid"></table>
+                <div id="pager"></div>
+            </div>
+        </div>
+
+        <div>
+            <div id="modal-add-duty" style="display: none;">
+                <input id="duty-name" class="duty-name" placeholder="请输入职务名称" autocomplete="off">
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block myscript %}
+    <script>
+        document.write( " <script src='/static/resources/js/school/manage/duty/main.js?version=" + hxuc.version + " '></s" + "cript> " );
+    </script>
+{% endblock %}

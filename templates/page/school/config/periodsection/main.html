@@ -1,0 +1,83 @@
+{% extends 'page/school/config/share/route.html' %}
+
+{% block mylink %}
+    <style type="text/css">
+        .xueDuan{
+            width:200px;
+            height:124px;
+            margin:0 50px 0 50px;
+            float:left;
+            background-color:#83BDF5;
+            border-radius: 4px;
+            color:#FFFFFF;
+            cursor:pointer;
+        }
+        .divName{margin: 0 0 15px 65px;font-size: 30px;cursor:pointer;color:#ffffff}
+        .imgClass{height:22px;width:22px}
+        .divLab{margin:0 0 0 18px}
+        .divLabUpper{margin:0 0 0 -20px}
+        .normInput{margin-left:73px;border:none;background-color: #83BDF5;color:#ffffff;padding: 0 1px}
+        .forA{position:relative;color:white;bottom: 5px;}
+    </style>
+{% endblock %}
+{% block mycontent %}
+    <div id="content">
+        <div id="norm" style="min-height:500px;width:100%;background-color: white;float:left">
+            <div style="height:120px">
+                <button id='mySwitch' style="float:right;width:100px;margin:50px 50px 0 0" onclick="test()">设置学段学制</button>
+            </div>
+            <div id="priDiv" class="xueDuan" hidden="hidden">
+                <div style="height: 22px"></div>
+                <div class="divName">小学</div>
+                <div><input class="normInput" readonly="readonly" id="pri"></div>
+            </div>
+            <div id="junDiv" class="xueDuan" hidden="hidden">
+                <div style="height: 22px"></div>
+                <div class="divName">初中</div>
+                <div><input class="normInput" id="jun" readonly="readonly"></div>
+            </div>
+            <div id="senDiv" class="xueDuan" hidden="hidden">
+                <div style="height: 22px"></div>
+                <div class="divName">高中</div>
+                <div><input class="normInput" readonly="readonly" id="sen"></div>
+            </div>
+        </div>
+
+        <div id="choos" style="background-color: white;height:500px;width:100%" hidden="hidden">
+            <div style="width:100%;height:120px;float:left">
+                <button id='cancelIt' style="float:right;margin:30px 30px 0 0" onclick="cancelIt()">取消</button>
+                <button id='keepIt' style="float:right;margin:30px 20px 0 0" onclick="keepIt()">保存</button>
+            </div>
+            <div  id="primary" class="xueDuan">
+                <label id='priCh' class="divLabUpper"  for="priCheck"></label>
+                <input id='priCheck' type="checkbox" style="float:left;visibility:hidden" >
+                <div class="divName">小学</div>
+                <label id='priFi' class="divLab" for="priFive"></label>
+                <input id="priFive" type="checkbox" style="position:absolute;height:1px;width:1px;visibility:hidden"><a class="forA">五年制</a>
+                <label id='priSi' class="divLab" for="priSix"></label>
+                <input id="priSix" type="checkbox" style="position:absolute;height:1px;width:1px;visibility:hidden"><a class="forA">六年制</a>
+            </div>
+            <div id="junior"  class="xueDuan">
+                <label id='junCh' class="divLabUpper" for="junCheck"></label>
+                <input id='junCheck' type="checkbox" style="float:left;visibility:hidden">
+                <div class="divName">初中</div>
+                <label id='junTh' class="divLab" for="junThree"></label>
+                <input id="junThree" type="checkbox" style="position:absolute;height:1px;width:1px;visibility:hidden"><a class="forA">三年制</a>
+                <label id='junFo' class="divLab" for="junFour"></label>
+                <input id="junFour" type="checkbox" style="position:absolute;height:1px;width:1px;visibility:hidden"><a class="forA">四年制</a>
+            </div>
+            <div  id="senior" class="xueDuan">
+                <label id='senCh' class="divLabUpper" for="senCheck"></label>
+                <input id='senCheck' type="checkbox" style="float:left;visibility:hidden">
+                <div class="divName">高中</div>
+                <a style="margin:0 0 0 80px;color:white">三年制</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block myscript %}
+    <script>
+        document.write('<script src="/static/resources/js/school/config/periodsection/main.js?rnd='+Math.random()+'"><'+'/script>');
+    </script>
+{% endblock %}

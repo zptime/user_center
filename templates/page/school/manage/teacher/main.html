@@ -1,0 +1,125 @@
+{% extends 'page/school/manage/share/route.html' %}
+
+{% block mylink %}
+    <script>
+        document.write('<link rel="stylesheet" href="/static/pub/btImport/css/btImport.css?version=' +  hxuc.version + '" /> ');
+    </script>
+{% endblock %}
+{% block mycontent %}
+    <div id="content" v-cloak>
+
+        <div class="right-content-core">
+            <div class="toolblock-box"><!--工具栏-->
+
+                <div class="toolblock">
+                    <span class="hx-float-l">
+                        <span v-show="leave_flag" class="hx-margin20-r">
+                            <span class="breadcrumbs-box">
+                                <a @click="switch_leave_flag(false)">教师管理</a>
+                                <span class="split">></span>
+                                <a>离校的教师</a>
+                            </span>
+                        </span>
+                        <span>
+                            <input type="checkbox" id="grid_multipleBtn"><label>全选</label></input>
+                        </span>
+                        <span v-show="!leave_flag&&multiple" onclick="leave()" class="tool-cell hx-margin20-l">
+                            设为离校
+                        </span>
+                        <span v-show="leave_flag&&multiple" onclick="leave()" class="tool-cell hx-margin20-l">
+                            返回学校
+                        </span>
+                        <span v-show="multiple" onclick="restpwd()" class="tool-cell hx-margin20-l">
+                            重置密码
+                        </span>
+                        <span v-show="leave_flag&&multiple" onclick="del()" class="tool-cell hx-margin20-l">
+                            删除
+                        </span>
+                    </span>
+                    <span class="hx-float-r">
+                        <span v-show="!leave_flag" class="tool-cell middle" @click="switch_leave_flag(true)">
+                            <span>离校的教师</span>
+                        </span>
+                    </span>
+                </div>
+
+                <div class="toolblock">
+                    <span class="hx-float-l">
+                        <select id="title" placeholder="--请选择--">
+                            <option value="">全部职务</option>
+                            <option v-for="title in title_list" value="{$ title.name $}">{$ title.name $}</option>
+                        </select>
+                        <input class="hx-margin20-l" id="name_or_code" name="name_or_code" placeholder="请输入姓名或工号">
+                        <button type="button" class="hx-margin20-l" onclick="reloadGrid()">查询</button>
+                    </span>
+                    <span class="hx-float-r">
+                            <span v-show="!leave_flag" class="tool-cell middle hx-margin20-l" onclick="add()">
+                                <img class="middle-img" src="/static/resources/images/icon/icon-add.png">
+                                <span class="middle-context">新增</span>
+                            </span>
+                            <span v-show="!leave_flag" class="tool-cell middle hx-margin20-l" onclick="importExcel()">
+                                <img class="middle-img" src="/static/resources/images/icon/icon-import.png">
+                                <span class="middle-context">导入</span>
+                            </span>
+                            <span class="tool-cell middle hx-margin20-l" onclick="exportExcel()">
+                                <img class="middle-img" src="/static/resources/images/icon/icon-export.png">
+                                <span class="middle-context">导出</span>
+                            </span>
+                    </span>
+                </div>
+            </div><!--工具栏-->
+            <div class="grid">
+                <table id="grid"></table>
+                <div id="pager"></div>
+            </div>
+        </div>
+
+        <div>
+            <div id="modal_add" style="display: none;">
+                <form>
+                    <table class="table-form">
+                        <tr>
+                            <th width="14%"></th>
+                            <th width="35%"></th>
+                            <th width="14%"></th>
+                            <th width="35%"></th>
+                        </tr>
+                        <tr>
+                            <td><label class="required" for="CH_full_name">姓名</label></td>
+                            <td><input type="text" name="full_name" v-model="form.full_name" check="CH_full_name"  placeholder="输入姓名"></td>
+                            <td><label class="required" for="CH_sex">性别</label></td>
+                            <td>
+                                <label class="radio-container"><input type="radio" name="sex" value="男" v-model="form.sex" check="CH_sex"/>男</label>
+                                <label class="radio-container"><input type="radio" name="sex" value="女" v-model="form.sex" check="CH_sex"/>女</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>工号</label></td>
+                            <td><input type="text" name="school_code" v-model="form.school_code" placeholder="输入工号"></td>
+                            <td><label class="required" for="CH_title" placeholder="输入工号">职务</label></td>
+                            <td><select type="text" name="title" v-model="form.title" check="CH_title">
+                                    <option value="">--请选择--</option>
+                                    <option v-for="title in title_list | filterBy title_list_filter" value="{$ title.name $}">{$ title.name $}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="required" for="CH_mobile">手机号</label></td>
+                            <td><input type="tel" v-model="form.mobile" name="mobile" check="CH_mobile" placeholder="输入手机号"></td>
+                            <td><label>身份证</label></td>
+                            <td><input type="text" v-model="form.id_card" name="id_card" placeholder="输入身份证号码"></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block myscript %}
+    <script>
+        document.write( " <script src='/static/pub/btImport/js/btImport.js?version=" + hxuc.version + " '></s" + "cript> " );
+        document.write( " <script src='/static/resources/js/school/manage/teacher/main.js?version=" + hxuc.version + " '></s" + "cript> " );
+    </script>
+{% endblock %}
